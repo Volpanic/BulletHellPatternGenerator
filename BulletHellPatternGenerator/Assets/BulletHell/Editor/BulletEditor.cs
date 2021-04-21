@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BulletHellGenerator.BulletEvents;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -7,10 +8,12 @@ using UnityEngine;
 public class BulletEditor : Editor
 {
     private Bullet bullet;
+    private GenericMenu addEventWindow;
 
     private void OnEnable()
     {
         bullet = (Bullet)target;
+        SetupContextMenu();
     }
 
     public override void OnInspectorGUI()
@@ -23,10 +26,29 @@ public class BulletEditor : Editor
             {
                 EditorGUILayout.BeginVertical("Box");
                 {
-                    bullet.bulletEvents[i].OnInspectorGUI();
+                    bullet.bulletEvents[i].OnInspectorGUI(bullet);
                     EditorGUILayout.EndVertical();
                 }
             }
+        }
+    }
+
+    private void SetupContextMenu()
+    {
+        addEventWindow = new GenericMenu();
+        addEventWindow.AddItem(new GUIContent("Wait For x Seconds"),false, () => AddBulletEvent<BEWaitForSeconds>());
+    }
+
+    private void AddBulletEvent<BE>() where BE : BulletEvents, new()
+    {
+        if(bullet != null)
+        {
+            //Crate the list
+            if(bullet.bulletEvents == null)
+            {
+                bullet.bulletEvents = new List<BulletEvents>();
+            }
+            bullet.bulletEvents.Add(new BE());
         }
     }
 }

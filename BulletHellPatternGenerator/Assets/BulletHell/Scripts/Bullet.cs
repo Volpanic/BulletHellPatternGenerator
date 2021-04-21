@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
             // Rigidbodies take priority in case user wants to use them instead
             if (Body   != null) return   Body.velocity;
             if (Body2D != null) return Body2D.velocity;
-            return direction * moveSpeed;
+            return direction * MoveSpeed;
         }
 
         set
@@ -47,12 +47,12 @@ public class Bullet : MonoBehaviour
             if (Body   != null) Body.velocity  = value; 
             if (Body2D != null)Body2D.velocity = value;
             direction = value.normalized;
-            moveSpeed = value.magnitude;
+            MoveSpeed = value.magnitude;
         }
     }
 
     private Vector3 direction = Vector3.right;
-    private float moveSpeed = 0;
+    public float MoveSpeed = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +63,6 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += direction * moveSpeed;
+        transform.position += direction * MoveSpeed;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace BulletHellGenerator.BulletEvents
@@ -11,7 +12,7 @@ namespace BulletHellGenerator.BulletEvents
         public abstract bool OnUpdate(Bullet bullet); // Update the event, returns true if event done.
 
 #if UNITY_EDITOR
-        public virtual void OnInspectorGUI() { }
+        public virtual void OnInspectorGUI(Bullet bullet) { }
 #endif
     }
 
@@ -30,28 +31,54 @@ namespace BulletHellGenerator.BulletEvents
         {
             timer += Time.deltaTime;
 
-            if (timer >= Time.deltaTime) return true;
+            if (timer >= MaxTime) return true;
             return false;
+        }
+
+        public override void OnInspectorGUI(Bullet bullet)
+        {
+            MaxTime = Mathf.Abs(EditorGUILayout.FloatField(MaxTime));
+            if (MaxTime == 0) MaxTime = 0.01f;
         }
     }
 
     [System.Serializable]
-    public class BEStopVelocity : BulletEvents
+    public class BEToMoveSpeed : BulletEvents
     {
-        private float MaxTime = 1;
+        private float TransitonDuration = 1;
+        private float TargetSpeed = 0;
         private float timer = 0;
+
+        private float initalSpeed = 0;
+        private bool hasGottenInitalSpeed = false;
 
         public override void OnReset()
         {
             timer = 0;
+            initalSpeed = 0;
+            hasGottenInitalSpeed = false;
         }
 
+        // Edit this later
         public override bool OnUpdate(Bullet bullet)
         {
+            if(!hasGottenInitalSpeed)
+            {
+                hasGottenInitalSpeed = true;
+                initalSpeed = bullet.MoveSpeed;
+            }
+
             timer += Time.deltaTime;
 
-            if (timer >= Time.deltaTime) return true;
+            if (timer >= TransitonDuration) return true;
             return false;
+        }
+
+        public override void OnInspectorGUI(Bullet bullet)
+        {
+            TransitonDuration = Mathf.Abs(EditorGUILayout.FloatField(TransitonDuration));
+            TargetSpeed = EditorGUILayout.FloatField(TargetSpeed);
+            if (TransitonDuration == 0) TransitonDuration = 0.01f;
         }
     }
 }
