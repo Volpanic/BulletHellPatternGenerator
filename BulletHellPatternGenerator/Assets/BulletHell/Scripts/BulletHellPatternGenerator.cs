@@ -46,19 +46,20 @@ public class BulletHellPatternGenerator : MonoBehaviour
     private void DoBullet()
     {
         float segR = (Mathf.PI * 2f) / (float)BulletAmount;
-        
 
-        Bullet pulse;
+
+        BH_Bullet pulse;
 
         for(int i = 0; i < BulletAmount; i++)
         {
             Vector3 p = new Vector3(Mathf.Cos(segR * i), Mathf.Sin(segR * i),0);
-            //p = transform.TransformDirection(p);
-            p = Vector3.Cross(p, transform.right + transform.forward + transform.up);
+            p = transform.TransformDirection(p);
+            //p = Vector3.Cross(p, transform.right + transform.forward + transform.up);
 
 
-            pulse = Instantiate(Bullet, transform.position + p,Quaternion.identity).GetComponent<Bullet>();
-            pulse.Velocity = new Vector3(p.x, p.y, p.z) * 6;
+            pulse = Instantiate(Bullet, transform.position + p,Quaternion.identity).GetComponent<BH_Bullet>();
+            pulse.Direction = new Vector3(p.x, p.y, p.z);
+            pulse.MoveSpeed = 16;
         }
     }
 }

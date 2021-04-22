@@ -103,6 +103,36 @@ MonoBehaviour:
   OrbitalVelocity: 0
   Body: {fileID: 0}
   Body2D: {fileID: 0}
+  bulletEvents:
+  - id: 0
+  - id: 1
+  - id: 2
+  - id: 3
+  Direction: {x: 1, y: 0, z: 0}
+  MoveSpeed: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: BEToMoveSpeed, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        TransitonDuration: 0.1
+        TargetSpeed: 5
+    00000001:
+      type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        TransitonDuration: 0.1
+        TargetDirection: {x: 1, y: 1, z: 0}
+        Relative: 1
+    00000002:
+      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        MaxTime: 0.5
+    00000003:
+      type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        TransitonDuration: 1
+        TargetDirection: {x: -1, y: -1, z: 0}
+        Relative: 1
 --- !u!122 &513092202851777853
 Halo:
   m_ObjectHideFlags: 0
@@ -114,4 +144,4 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278190335
-  m_Size: 0.75
+  m_Size: 0.6
