@@ -69,19 +69,41 @@ namespace BulletHellGenerator
 
         private void DrawBoard()
         {
+            if (Data == null) return;
+
+            //Choosing bullet selection type
             GUILayout.TextField("Bullets");
 
-            if (GUILayout.Button("Yo"))
-            {
+            if (GUILayout.Button("Change Bullet Mode"))
                 BulletChooseMenu.ShowAsContext();
+            if(Data.Pattern.Bullet != null)
+            {
+
             }
 
             DrawSeparator();
 
+            //Choosing timing type
             GUILayout.TextField("Timing");
+
+            if (GUILayout.Button("Change Timing Mode"))
+                TimingChooseMenu.ShowAsContext();
+            if (Data.Pattern.Timing != null)
+            {
+
+            }
             DrawSeparator();
 
+            //Choosing pattern type
             GUILayout.TextField("Pattern");
+
+            if (GUILayout.Button("Change Pattern Mode"))
+                PatternChooseMenu.ShowAsContext();
+            if (Data.Pattern.Pattern != null)
+            {
+
+            }
+
             DrawSeparator();
         }
 
@@ -96,9 +118,47 @@ namespace BulletHellGenerator
             for (int i = 0; i < bulletChooseTypes.Length; i++)
             {
                 if(bulletChooseTypes[i].IsSubclassOf(typeof(BulletBase)))
-                    BulletChooseMenu.AddItem(new GUIContent(bulletChooseTypes[i].Name), false, () => BulletChooseOnClick(bulletChooseTypes[i]));
+                    BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, () => BulletChooseOnClick(bulletChooseTypes[i]));
             }
+
+            //Setup Timing choose menu, by getting all compiled 
+            System.Type[] timingChooseTypes = Assembly.GetAssembly(typeof(TimingBase)).GetTypes();
+            for (int i = 0; i < timingChooseTypes.Length; i++)
+            {
+                if (timingChooseTypes[i].IsSubclassOf(typeof(TimingBase)))
+                    TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, () => TimingChooseOnClick(timingChooseTypes[i]));
+            }
+
+            //Setup Pattern choose menu, by getting all compiled 
+            System.Type[] patternChooseTypes = Assembly.GetAssembly(typeof(PatternBase)).GetTypes();
+            for (int i = 0; i < patternChooseTypes.Length; i++)
+            {
+                if (patternChooseTypes[i].IsSubclassOf(typeof(PatternBase)))
+                    PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, () => PatternChooseOnClick(patternChooseTypes[i]));
+            }
+
         }
+
+        private void PatternChooseOnClick(Type type)
+        {
+            if (Data == null) return;
+
+            Undo.RecordObject(Data, "Changed Pattern Choose Mode");
+            //This code is kind of yucky, by makes modularity really easy
+            Data.Pattern.Pattern = (PatternBase)Activator.CreateInstance(type);
+            EditorUtility.SetDirty(Data);
+        }
+
+        private void TimingChooseOnClick(Type type)
+        {
+            if (Data == null) return;
+
+            Undo.RecordObject(Data, "Changed Timing Choose Mode");
+            //This code is kind of yucky, by makes modularity really easy
+            Data.Pattern.Timing = (TimingBase)Activator.CreateInstance(type);
+            EditorUtility.SetDirty(Data);
+        }
+
         private void BulletChooseOnClick(Type type)
         {
             if (Data == null) return;

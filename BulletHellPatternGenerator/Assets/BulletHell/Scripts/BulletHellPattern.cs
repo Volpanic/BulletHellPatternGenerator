@@ -8,7 +8,7 @@ public struct PatternData
 {
     public BulletBase Bullet;
     public TimingBase Timing;
-    public AngleBase   Angle;
+    public PatternBase Pattern;
 }
 
 [CreateAssetMenu(fileName = "NewBulletHellPattern")]

@@ -20,14 +20,9 @@ namespace BulletHellGenerator
         }
     }
 
-    public class Bullerffgg : BulletBase
+    [System.Serializable]
+    public class BulletTest : BulletBase
     {
 
     }
-
-    public class Bullerffgg2 : BulletBase
-    {
-
-    }
-
 }

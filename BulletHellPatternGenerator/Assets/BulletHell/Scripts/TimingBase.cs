@@ -12,4 +12,10 @@ namespace BulletHellGenerator
             return true;
         }
     }
+
+    [System.Serializable]
+    public class TimingTest : TimingBase
+    {
+
+    }
 }
