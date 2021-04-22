@@ -59,7 +59,7 @@ public class BH_Bullet : MonoBehaviour
     void Start()
     {
         MoveSpeed = 1;
-        MaxLifeTime = 8;
+        MaxLifeTime = 32;
     }
 
     // Update is called once per frame
@@ -90,6 +90,11 @@ public class BH_Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
 

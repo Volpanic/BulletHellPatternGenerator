@@ -36,12 +36,13 @@ namespace BulletHellGenerator.BulletEvents
             if (timer >= MaxTime) return true;
             return false;
         }
-
+#if UNITY_EDITOR
         public override void OnInspectorGUI(BH_Bullet bullet)
         {
-            MaxTime = Mathf.Abs(EditorGUILayout.FloatField("Wait for time duration",MaxTime));
+            MaxTime = Mathf.Abs(EditorGUILayout.FloatField("Wait for time duration", MaxTime));
             if (MaxTime == 0) MaxTime = 0.01f;
         }
+#endif
     }
     #endregion
 
@@ -51,43 +52,56 @@ namespace BulletHellGenerator.BulletEvents
     {
         public float TransitonDuration = 1;
         public float TargetSpeed = 0;
+        public bool Relative = false;
         private float timer = 0;
 
         private float initalSpeed = 0;
+        private float targetSpeed = 0;
         private bool hasGottenInitalSpeed = false;
 
         public override void OnReset()
         {
             timer = 0;
             initalSpeed = 0;
+            targetSpeed = 0;
             hasGottenInitalSpeed = false;
         }
 
         // Edit this later
         public override bool OnUpdate(BH_Bullet bullet)
         {
-            if(!hasGottenInitalSpeed)
+            if (!hasGottenInitalSpeed)
             {
                 hasGottenInitalSpeed = true;
                 initalSpeed = bullet.MoveSpeed;
+
+                //Adjust to be relative if should
+                targetSpeed = TargetSpeed;
+
+                if (Relative)
+                {
+                    targetSpeed += bullet.MoveSpeed;
+                }
             }
 
             timer += Time.deltaTime;
-            bullet.MoveSpeed = Mathf.Lerp(initalSpeed,TargetSpeed,timer / TransitonDuration);
+            bullet.MoveSpeed = Mathf.Lerp(initalSpeed, targetSpeed, timer / TransitonDuration);
 
             if (timer >= TransitonDuration) return true;
             return false;
         }
 
+#if UNITY_EDITOR
         public override void OnInspectorGUI(BH_Bullet bullet)
         {
-            TransitonDuration = Mathf.Abs(EditorGUILayout.FloatField("Transition Duration",TransitonDuration));
-            TargetSpeed = EditorGUILayout.FloatField("Target Speed",TargetSpeed);
+            TransitonDuration = Mathf.Abs(EditorGUILayout.FloatField("Transition Duration", TransitonDuration));
+            TargetSpeed = EditorGUILayout.FloatField("Target Speed", TargetSpeed);
             if (TransitonDuration == 0) TransitonDuration = 0.01f;
+            Relative = EditorGUILayout.Toggle("Relative", Relative);
         }
+#endif
     }
     #endregion
-
 
     #region // Rotate Direction
 
@@ -122,10 +136,10 @@ namespace BulletHellGenerator.BulletEvents
 
                 targetDirection = TargetDirection;
 
-                if(Relative)
+                if (Relative)
                 {
-                    float ang = Mathf.Atan2(bullet.Direction.y,bullet.Direction.x) + Mathf.Atan2(targetDirection.y,targetDirection.x);
-                    targetDirection = new Vector3(Mathf.Cos(ang),Mathf.Sin(ang),targetDirection.z);
+                    float ang = Mathf.Atan2(bullet.Direction.y, bullet.Direction.x) + Mathf.Atan2(targetDirection.y, targetDirection.x);
+                    targetDirection = new Vector3(Mathf.Cos(ang), Mathf.Sin(ang), targetDirection.z);
                 }
             }
 
@@ -137,14 +151,15 @@ namespace BulletHellGenerator.BulletEvents
             return false;
         }
 
+#if UNITY_EDITOR
         public override void OnInspectorGUI(BH_Bullet bullet)
         {
             TransitonDuration = Mathf.Abs(EditorGUILayout.FloatField("Transition Duration", TransitonDuration));
             TargetDirection = EditorGUILayout.Vector3Field("Target Direction", TargetDirection);
-            Relative = EditorGUILayout.Toggle("Relative",Relative);
+            Relative = EditorGUILayout.Toggle("Relative", Relative);
             if (TransitonDuration == 0) TransitonDuration = 0.01f;
         }
+#endif
     }
     #endregion
-
 }

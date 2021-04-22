@@ -14,6 +14,5 @@ public struct PatternData
 [CreateAssetMenu(fileName = "NewBulletHellPattern")]
 public class BulletHellPattern : ScriptableObject 
 {
-    [SerializeReference]
-    public List<PatternData> Patterns;
+    public PatternData Pattern;
 }

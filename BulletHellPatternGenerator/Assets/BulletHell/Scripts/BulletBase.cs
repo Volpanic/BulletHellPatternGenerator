@@ -20,4 +20,14 @@ namespace BulletHellGenerator
         }
     }
 
+    public class Bullerffgg : BulletBase
+    {
+
+    }
+
+    public class Bullerffgg2 : BulletBase
+    {
+
+    }
+
 }

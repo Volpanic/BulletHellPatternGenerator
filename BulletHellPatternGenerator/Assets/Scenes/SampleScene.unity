@@ -316,8 +316,8 @@ MonoBehaviour:
   m_RefResolutionY: 320
   m_UpscaleRT: 1
   m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
+  m_CropFrameX: 1
+  m_CropFrameY: 1
   m_StretchFill: 0
 --- !u!1 &1003761822
 GameObject:
@@ -349,8 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1184654237552063843, guid: cbc24c19e75c37744bcd229d68ac3cb6, type: 3}
-  TimeBetween: 0.1
-  BulletAmount: 4
+  TimeBetween: 0.33
+  BulletAmount: 16
 --- !u!4 &1003761824
 Transform:
   m_ObjectHideFlags: 0

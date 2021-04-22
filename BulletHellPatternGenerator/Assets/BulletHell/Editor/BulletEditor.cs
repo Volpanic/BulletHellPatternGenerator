@@ -38,24 +38,30 @@ public class BulletEditor : Editor
                             //Remove Button
                             if(GUILayout.Button("✘"))
                             {
+                                Undo.RecordObject(target,"Bullet Event Removed");
                                 bullet.bulletEvents.RemoveAt(i);
                                 i--;
+                                EditorUtility.SetDirty(target);
                                 continue;
                             }
 
                             //MoveUp Button
                             if (GUILayout.Button("▲") && i != 0)
                             {
+                                Undo.RecordObject(target, "Bullet Event Moved Up");
                                 bullet.bulletEvents.Reverse(i-1, 2);
                                 i--;
+                                EditorUtility.SetDirty(target);
                                 continue;
                             }
 
                             //MoveDown Button
                             if (GUILayout.Button("▼") && i != bullet.bulletEvents.Count-1)
                             {
+                                Undo.RecordObject(target, "Bullet Event Moved Down");
                                 bullet.bulletEvents.Reverse(i,2);
                                 i--;
+                                EditorUtility.SetDirty(target);
                                 continue;
                             }
 
