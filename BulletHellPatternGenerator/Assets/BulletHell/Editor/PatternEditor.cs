@@ -23,7 +23,8 @@ namespace BulletHellGenerator
         [MenuItem("Pattern Editor/Editor")]
         public static PatternEditor OpenWindow()
         {
-            return GetWindow<PatternEditor>("Pattern Editor");
+            PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
+            return window;
         }
 
         public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
@@ -67,6 +68,7 @@ namespace BulletHellGenerator
                     if (BoardRect != dynamicRect)
                     {
                         BoardRect = dynamicRect;
+
                         Repaint();
                     }
                 }

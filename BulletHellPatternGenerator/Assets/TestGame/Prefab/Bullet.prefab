@@ -98,13 +98,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Forward: {x: 0, y: 0, z: 0}
   SpeedModifier: 1
+  OrbitalVelcoity: 0
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}
   bulletEvents:
   - id: 0
   - id: 1
-  - id: 2
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
@@ -112,17 +112,11 @@ MonoBehaviour:
     00000000:
       type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
-        MaxTime: 0.5
+        MaxTime: 1
     00000001:
-      type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        TransitonDuration: 1
-        TargetDirection: {x: 1, y: -1, z: 0}
-        Relative: 1
-    00000002:
       type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
-        MaxTime: 0.5
+        MaxTime: 1
 --- !u!122 &513092202851777853
 Halo:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class BulletHellPatternGenerator : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class BulletHellPatternGenerator : MonoBehaviour
 
     [Range(4,128)]
     public int BulletAmount = 4;
+
+    public MinMaxCurve Curve;
 
     private float Timer = 0;
 

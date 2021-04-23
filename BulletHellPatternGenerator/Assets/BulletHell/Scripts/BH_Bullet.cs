@@ -13,6 +13,8 @@ public class BH_Bullet : MonoBehaviour
     public Vector3 Forward;
     public float SpeedModifier = 1;
 
+    public float OrbitalVelcoity = 0;
+
     //LIFE
     public float MaxLifeTime = 1;
     private float lifeTimer = 0;
@@ -47,6 +49,9 @@ public class BH_Bullet : MonoBehaviour
     public Vector3 Direction = Vector3.right;
     public float MoveSpeed = 0;
 
+    private Vector3 orbitalDirection = Vector3.zero;
+    private float orbitalAngle = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +78,14 @@ public class BH_Bullet : MonoBehaviour
             }
         }
 
-        transform.position += (Direction * (MoveSpeed * SpeedModifier)) * Time.deltaTime;
+        if(OrbitalVelcoity != 0)
+        {
+            orbitalAngle += OrbitalVelcoity * Time.deltaTime;
+            orbitalDirection.x = Mathf.Cos(orbitalAngle);
+            orbitalDirection.y = Mathf.Sin(orbitalAngle);
+        }
+
+        transform.position += ((Direction + orbitalDirection).normalized * (MoveSpeed * SpeedModifier)) * Time.deltaTime;
 
         lifeTimer += Time.deltaTime;
 
