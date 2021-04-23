@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6436085721792558785}
   - component: {fileID: 513092202851777853}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Bullet 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4311617202805498557, guid: 68608bd64eb25304f84957218903ad1d, type: 3}
+  m_Sprite: {fileID: -9157457220473546734, guid: 68608bd64eb25304f84957218903ad1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,14 +97,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Forward: {x: 0, y: 0, z: 0}
-  SpeedModifier: 1
+  SpeedModifier: 0.75
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}
   bulletEvents:
   - id: 0
   - id: 1
-  - id: 2
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
@@ -112,17 +111,13 @@ MonoBehaviour:
     00000000:
       type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
-        MaxTime: 0.5
+        MaxTime: 1
     00000001:
       type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
         TransitonDuration: 1
-        TargetDirection: {x: 1, y: -1, z: 0}
+        TargetDirection: {x: -1, y: 1, z: 0}
         Relative: 1
-    00000002:
-      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        MaxTime: 0.5
 --- !u!122 &513092202851777853
 Halo:
   m_ObjectHideFlags: 0
@@ -133,5 +128,5 @@ Halo:
   m_Enabled: 1
   m_Color:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4278255360
   m_Size: 0.6

@@ -26,6 +26,14 @@ namespace BulletHellGenerator
             return GetWindow<PatternEditor>("Pattern Editor");
         }
 
+        public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
+        {
+            PatternEditor window =  GetWindow<PatternEditor>("Pattern Editor");
+            window.Data = asset;
+
+            return window;
+        }
+
         private void OnEnable()
         {
             SetupContextMenus();
@@ -33,7 +41,6 @@ namespace BulletHellGenerator
 
         private void OnGUI()
         {
-
             GUI.Box(BoardRect, "Box Tho ╚(•⌂•)╝");
 
             GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 32, float.MaxValue, float.MaxValue));
@@ -41,8 +48,10 @@ namespace BulletHellGenerator
                 //Begin vertical area, used to measure the rect of the node
                 GUILayout.BeginVertical(GUILayout.MaxWidth(512), GUILayout.ExpandWidth(false));
                 {
-
+                    EditorGUI.BeginChangeCheck();
                     DrawBoard();
+
+                    if (EditorGUI.EndChangeCheck()) SetDirtyAndSave();
 
                     GUILayout.EndVertical();
                 }
@@ -72,40 +81,45 @@ namespace BulletHellGenerator
             if (Data == null) return;
 
             //Choosing bullet selection type
-            GUILayout.TextField("Bullets");
+            GUILayout.Label("Bullets");
 
             if (GUILayout.Button("Change Bullet Mode"))
                 BulletChooseMenu.ShowAsContext();
-            if(Data.Pattern.Bullet != null)
+            if(Data.Bullet != null)
             {
-
+                Data.Bullet.OnGUI();
             }
 
             DrawSeparator();
 
             //Choosing timing type
-            GUILayout.TextField("Timing");
+            GUILayout.Label("Timing");
 
             if (GUILayout.Button("Change Timing Mode"))
                 TimingChooseMenu.ShowAsContext();
-            if (Data.Pattern.Timing != null)
+            if (Data.Timing != null)
             {
-
+                Data.Timing.OnGUI();
             }
             DrawSeparator();
 
             //Choosing pattern type
-            GUILayout.TextField("Pattern");
+            GUILayout.Label("Pattern");
 
             if (GUILayout.Button("Change Pattern Mode"))
                 PatternChooseMenu.ShowAsContext();
-            if (Data.Pattern.Pattern != null)
+            if (Data.Pattern != null)
             {
-
+                Data.Pattern.OnGUI();
             }
 
             DrawSeparator();
+
         }
+
+        System.Type[] bulletChooseTypes;
+        System.Type[] timingChooseTypes;
+        System.Type[] patternChooseTypes;
 
         private void SetupContextMenus()
         {
@@ -113,30 +127,49 @@ namespace BulletHellGenerator
             TimingChooseMenu = new GenericMenu();
             PatternChooseMenu = new GenericMenu();
 
+            int count = 0;
+
             //Setup bullet choose menu, by getting all compiled 
-            System.Type[] bulletChooseTypes = Assembly.GetAssembly(typeof(BulletBase)).GetTypes();
+            bulletChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(BulletBase)).GetTypes(), typeof(BulletBase));
             for (int i = 0; i < bulletChooseTypes.Length; i++)
             {
-                if(bulletChooseTypes[i].IsSubclassOf(typeof(BulletBase)))
-                    BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, () => BulletChooseOnClick(bulletChooseTypes[i]));
+                BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, () => BulletChooseOnClick(bulletChooseTypes[count-1]));
+                count++;
             }
+
+            count = 0;
 
             //Setup Timing choose menu, by getting all compiled 
-            System.Type[] timingChooseTypes = Assembly.GetAssembly(typeof(TimingBase)).GetTypes();
+            timingChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(TimingBase)).GetTypes(), typeof(TimingBase));
             for (int i = 0; i < timingChooseTypes.Length; i++)
             {
-                if (timingChooseTypes[i].IsSubclassOf(typeof(TimingBase)))
-                    TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, () => TimingChooseOnClick(timingChooseTypes[i]));
+                TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, () => TimingChooseOnClick(timingChooseTypes[count-1]));
+                count++;
             }
+
+            count = 0;
 
             //Setup Pattern choose menu, by getting all compiled 
-            System.Type[] patternChooseTypes = Assembly.GetAssembly(typeof(PatternBase)).GetTypes();
+            patternChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(PatternBase)).GetTypes(), typeof(PatternBase));
             for (int i = 0; i < patternChooseTypes.Length; i++)
             {
-                if (patternChooseTypes[i].IsSubclassOf(typeof(PatternBase)))
-                    PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, () => PatternChooseOnClick(patternChooseTypes[i]));
+                PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, () => PatternChooseOnClick(patternChooseTypes[count-1]));
+                count++;
             }
 
+        }
+
+        private System.Type[] CullTypeArray(System.Type[] toCull, System.Type desiredParentType)
+        {
+            List<System.Type> tempList = new List<Type>();
+
+            for(int i = 0; i < toCull.Length; i++)
+            {
+                if (toCull[i].IsSubclassOf(desiredParentType))
+                    tempList.Add(toCull[i]);
+            }
+
+            return tempList.ToArray();
         }
 
         private void PatternChooseOnClick(Type type)
@@ -145,8 +178,9 @@ namespace BulletHellGenerator
 
             Undo.RecordObject(Data, "Changed Pattern Choose Mode");
             //This code is kind of yucky, by makes modularity really easy
-            Data.Pattern.Pattern = (PatternBase)Activator.CreateInstance(type);
-            EditorUtility.SetDirty(Data);
+            Data.Pattern = (PatternBase)Activator.CreateInstance(type);
+            SetDirtyAndSave();
+            Repaint();
         }
 
         private void TimingChooseOnClick(Type type)
@@ -155,8 +189,9 @@ namespace BulletHellGenerator
 
             Undo.RecordObject(Data, "Changed Timing Choose Mode");
             //This code is kind of yucky, by makes modularity really easy
-            Data.Pattern.Timing = (TimingBase)Activator.CreateInstance(type);
-            EditorUtility.SetDirty(Data);
+            Data.Timing = (TimingBase)Activator.CreateInstance(type);
+            SetDirtyAndSave();
+            Repaint();
         }
 
         private void BulletChooseOnClick(Type type)
@@ -165,8 +200,9 @@ namespace BulletHellGenerator
 
             Undo.RecordObject(Data,"Changed Bullet Choose Mode");
             //This code is kind of yucky, by makes modularity really easy
-            Data.Pattern.Bullet = (BulletBase)Activator.CreateInstance(type);
-            EditorUtility.SetDirty(Data);
+            Data.Bullet = (BulletBase)Activator.CreateInstance(type);
+            SetDirtyAndSave();
+            Repaint();
         }
 
         private void DrawMenuBar()
@@ -181,6 +217,11 @@ namespace BulletHellGenerator
                     EditorGUI.BeginChangeCheck();
                     Data = (BulletHellPattern)EditorGUILayout.ObjectField(Data, typeof(BulletHellPattern), false);
 
+                    if(GUILayout.Button("Save"))
+                    {
+                        SetDirtyAndSave();
+                    }
+
                     GUILayout.EndHorizontal();
                 }
 
@@ -188,9 +229,19 @@ namespace BulletHellGenerator
             }
         }
 
+        private void SetDirtyAndSave()
+        {
+            if(Data != null)
+            {
+                EditorUtility.SetDirty(Data);
+            }
+        }
+
         private void DrawSeparator()
         {
+            GUI.backgroundColor = Color.cyan;
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+            GUI.backgroundColor = Color.white;
         }
     }
 }

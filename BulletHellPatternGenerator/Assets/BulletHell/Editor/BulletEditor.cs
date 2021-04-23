@@ -21,6 +21,19 @@ public class BulletEditor : Editor
     {
         if (bullet == null) return;
 
+        EditorGUI.BeginChangeCheck();
+        {
+            //Draw regular bullet data
+            bullet.MaxLifeTime = EditorGUILayout.FloatField(new GUIContent("Max Life Time", "In seconds"), bullet.MaxLifeTime);
+            bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
+                ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
+
+            if(EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);  
+            }
+        }
+
         //Draw Bullet events
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,GUILayout.Height(256),GUILayout.ExpandHeight(true));
         {

@@ -12,5 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
   m_Name: NewBulletHellPattern
   m_EditorClassIdentifier: 
-  Pattern:
-    Pattern: {fileID: 0}

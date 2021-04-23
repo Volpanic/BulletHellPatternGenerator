@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BulletHellPatternGenerator : MonoBehaviour
 {
+    public List<BulletHellPattern> Patterns;
+
     public GameObject Bullet;
     [Range(0.1f, 24f)]
     public float TimeBetween = 0.1f;
@@ -24,42 +26,12 @@ public class BulletHellPatternGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Timer += Time.deltaTime;
-
-        while(TimeBetween != 0 && Timer >= Mathf.Abs(TimeBetween))
+        if(Patterns != null)
         {
-            Timer -= TimeBetween;
-
-            DoBullet();
-
-            if(Input.GetKey(KeyCode.Escape))
+            for(int i = 0; i < Patterns.Count; i++)
             {
-                Application.Quit();
-
-                #if UNITYEDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-                #endif
+                Patterns[i].Pattern.UpdatePattern(this,Patterns[i]);
             }
-        }
-    }
-
-    private void DoBullet()
-    {
-        float segR = (Mathf.PI * 2f) / (float)BulletAmount;
-
-
-        BH_Bullet pulse;
-
-        for(int i = 0; i < BulletAmount; i++)
-        {
-            Vector3 p = new Vector3(Mathf.Cos(segR * i), Mathf.Sin(segR * i),0);
-            p = transform.TransformDirection(p);
-            //p = Vector3.Cross(p, transform.right + transform.forward + transform.up);
-
-
-            pulse = Instantiate(Bullet, transform.position + p,Quaternion.identity).GetComponent<BH_Bullet>();
-            pulse.Direction = new Vector3(p.x, p.y, p.z);
-            pulse.MoveSpeed = 16;
         }
     }
 }
