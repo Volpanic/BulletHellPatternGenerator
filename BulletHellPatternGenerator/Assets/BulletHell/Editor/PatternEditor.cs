@@ -114,7 +114,6 @@ namespace BulletHellGenerator
             }
 
             DrawSeparator();
-
         }
 
         System.Type[] bulletChooseTypes;
@@ -214,12 +213,16 @@ namespace BulletHellGenerator
                 //Draw menu bar content
                 GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
                 {
-                    EditorGUI.BeginChangeCheck();
                     Data = (BulletHellPattern)EditorGUILayout.ObjectField(Data, typeof(BulletHellPattern), false);
 
                     if(GUILayout.Button("Save"))
                     {
                         SetDirtyAndSave();
+                    }
+
+                    if(Data != null)
+                    {
+                        Debug.Log(Data.GetType().IsSerializable);
                     }
 
                     GUILayout.EndHorizontal();
