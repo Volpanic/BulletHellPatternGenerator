@@ -27,7 +27,8 @@ public class BulletEditor : Editor
             bullet.MaxLifeTime = EditorGUILayout.FloatField(new GUIContent("Max Life Time", "In seconds"), bullet.MaxLifeTime);
             bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
                 ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
-            bullet.OrbitalVelcoity = EditorGUILayout.FloatField(new GUIContent("Orbital Velocity", ""), bullet.OrbitalVelcoity);
+            bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
+                EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,-360,360));
 
             if (EditorGUI.EndChangeCheck())
             {

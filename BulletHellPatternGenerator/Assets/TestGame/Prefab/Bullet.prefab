@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Forward: {x: 0, y: 0, z: 0}
-  SpeedModifier: 1
-  OrbitalVelcoity: 0
+  SpeedModifier: 0.25
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.00000008742278, w: 1}
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}
