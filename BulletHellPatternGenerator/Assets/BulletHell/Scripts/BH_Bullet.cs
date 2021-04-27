@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class BH_Bullet : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BH_Bullet : MonoBehaviour
     public float SpeedModifier = 1;
 
     public Quaternion OrbitalVelcoity = Quaternion.identity;
+    public MinMaxCurve AHHHHH;
 
     //LIFE
     public float MaxLifeTime = 1;

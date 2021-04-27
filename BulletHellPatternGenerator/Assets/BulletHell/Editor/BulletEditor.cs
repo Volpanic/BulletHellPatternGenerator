@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 [CustomEditor(typeof(BH_Bullet))]
 public class BulletEditor : Editor
@@ -11,9 +12,17 @@ public class BulletEditor : Editor
     private GenericMenu addEventWindow;
     private Vector2 scrollPosition;
 
+    private SerializedObject bulletObject;
+
+    private SerializedProperty AHHHH;
+
     private void OnEnable()
     {
         bullet = (BH_Bullet)target;
+
+        bulletObject = new SerializedObject(target);
+        AHHHH = bulletObject.FindProperty("AHHHHH");
+
         SetupContextMenu();
     }
 
@@ -28,7 +37,9 @@ public class BulletEditor : Editor
             bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
                 ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
             bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
-                EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,-360,360));
+                EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,0,360));
+
+            EditorGUILayout.PropertyField(AHHHH);
 
             if (EditorGUI.EndChangeCheck())
             {

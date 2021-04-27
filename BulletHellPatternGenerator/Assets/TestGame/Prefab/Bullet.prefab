@@ -96,9 +96,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd05a8cd64f5b04db9e29268c578288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Forward: {x: 0, y: 0, z: 0}
+  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   SpeedModifier: 0.25
-  OrbitalVelcoity: {x: 0, y: 0, z: 0.00000008742278, w: 1}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  AHHHHH:
+    m_Mode: 0
+    m_CurveMultiplier: 0
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}

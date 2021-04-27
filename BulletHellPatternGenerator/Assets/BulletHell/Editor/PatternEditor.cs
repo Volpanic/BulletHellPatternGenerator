@@ -83,7 +83,7 @@ namespace BulletHellGenerator
             if (Data == null) return;
 
             //Choosing bullet selection type
-            GUILayout.Label("Bullets");
+            GUILayout.Label("Bullets",EditorStyles.boldLabel);
 
             if (GUILayout.Button("Change Bullet Mode"))
                 BulletChooseMenu.ShowAsContext();
@@ -95,7 +95,7 @@ namespace BulletHellGenerator
             DrawSeparator();
 
             //Choosing timing type
-            GUILayout.Label("Timing");
+            GUILayout.Label("Timing", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Change Timing Mode"))
                 TimingChooseMenu.ShowAsContext();
@@ -106,7 +106,7 @@ namespace BulletHellGenerator
             DrawSeparator();
 
             //Choosing pattern type
-            GUILayout.Label("Pattern");
+            GUILayout.Label("Pattern", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Change Pattern Mode"))
                 PatternChooseMenu.ShowAsContext();
