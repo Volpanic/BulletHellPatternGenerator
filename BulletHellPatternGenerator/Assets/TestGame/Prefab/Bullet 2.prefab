@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1184654237552063841}
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
-  - component: {fileID: 513092202851777853}
   - component: {fileID: -8988345013132623521}
   m_Layer: 8
   m_Name: Bullet 2
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8839281568011330166, guid: 68608bd64eb25304f84957218903ad1d, type: 3}
+  m_Sprite: {fileID: -7946635594010192847, guid: 078ebe224f0189a43a1e703f5d25cdd0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,18 +108,6 @@ MonoBehaviour:
   MoveSpeed: 0
   references:
     version: 1
---- !u!122 &513092202851777853
-Halo:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184654237552063843}
-  m_Enabled: 1
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_Size: 0.6
 --- !u!61 &-8988345013132623521
 BoxCollider2D:
   m_ObjectHideFlags: 0

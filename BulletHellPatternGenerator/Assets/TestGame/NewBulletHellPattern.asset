@@ -25,9 +25,7 @@ MonoBehaviour:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 71d3879121b6f2e4a8c66216be8c877b, type: 3}
-        - {fileID: 1184654237552063843, guid: 71d3879121b6f2e4a8c66216be8c877b, type: 3}
-        - {fileID: 1184654237552063843, guid: 71d3879121b6f2e4a8c66216be8c877b, type: 3}
+        - {fileID: 1184654237552063843, guid: cbc24c19e75c37744bcd229d68ac3cb6, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -172,4 +170,4 @@ MonoBehaviour:
           m_ConstantMax: 0
         BulletArc:
           AnglePosition: 0
-          AngleSize: 2.17
+          AngleSize: 3.14

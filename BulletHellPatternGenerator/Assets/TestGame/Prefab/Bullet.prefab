@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1184654237552063841}
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
-  - component: {fileID: 513092202851777853}
   - component: {fileID: -5907166707620802729}
   m_Layer: 8
   m_Name: Bullet
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4311617202805498557, guid: 68608bd64eb25304f84957218903ad1d, type: 3}
+  m_Sprite: {fileID: -1370450060503218194, guid: 078ebe224f0189a43a1e703f5d25cdd0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,23 +99,6 @@ MonoBehaviour:
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   SpeedModifier: 1
   OrbitalVelcoity: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
-  AHHHHH:
-    m_Mode: 0
-    m_CurveMultiplier: 0
-    m_CurveMin:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_CurveMax:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_ConstantMin: 0
-    m_ConstantMax: 0
   Creator: {fileID: 0}
   MaxLifeTime: 8
   Body: {fileID: 0}
@@ -136,18 +118,6 @@ MonoBehaviour:
       type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
         MaxTime: 1
---- !u!122 &513092202851777853
-Halo:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184654237552063843}
-  m_Enabled: 1
-  m_Color:
-    serializedVersion: 2
-    rgba: 4278190335
-  m_Size: 0.6
 --- !u!61 &-5907166707620802729
 BoxCollider2D:
   m_ObjectHideFlags: 0
