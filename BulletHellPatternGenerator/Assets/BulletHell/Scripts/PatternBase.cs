@@ -56,26 +56,13 @@ namespace BulletHellGenerator
             {
                 for (int i = 0; i < BulletAmount; i++)
                 {
-                    CreateBulletAtDirection(generator.transform.position,BulletSpeed, seg * i, bulletChooser.GetBullet(), generator);
+                    generator.CreateBulletAtDirection(generator.transform.position,BulletSpeed, (seg * i) + AngleOffset, bulletChooser.GetBullet());
                 }
             }
             else
             {
-                CreateBulletAtDirection(generator.transform.position, BulletSpeed, seg * SeqentialCount++, bulletChooser.GetBullet(), generator);
+                generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed,(seg * SeqentialCount++) + AngleOffset, bulletChooser.GetBullet());
             }
-        }
-
-        private BH_Bullet CreateBulletAtDirection(Vector3 position,float Speed, float Angle, GameObject BulletPrefab,BulletHellPatternGenerator gen)
-        {
-            if (BulletPrefab == null) return null;
-            Vector3 dir = new Vector3(Mathf.Cos(Angle + AngleOffset), Mathf.Sin(Angle + AngleOffset), 0);
-
-            BH_Bullet pulse = GameObject.Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
-            pulse.Direction = dir;
-            pulse.MoveSpeed = Speed;
-            pulse.RelativeDirection = gen.transform.rotation;
-
-            return pulse;
         }
 
         #if UNITY_EDITOR

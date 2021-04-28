@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BulletHellGenerator.Heatmap;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -8,15 +9,10 @@ using static UnityEngine.ParticleSystem;
 public class BulletHellPatternGenerator : MonoBehaviour
 {
     public List<BulletHellPattern> Patterns;
-
-    public GameObject Bullet;
-    [Range(0.1f, 24f)]
-    public float TimeBetween = 0.1f;
-
-    [Range(4,128)]
-    public int BulletAmount = 4;
-
     public MinMaxCurve Curve;
+    public BH_HeatmapGenerator HeatmapGen;
+
+    private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
     private float Timer = 0;
 
@@ -37,4 +33,38 @@ public class BulletHellPatternGenerator : MonoBehaviour
             }
         }
     }
+
+    #region // Bullet Creation
+
+    public BH_Bullet CreateBulletAtDirection(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
+    {
+        if (BulletPrefab == null) return null;
+        Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
+
+        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        pulse.Direction = dir;
+        pulse.MoveSpeed = Speed;
+        pulse.RelativeDirection = transform.rotation;
+        pulse.Creator = this;
+
+        SpawnedBullets.Add(pulse);
+        return pulse;
+    }
+
+    public BH_Bullet CreateBulletAtSquare(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
+    {
+        if (BulletPrefab == null) return null;
+        Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
+
+        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        pulse.Direction = dir;
+        pulse.MoveSpeed = Speed;
+        pulse.RelativeDirection = transform.rotation;
+        pulse.Creator = this;
+
+        SpawnedBullets.Add(pulse);
+        return pulse;
+    }
+
+    #endregion
 }

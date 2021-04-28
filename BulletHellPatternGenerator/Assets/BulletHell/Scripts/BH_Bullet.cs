@@ -17,9 +17,14 @@ public class BH_Bullet : MonoBehaviour
     public Quaternion OrbitalVelcoity = Quaternion.identity;
     public MinMaxCurve AHHHHH;
 
+    [HideInInspector]
+    public BulletHellPatternGenerator Creator;
+
     //LIFE
     public float MaxLifeTime = 1;
     private float lifeTimer = 0;
+
+    private float heatTimer = 0;
 
     //Crust
     public Rigidbody Body;
@@ -54,21 +59,21 @@ public class BH_Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-  
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //Bullet Event stack
-        if (bulletEvents != null)
+        if (bulletEvents != null && bulletEvents.Count > 0)
         {
-            if(bulletEvents[bulletEventIndex].OnUpdate(this))
+            if (bulletEvents[bulletEventIndex].OnUpdate(this))
             {
                 bulletEventIndex++;
 
                 //Still in bounds
-                if(bulletEventIndex >= bulletEvents.Count)
+                if (bulletEventIndex >= bulletEvents.Count)
                 {
                     bulletEventIndex = 0;
                 }
@@ -81,10 +86,17 @@ public class BH_Bullet : MonoBehaviour
         transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.deltaTime;
 
         lifeTimer += Time.deltaTime;
+        heatTimer += Time.deltaTime;
 
-        if(lifeTimer >= MaxLifeTime)
+        if (lifeTimer >= MaxLifeTime)
         {
             Destroy(gameObject);
+        }
+
+        if (heatTimer >= 0.01f && Creator.HeatmapGen != null && Creator.HeatmapGen.isActiveAndEnabled)
+        {
+            Creator.HeatmapGen.AddHeatWorldPos(transform.position);
+            heatTimer = 0;
         }
     }
 

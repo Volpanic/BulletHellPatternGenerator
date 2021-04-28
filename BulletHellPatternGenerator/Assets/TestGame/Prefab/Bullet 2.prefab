@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
   - component: {fileID: 513092202851777853}
+  - component: {fileID: -8988345013132623521}
   m_Layer: 0
   m_Name: Bullet 2
   m_TagString: Untagged
@@ -96,30 +97,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd05a8cd64f5b04db9e29268c578288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Forward: {x: 0, y: 0, z: 0}
-  SpeedModifier: 2
+  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
+  SpeedModifier: 0.25
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.31730464, w: -0.94832367}
+  AHHHHH:
+    m_Mode: 0
+    m_CurveMultiplier: 0
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  Creator: {fileID: 0}
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}
-  bulletEvents:
-  - id: 0
-  - id: 1
+  bulletEvents: []
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
     version: 1
-    00000000:
-      type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        TransitonDuration: 1
-        TargetDirection: {x: 1, y: 1, z: 0}
-        Relative: 1
-    00000001:
-      type: {class: BEToMoveSpeed, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        TransitonDuration: 1
-        TargetSpeed: 1
-        Relative: 1
 --- !u!122 &513092202851777853
 Halo:
   m_ObjectHideFlags: 0
@@ -132,3 +138,29 @@ Halo:
     serializedVersion: 2
     rgba: 4294967295
   m_Size: 0.6
+--- !u!61 &-8988345013132623521
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184654237552063843}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

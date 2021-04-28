@@ -222,11 +222,6 @@ namespace BulletHellGenerator
                         SetDirtyAndSave();
                     }
 
-                    if(Data != null)
-                    {
-                        Debug.Log(Data.GetType().IsSerializable);
-                    }
-
                     GUILayout.EndHorizontal();
                 }
 
