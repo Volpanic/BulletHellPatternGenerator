@@ -1,4 +1,5 @@
-﻿using BulletHellGenerator.Heatmap;
+﻿using BulletHellGenerator;
+using BulletHellGenerator.Heatmap;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class BulletHellPatternGenerator : MonoBehaviour
     public List<BulletHellPattern> Patterns;
     public MinMaxCurve Curve;
     public BH_HeatmapGenerator HeatmapGen;
+
+    public AngleRange range;
 
     private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
@@ -50,21 +53,5 @@ public class BulletHellPatternGenerator : MonoBehaviour
         SpawnedBullets.Add(pulse);
         return pulse;
     }
-
-    public BH_Bullet CreateBulletAtSquare(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
-    {
-        if (BulletPrefab == null) return null;
-        Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
-
-        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
-        pulse.Direction = dir;
-        pulse.MoveSpeed = Speed;
-        pulse.RelativeDirection = transform.rotation;
-        pulse.Creator = this;
-
-        SpawnedBullets.Add(pulse);
-        return pulse;
-    }
-
     #endregion
 }

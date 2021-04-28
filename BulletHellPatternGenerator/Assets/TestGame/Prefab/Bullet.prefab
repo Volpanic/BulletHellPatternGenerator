@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6436085721792558785}
   - component: {fileID: 513092202851777853}
   - component: {fileID: -5907166707620802729}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 0.25
-  OrbitalVelcoity: {x: 0, y: 0, z: 0.31730464, w: 0.94832367}
+  SpeedModifier: 1
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
   AHHHHH:
     m_Mode: 0
     m_CurveMultiplier: 0
@@ -172,5 +172,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0

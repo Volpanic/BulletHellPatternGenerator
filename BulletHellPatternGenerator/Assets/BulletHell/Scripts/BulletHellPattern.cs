@@ -15,4 +15,11 @@ public class BulletHellPattern : ScriptableObject
 
     [SerializeReference]
     public PatternBase Pattern;
+
+    public float PatternDuration = 5;
+
+    private void OnValidate()
+    {
+        PatternDuration = Mathf.Max(0.01f, PatternDuration);
+    }
 }

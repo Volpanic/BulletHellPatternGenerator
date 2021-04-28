@@ -21,7 +21,7 @@ namespace BulletHellGenerator
         }
 
         #if UNITY_EDITOR
-        public virtual void OnGUI()
+        public virtual void OnGUI(SerializedObject pattern)
         {
 
         }
@@ -47,7 +47,7 @@ namespace BulletHellGenerator
         }
 
         #if UNITY_EDITOR
-        public override void OnGUI()
+        public override void OnGUI(SerializedObject pattern)
         {
             if (Bullets == null) Bullets = new List<GameObject>();
 

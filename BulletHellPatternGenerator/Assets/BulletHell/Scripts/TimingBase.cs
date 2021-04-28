@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 namespace BulletHellGenerator
 {
@@ -14,7 +15,7 @@ namespace BulletHellGenerator
         }
 
         #if UNITY_EDITOR
-        public virtual void OnGUI()
+        public virtual void OnGUI(SerializedObject pattern)
         {
 
         }
@@ -38,8 +39,8 @@ namespace BulletHellGenerator
             return false;
         }
 
-        #if UNITY_EDITOR
-        public override void OnGUI()
+#if UNITY_EDITOR
+        public override void OnGUI(SerializedObject pattern)
         {
             Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);
             Interval = Mathf.Clamp(Interval,0, float.MaxValue);

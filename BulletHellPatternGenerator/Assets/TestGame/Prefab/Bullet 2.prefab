@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6436085721792558785}
   - component: {fileID: 513092202851777853}
   - component: {fileID: -8988345013132623521}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1184654237552063843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,25 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 0.25
-  OrbitalVelcoity: {x: 0, y: 0, z: 0.31730464, w: -0.94832367}
-  AHHHHH:
-    m_Mode: 0
-    m_CurveMultiplier: 0
-    m_CurveMin:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_CurveMax:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_ConstantMin: 0
-    m_ConstantMax: 0
+  SpeedModifier: 5
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643972, w: -0.976296}
   Creator: {fileID: 0}
   MaxLifeTime: 8
   Body: {fileID: 0}
@@ -162,5 +145,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0

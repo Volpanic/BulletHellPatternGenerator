@@ -39,8 +39,6 @@ public class BulletEditor : Editor
             bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
                 EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,0,360));
 
-            EditorGUILayout.PropertyField(AHHHH);
-
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(target);  

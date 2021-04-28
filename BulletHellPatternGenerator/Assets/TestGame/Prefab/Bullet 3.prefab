@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
   - component: {fileID: 513092202851777853}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1184654237552063843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,33 +96,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd05a8cd64f5b04db9e29268c578288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Forward: {x: 0, y: 0, z: 0}
-  SpeedModifier: 4
+  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
+  SpeedModifier: 5
+  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  Creator: {fileID: 0}
   MaxLifeTime: 8
   Body: {fileID: 0}
   Body2D: {fileID: 0}
-  bulletEvents:
-  - id: 0
-  - id: 1
-  - id: 2
+  bulletEvents: []
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
     version: 1
-    00000000:
-      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        MaxTime: 0.1
-    00000001:
-      type: {class: BERotateTowardsDirection, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        TransitonDuration: 1
-        TargetDirection: {x: 0.25, y: 0.25, z: 0}
-        Relative: 1
-    00000002:
-      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        MaxTime: 0.6
 --- !u!122 &513092202851777853
 Halo:
   m_ObjectHideFlags: 0

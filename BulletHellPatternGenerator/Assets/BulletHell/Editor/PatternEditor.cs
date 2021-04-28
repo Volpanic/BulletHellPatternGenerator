@@ -15,6 +15,7 @@ namespace BulletHellGenerator
         Vector2 boardPosition;
 
         BulletHellPattern Data;
+        SerializedObject sData;
 
         GenericMenu BulletChooseMenu;
         GenericMenu TimingChooseMenu;
@@ -31,6 +32,7 @@ namespace BulletHellGenerator
         {
             PatternEditor window =  GetWindow<PatternEditor>("Pattern Editor");
             window.Data = asset;
+            window.sData = new SerializedObject(window.Data);
 
             return window;
         }
@@ -81,6 +83,11 @@ namespace BulletHellGenerator
         private void DrawBoard()
         {
             if (Data == null) return;
+            if (sData == null) return;
+
+            sData.Update();
+
+            EditorGUILayout.PropertyField(sData.FindProperty("PatternDuration"));
 
             //Choosing bullet selection type
             GUILayout.Label("Bullets",EditorStyles.boldLabel);
@@ -89,7 +96,7 @@ namespace BulletHellGenerator
                 BulletChooseMenu.ShowAsContext();
             if(Data.Bullet != null)
             {
-                Data.Bullet.OnGUI();
+                Data.Bullet.OnGUI(sData);
             }
 
             DrawSeparator();
@@ -101,7 +108,7 @@ namespace BulletHellGenerator
                 TimingChooseMenu.ShowAsContext();
             if (Data.Timing != null)
             {
-                Data.Timing.OnGUI();
+                Data.Timing.OnGUI(sData);
             }
             DrawSeparator();
 
@@ -112,10 +119,12 @@ namespace BulletHellGenerator
                 PatternChooseMenu.ShowAsContext();
             if (Data.Pattern != null)
             {
-                Data.Pattern.OnGUI();
+                Data.Pattern.OnGUI(sData);
             }
 
             DrawSeparator();
+
+            sData.ApplyModifiedProperties();
         }
 
         System.Type[] bulletChooseTypes;
@@ -215,7 +224,13 @@ namespace BulletHellGenerator
                 //Draw menu bar content
                 GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
                 {
+                    EditorGUI.BeginChangeCheck();
                     Data = (BulletHellPattern)EditorGUILayout.ObjectField(Data, typeof(BulletHellPattern), false);
+
+                    if(EditorGUI.EndChangeCheck() && Data != null)
+                    {
+                        sData = new SerializedObject(Data);
+                    }
 
                     if(GUILayout.Button("Save"))
                     {

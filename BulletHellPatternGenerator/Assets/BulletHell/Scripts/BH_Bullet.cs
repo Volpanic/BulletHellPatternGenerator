@@ -15,7 +15,6 @@ public class BH_Bullet : MonoBehaviour
     public float SpeedModifier = 1;
 
     public Quaternion OrbitalVelcoity = Quaternion.identity;
-    public MinMaxCurve AHHHHH;
 
     [HideInInspector]
     public BulletHellPatternGenerator Creator;
