@@ -107,16 +107,11 @@ MonoBehaviour:
   Body2D: {fileID: 0}
   bulletEvents:
   - id: 0
-  - id: 1
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
     version: 1
     00000000:
-      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        MaxTime: 1
-    00000001:
       type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
       data:
         MaxTime: 1

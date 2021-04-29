@@ -21,6 +21,8 @@ namespace BulletHellGenerator.Heatmap
         [Tooltip("The scale of the heatmap textures, Width and Height divided by downscale.")]
         public int Downscale = 4;
 
+        public Gradient HeatMapGradiant = new Gradient();
+
         public void Start()
         {
             map = new Heatmap(Mathf.Max(2,Mathf.Abs(Screen.width / Downscale)), Mathf.Max(2, Mathf.Abs(Screen.height / Downscale)));
@@ -29,11 +31,11 @@ namespace BulletHellGenerator.Heatmap
 
         public void Update()
         {
-            tex = map.GetTexture2D();
+            map.UpdateTex(HeatMapGradiant);
 
             if(HeatmapImage != null)
             {
-                HeatmapImage.texture = tex;
+                HeatmapImage.texture = map.Texture;
             }
         }
 
@@ -47,18 +49,18 @@ namespace BulletHellGenerator.Heatmap
 
         public void AddHeat(int x, int y)
         {
-            map.AddHeat(x,y,  2);
-            map.AddHeat(x+1,y,1);
-            map.AddHeat(x-1,y,1);
-            map.AddHeat(x,y+1,1);
-            map.AddHeat(x,y-1,1);
+            map.AddHeat(x,y,1);
+            map.AddHeat(x+1,y,3);
+            map.AddHeat(x-1,y,3);
+            map.AddHeat(x,y+1,3);
+            map.AddHeat(x,y-1,3);
         }
     }
 
+    [System.Serializable]
     public class Heatmap
     {
-        public Texture2D tax;
-
+        public Texture2D Texture;
         private byte[] heatMap;
 
         int mWidth = 0;
@@ -68,37 +70,37 @@ namespace BulletHellGenerator.Heatmap
         {
             mWidth = width;
             mHeight = height;
+
             heatMap = new byte[Mathf.Abs(width * height)];
+
+            Texture = new Texture2D(width, height);
+            Texture.filterMode = FilterMode.Point;
 
             for (int i = 0; i < heatMap.Length; i++)
             {
-                heatMap[i] = 255;
+                heatMap[i] = 0;
             }
 
         }
 
         private int GetMapPos(int x, int y) { return (y * mWidth) + x; }
 
-        public void SetHeat(int x, int y, byte heat) { heatMap[GetMapPos(x, y)] = heat; }
         public void AddHeat(int x, int y, byte heat) 
         {
             if (GetMapPos(x, y) > heatMap.Length-1 || GetMapPos(x, y) < 0) return;
-            heatMap[GetMapPos(x, y)] = (byte)(heatMap[GetMapPos(x, y)] - heat);
+            heatMap[GetMapPos(x, y)] = (byte)Mathf.Min(heatMap[GetMapPos(x, y)] + heat,byte.MaxValue);
         }
 
-        public Texture2D GetTexture2D()
+        public void UpdateTex(Gradient heatmapGradiant)
         {
-            Texture2D tex = new Texture2D(mWidth, mHeight);
-            tex.filterMode = FilterMode.Point;
-
-            for (int i = 0; i < heatMap.Length; i++)
+            float nTime = 0;
+            for(int i = 0; i < heatMap.Length; i++)
             {
-                float g = heatMap[i] / byte.MaxValue;
-                tex.SetPixel(i % mWidth, i / mWidth, new Color(g, g, g, 1));
+                nTime = heatMap[i] / (float)byte.MaxValue;
+                Texture.SetPixel(i % mWidth, i / mWidth, heatmapGradiant.Evaluate(nTime));
             }
 
-            tex.Apply();
-            return tex;
+            Texture.Apply();
         }
 
     }

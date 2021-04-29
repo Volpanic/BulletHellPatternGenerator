@@ -13,8 +13,6 @@ public class BulletHellPatternGenerator : MonoBehaviour
     public MinMaxCurve Curve;
     public BH_HeatmapGenerator HeatmapGen;
 
-    public AngleRange range;
-
     private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
     // Start is called before the first frame update

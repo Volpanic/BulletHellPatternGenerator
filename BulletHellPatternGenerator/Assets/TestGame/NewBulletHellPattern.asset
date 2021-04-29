@@ -18,7 +18,7 @@ MonoBehaviour:
     id: 1
   Pattern:
     id: 2
-  PatternDuration: 2
+  PatternDuration: 5
   references:
     version: 1
     00000000:
@@ -26,7 +26,6 @@ MonoBehaviour:
       data:
         Bullets:
         - {fileID: 1184654237552063843, guid: cbc24c19e75c37744bcd229d68ac3cb6, type: 3}
-        - {fileID: 1184654237552063843, guid: 71d3879121b6f2e4a8c66216be8c877b, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -48,7 +47,7 @@ MonoBehaviour:
             m_Curve:
             - serializedVersion: 3
               time: 0
-              value: 16
+              value: 0
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -56,8 +55,8 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.4
-              value: 0
+              time: 0.2
+              value: 8
               inSlope: Infinity
               outSlope: Infinity
               tangentMode: 103
@@ -65,17 +64,8 @@ MonoBehaviour:
               inWeight: 0.33333334
               outWeight: 0.33333334
             - serializedVersion: 3
-              time: 0.59782606
-              value: 16
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
               time: 1
-              value: 16
+              value: 8
               inSlope: 0
               outSlope: 0
               tangentMode: 0
@@ -83,36 +73,18 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 2
+            m_PostInfinity: 0
             m_RotationOrder: 4
           m_ConstantMin: 1
-          m_ConstantMax: 16
-        BulletSpeed: 8
-        Sequentially: 1
+          m_ConstantMax: 8
+        BulletSpeed: 10
+        Sequentially: 0
         AngleOffset:
-          m_Mode: 0
+          m_Mode: 1
           m_CurveMultiplier: 1
           m_CurveMin:
             serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
+            m_Curve: []
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -122,53 +94,26 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
-              inSlope: 1.0000001
-              outSlope: 1.0000001
-              tangentMode: 34
+              inSlope: 2
+              outSlope: 2
+              tangentMode: 0
               weightedMode: 0
               inWeight: 0
-              outWeight: 0.33333334
+              outWeight: 0
             - serializedVersion: 3
-              time: 0.30956075
-              value: 0.30956078
-              inSlope: 1
-              outSlope: 1
-              tangentMode: 34
+              time: 0.5036011
+              value: 0.9976425
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 0.3911162
-              value: 0.39111623
-              inSlope: 1.7618748
-              outSlope: 1.7618748
-              tangentMode: 34
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 0.49079478
-              value: 0.64268
-              inSlope: 1.6127353
-              outSlope: 1.6127353
-              tangentMode: 34
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 0.701721
-              outSlope: 0.701721
-              tangentMode: 34
-              weightedMode: 0
-              inWeight: 0.33333334
+              inWeight: 0
               outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 2
+            m_PostInfinity: 0
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 4.72
-          AngleSize: 1.58
+          AnglePosition: 0
+          AngleSize: 3.1415927
