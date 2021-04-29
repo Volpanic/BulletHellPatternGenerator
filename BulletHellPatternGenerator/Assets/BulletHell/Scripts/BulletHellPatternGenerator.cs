@@ -22,7 +22,7 @@ public class BulletHellPatternGenerator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(Patterns != null)
         {
@@ -43,6 +43,42 @@ public class BulletHellPatternGenerator : MonoBehaviour
         BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
         pulse.Direction = dir;
         pulse.MoveSpeed = Speed;
+        pulse.RelativeDirection = transform.rotation;
+        pulse.Creator = this;
+
+        SpawnedBullets.Add(pulse);
+        return pulse;
+    }
+
+    public BH_Bullet CreateBulletAtDirectionOct(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
+    {
+        if (BulletPrefab == null) return null;
+        Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
+
+        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        pulse.Direction = dir;
+
+        if (Mathf.Abs(Mathf.Round(dir.x)) > Mathf.Abs(Mathf.Round(dir.y))) dir.x = Mathf.Round(dir.x);
+        if (Mathf.Abs(Mathf.Round(dir.y)) > Mathf.Abs(Mathf.Round(dir.x))) dir.y = Mathf.Round(dir.y);
+
+        pulse.MoveSpeed = Speed * (dir.magnitude);
+        pulse.RelativeDirection = transform.rotation;
+        pulse.Creator = this;
+
+        SpawnedBullets.Add(pulse);
+        return pulse;
+    }
+
+    public BH_Bullet CreateBulletAtDirectionSquare(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
+    {
+        if (BulletPrefab == null) return null;
+        Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
+
+        float M = Mathf.Max(Mathf.Abs(dir.x),Mathf.Abs(dir.y));
+
+        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        pulse.Direction = dir;
+        pulse.MoveSpeed = Speed / M;
         pulse.RelativeDirection = transform.rotation;
         pulse.Creator = this;
 

@@ -30,16 +30,24 @@ namespace BulletHellGenerator
 
         public override bool CheckTime()
         {
-            timing += Time.deltaTime;
+            //failsafe
+            if (Interval == 0)
+                return false;
+
+            timing += Time.fixedDeltaTime;
             if (timing >= Interval)
             {
+                if(timing <= 0)
+                    return false;
+
                 timing -= Interval;
+
                 return true;
             }
             return false;
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         public override void OnGUI(SerializedObject pattern)
         {
             Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);

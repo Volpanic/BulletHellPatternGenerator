@@ -65,7 +65,7 @@ public class BH_Bullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Bullet Event stack
         if (bulletEvents != null && bulletEvents.Count > 0)
@@ -84,11 +84,11 @@ public class BH_Bullet : MonoBehaviour
             }
         }
 
-        Direction += ((OrbitalVelcoity) * Direction) * Time.deltaTime;
-        transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.deltaTime;
+        Direction += ((OrbitalVelcoity) * Direction) * Time.fixedDeltaTime;
+        transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.fixedDeltaTime;
 
-        lifeTimer += Time.deltaTime;
-        heatTimer += Time.deltaTime;
+        lifeTimer += Time.fixedDeltaTime;
+        heatTimer += Time.fixedDeltaTime;
 
         if (lifeTimer >= MaxLifeTime)
         {

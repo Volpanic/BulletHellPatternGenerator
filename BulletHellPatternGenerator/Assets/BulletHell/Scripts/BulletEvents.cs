@@ -31,7 +31,7 @@ namespace BulletHellGenerator.BulletEvents
 
         public override bool OnUpdate(BH_Bullet bullet)
         {
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
 
             if (timer >= MaxTime) return true;
             return false;

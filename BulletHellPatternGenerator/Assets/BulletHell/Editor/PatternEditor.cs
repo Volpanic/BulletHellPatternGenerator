@@ -14,8 +14,8 @@ namespace BulletHellGenerator
         Rect BoardRect = new Rect(0, 0, 1, 1);
         Vector2 boardPosition;
 
-        BulletHellPattern Data;
-        SerializedObject sData;
+        public static BulletHellPattern Data;
+        public static SerializedObject sData;
 
         GenericMenu BulletChooseMenu;
         GenericMenu TimingChooseMenu;
@@ -31,8 +31,8 @@ namespace BulletHellGenerator
         public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
         {
             PatternEditor window =  GetWindow<PatternEditor>("Pattern Editor");
-            window.Data = asset;
-            window.sData = new SerializedObject(window.Data);
+            PatternEditor.Data = asset;
+            PatternEditor.sData = new SerializedObject(PatternEditor.Data);
 
             return window;
         }
@@ -96,6 +96,7 @@ namespace BulletHellGenerator
                 BulletChooseMenu.ShowAsContext();
             if(Data.Bullet != null)
             {
+                GUILayout.Label(ObjectNames.NicifyVariableName(Data.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 Data.Bullet.OnGUI(sData);
             }
 
@@ -108,6 +109,7 @@ namespace BulletHellGenerator
                 TimingChooseMenu.ShowAsContext();
             if (Data.Timing != null)
             {
+                GUILayout.Label(ObjectNames.NicifyVariableName(Data.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 Data.Timing.OnGUI(sData);
             }
             DrawSeparator();
@@ -119,6 +121,7 @@ namespace BulletHellGenerator
                 PatternChooseMenu.ShowAsContext();
             if (Data.Pattern != null)
             {
+                GUILayout.Label(ObjectNames.NicifyVariableName(Data.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 Data.Pattern.OnGUI(sData);
             }
 
@@ -188,6 +191,7 @@ namespace BulletHellGenerator
 
             Undo.RecordObject(Data, "Changed Pattern Choose Mode");
             //This code is kind of yucky, by makes modularity really easy
+            Data.Pattern = null;
             Data.Pattern = (PatternBase)Activator.CreateInstance(type);
             SetDirtyAndSave();
             Repaint();
