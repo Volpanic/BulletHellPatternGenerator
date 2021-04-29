@@ -33,6 +33,10 @@ namespace BulletHellGenerator
             }
         }
 
+        public float Evaluate(float normalizedPosition)
+        {
+            return MinAngle + (Range * normalizedPosition);
+        }
 
         [SerializeField]
         [Range(0,Mathf.PI*2)]
@@ -55,7 +59,6 @@ namespace BulletHellGenerator
 
             //oxymoron name, i know
             Rect circleRect = new Rect(position.position, new Vector2(EditorGUIUtility.singleLineHeight * 6, EditorGUIUtility.singleLineHeight * 4));
-            Vector2 circRectCenter = circleRect.center - circleRect.position;
 
             EditorGUI.HelpBox(circleRect, "", MessageType.None);
 
@@ -67,35 +70,51 @@ namespace BulletHellGenerator
                 GL.Clear(true, false, Color.black);
 
                 //Draw the actual circle
-                int percision = 32; // Circle percision
-                float range = property.FindPropertyRelative("AngleSize").floatValue * 2f;
+                float minAngle = property.FindPropertyRelative("AnglePosition").floatValue - property.FindPropertyRelative("AngleSize").floatValue;
+                float angleSize = property.FindPropertyRelative("AngleSize").floatValue * 2f;
 
-                float sectionSize = (range) / percision;
+                float angleSegs = 32;
 
-                float segments = ((range / (Mathf.PI * 2f)) * percision);
+                float radius = EditorGUIUtility.singleLineHeight * 1.5f;
 
-                if (segments > 1)
+                if (angleSegs > 0)
                 {
-                    GL.Begin(GL.TRIANGLE_STRIP);
+                    GL.Begin(GL.QUADS);
                     GL.Color(Color.white);
 
-                    Vector3 circPoint = new Vector3(float.NaN, float.NaN,0);
+                    Vector3 p1 = new Vector3(0,0,0);
+                    Vector3 p2 = new Vector3(0,0,0);
+                    Vector3 p3 = new Vector3(0,0,0);
+                    Vector3 p4 = new Vector3(0,0,0);
 
-                    //Actually draw the circle
-                    for (int i = 0; i <= segments; i++)
+                    Vector3 pos = circleRect.size / 2f;
+
+                    for (int i = 0; i < angleSegs; i++)
                     {
-                        var len = (i * sectionSize) + property.FindPropertyRelative("AnglePosition").floatValue;
-                        circPoint.x = Mathf.Cos(len) * EditorGUIUtility.singleLineHeight * 1.5f;
-                        circPoint.y = Mathf.Sin(len) * EditorGUIUtility.singleLineHeight * 1.5f;
-                        GL.Vertex((Vector3)circRectCenter + circPoint);
-                        GL.Vertex((Vector3)circRectCenter + circPoint * 0.5f);
+                        float angle = minAngle + (angleSize * (i / angleSegs));
 
-                        len = ((i+1) * sectionSize) + property.FindPropertyRelative("AnglePosition").floatValue;
-                        circPoint.x = Mathf.Cos(len) * EditorGUIUtility.singleLineHeight * 1.5f;
-                        circPoint.y = Mathf.Sin(len) * EditorGUIUtility.singleLineHeight * 1.5f;
-                        GL.Vertex((Vector3)circRectCenter + circPoint);
-                        GL.Vertex((Vector3)circRectCenter + circPoint*0.5f);
+                        p1.x = Mathf.Cos(angle) * radius;
+                        p1.y =- Mathf.Sin(angle) * radius;
+
+                        p2.x = Mathf.Cos(angle) * (radius * 0.75f);
+                        p2.y = -Mathf.Sin(angle) * (radius * 0.75f);
+
+                        angle = minAngle + (angleSize * ((i+1f) / angleSegs));
+
+                        p4.x = Mathf.Cos(angle) * radius;
+                        p4.y = -Mathf.Sin(angle) * radius;
+
+                        p3.x = Mathf.Cos(angle) * (radius * 0.75f);
+                        p3.y = -Mathf.Sin(angle) * (radius * 0.75f);
+
+                        GL.Vertex(pos + p1);
+                        GL.Vertex(pos + p2);
+                        GL.Vertex(pos + p3);
+                        GL.Vertex(pos + p4);
+
                     }
+
+
                     GL.End();
                    
                 }

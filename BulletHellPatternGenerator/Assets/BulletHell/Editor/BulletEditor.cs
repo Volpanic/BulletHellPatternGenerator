@@ -38,6 +38,8 @@ public class BulletEditor : Editor
                 ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
             bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
                 EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,0,360));
+            bullet.RotateRelativeToDirection = EditorGUILayout.Toggle(new GUIContent("Rotate Relative to Direction"),bullet.RotateRelativeToDirection);
+            bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent(""),bullet.RotationOffset.eulerAngles));
 
             if (EditorGUI.EndChangeCheck())
             {

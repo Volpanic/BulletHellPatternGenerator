@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1184654237552063843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,14 +96,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 5
+  SpeedModifier: 0.25
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Creator: {fileID: 0}
   MaxLifeTime: 8
+  RotateRelativeToDirection: 0
+  RotationOffset: {x: 0, y: 0, z: 0, w: 1}
   Body: {fileID: 0}
   Body2D: {fileID: 0}
-  bulletEvents: []
+  bulletEvents:
+  - id: 0
+  - id: 1
+  - id: 2
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
   references:
     version: 1
+    00000000:
+      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        MaxTime: 1
+    00000001:
+      type: {class: BEToMoveSpeed, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        TransitonDuration: 1
+        TargetSpeed: 100
+        Relative: 1
+    00000002:
+      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
+      data:
+        MaxTime: 1

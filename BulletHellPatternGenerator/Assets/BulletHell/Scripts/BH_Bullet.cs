@@ -25,6 +25,10 @@ public class BH_Bullet : MonoBehaviour
 
     private float heatTimer = 0;
 
+    //Rotation Stuff
+    public bool RotateRelativeToDirection;
+    public Quaternion RotationOffset;
+
     //Crust
     public Rigidbody Body;
     public Rigidbody2D Body2D;
@@ -58,7 +62,6 @@ public class BH_Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -97,6 +100,8 @@ public class BH_Bullet : MonoBehaviour
             Creator.HeatmapGen.AddHeatWorldPos(transform.position);
             heatTimer = 0;
         }
+
+        transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
     }
 
     private void OnBecameInvisible()

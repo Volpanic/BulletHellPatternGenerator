@@ -847,7 +847,7 @@ MonoBehaviour:
   HeatmapGen: {fileID: 1003761825}
   range:
     AnglePosition: 0
-    AngleSize: 2.19
+    AngleSize: 1.03
 --- !u!4 &1003761824
 Transform:
   m_ObjectHideFlags: 0

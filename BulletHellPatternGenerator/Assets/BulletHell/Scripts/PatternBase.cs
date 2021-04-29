@@ -66,12 +66,13 @@ namespace BulletHellGenerator
             {
                 for (int i = 0; i < bulletAmount; i++)
                 {
-                    generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed,BulletArc.MinAngle + (seg * i), bulletChooser.GetBullet());
+                    generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed,BulletArc.Evaluate((float)i / (float)bulletAmount) + (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)), bulletChooser.GetBullet());
                 }
             }
             else
             {
-                //generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, initAngle + (seg * SeqentialCount++) + (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration) * (range)), bulletChooser.GetBullet());
+                generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, BulletArc.Evaluate((float)SeqentialCount++ / (float)bulletAmount) + (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)), bulletChooser.GetBullet());
+                SeqentialCount %= bulletAmount;
             }
         }
 

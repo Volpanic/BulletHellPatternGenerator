@@ -17,8 +17,6 @@ public class BulletHellPatternGenerator : MonoBehaviour
 
     private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
-    private float Timer = 0;
-
     // Start is called before the first frame update
     void Start()
     {
