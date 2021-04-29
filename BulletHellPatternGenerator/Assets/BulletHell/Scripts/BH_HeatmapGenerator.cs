@@ -14,8 +14,7 @@ namespace BulletHellGenerator.Heatmap
 
         public RawImage HeatmapImage;
 
-        [HideInInspector]
-        public Camera mainCam;
+        public Camera MainCam;
 
         [Range(1,10)]
         [Tooltip("The scale of the heatmap textures, Width and Height divided by downscale.")]
@@ -26,7 +25,6 @@ namespace BulletHellGenerator.Heatmap
         public void Start()
         {
             map = new Heatmap(Mathf.Max(2,Mathf.Abs(Screen.width / Downscale)), Mathf.Max(2, Mathf.Abs(Screen.height / Downscale)));
-            mainCam = Camera.main;
         }
 
         public void Update()
@@ -41,7 +39,7 @@ namespace BulletHellGenerator.Heatmap
 
         public void AddHeatWorldPos(Vector3 worldPos)
         {
-            worldPos = mainCam.WorldToScreenPoint(worldPos);
+            worldPos = MainCam.WorldToScreenPoint(worldPos);
             worldPos /= Downscale;
 
             AddHeat((int)worldPos.x, (int)worldPos.y);
