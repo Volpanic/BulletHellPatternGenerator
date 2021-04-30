@@ -28,7 +28,13 @@ public class BulletHellPatternGenerator : MonoBehaviour
         {
             for(int i = 0; i < Patterns.Count; i++)
             {
-                Patterns[i].Pattern.UpdatePattern(this,Patterns[i]);
+                if (Patterns[i].PatternLayers == null || Patterns[i].PatternLayers.Count == 0)
+                    continue;
+
+                for (int j = 0; j < Patterns[i].PatternLayers.Count; j++)
+                {
+                    Patterns[i].PatternLayers[j].Pattern.UpdatePattern(this, Patterns[i],Patterns[i].PatternLayers[j]);
+                }
             }
         }
     }

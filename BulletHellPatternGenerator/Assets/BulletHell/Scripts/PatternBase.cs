@@ -18,12 +18,12 @@ namespace BulletHellGenerator
     {
         protected float durationTimer = 0;
 
-        public void UpdatePattern(BulletHellPatternGenerator generator, BulletHellPattern data)
+        public void UpdatePattern(BulletHellPatternGenerator generator, BulletHellPattern data, BulletHellPattern.PatternLayer layerData)
         {
             // Base Example
-            if(data.Timing.CheckTime())
+            if(layerData.Timing.CheckTime())
             {
-                GeneratePattern(generator, data.Bullet, data.PatternDuration);
+                GeneratePattern(generator, layerData.Bullet, data.PatternDuration);
             }
 
             durationTimer += Time.fixedDeltaTime;
@@ -39,7 +39,7 @@ namespace BulletHellGenerator
         }
 
 #if UNITY_EDITOR
-        public virtual void OnGUI(SerializedObject pattern)
+        public virtual void OnGUI(SerializedProperty pattern)
         {
 
         }
@@ -50,10 +50,10 @@ namespace BulletHellGenerator
     [System.Serializable]
     public class RingPattern : PatternBase
     {
-        public MinMaxCurve BulletAmount = new MinMaxCurve(1, 64);
+        public MinMaxCurve BulletAmount = new MinMaxCurve(8);
         public float BulletSpeed = 4;
         public bool Sequentially = false;
-        public MinMaxCurve AngleOffset = new MinMaxCurve(0f, 1f);
+        public MinMaxCurve AngleOffset = new MinMaxCurve(0);
         public AngleRange BulletArc;
 
         private int SeqentialCount;
@@ -78,13 +78,13 @@ namespace BulletHellGenerator
         }
 
 #if UNITY_EDITOR
-        public override void OnGUI(SerializedObject pattern)
+        public override void OnGUI(SerializedProperty pattern)
         {
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
             BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("BulletArc"), new GUIContent("Angle Arc"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletArc"), new GUIContent("Angle Arc"));
         }
 #endif
     }
@@ -95,10 +95,10 @@ namespace BulletHellGenerator
     [System.Serializable]
     public class OctogonPattern : PatternBase
     {
-        public MinMaxCurve BulletAmount = new MinMaxCurve(1, 64);
+        public MinMaxCurve BulletAmount = new MinMaxCurve(8);
         public float BulletSpeed = 4;
         public bool Sequentially = false;
-        public MinMaxCurve AngleOffset = new MinMaxCurve(0f, 1f);
+        public MinMaxCurve AngleOffset = new MinMaxCurve(0);
         public AngleRange BulletArc;
 
         private int SeqentialCount;
@@ -123,13 +123,13 @@ namespace BulletHellGenerator
         }
 
 #if UNITY_EDITOR
-        public override void OnGUI(SerializedObject pattern)
+        public override void OnGUI(SerializedProperty pattern)
         {
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
             BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("BulletArc"), new GUIContent("Angle Arc"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletArc"), new GUIContent("Angle Arc"));
         }
 #endif
     }
@@ -139,10 +139,10 @@ namespace BulletHellGenerator
     [System.Serializable]
     public class SquarePattern : PatternBase
     {
-        public MinMaxCurve BulletAmount = new MinMaxCurve(1, 64);
+        public MinMaxCurve BulletAmount = new MinMaxCurve(8);
         public float BulletSpeed = 4;
         public bool Sequentially = false;
-        public MinMaxCurve AngleOffset = new MinMaxCurve(0f, 1f);
+        public MinMaxCurve AngleOffset = new MinMaxCurve(0);
 
         private int SeqentialCount;
 
@@ -167,12 +167,12 @@ namespace BulletHellGenerator
         }
 
 #if UNITY_EDITOR
-        public override void OnGUI(SerializedObject pattern)
+        public override void OnGUI(SerializedProperty pattern)
         {
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
             BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
-            EditorGUILayout.PropertyField(pattern.FindProperty("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
+            EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
         }
 #endif
     }

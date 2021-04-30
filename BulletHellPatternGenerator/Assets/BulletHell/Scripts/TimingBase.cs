@@ -15,7 +15,7 @@ namespace BulletHellGenerator
         }
 
         #if UNITY_EDITOR
-        public virtual void OnGUI(SerializedObject pattern)
+        public virtual void OnGUI(SerializedProperty pattern)
         {
 
         }
@@ -48,7 +48,7 @@ namespace BulletHellGenerator
         }
 
         #if UNITY_EDITOR
-        public override void OnGUI(SerializedObject pattern)
+        public override void OnGUI(SerializedProperty pattern)
         {
             Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);
             Interval = Mathf.Clamp(Interval,0, float.MaxValue);

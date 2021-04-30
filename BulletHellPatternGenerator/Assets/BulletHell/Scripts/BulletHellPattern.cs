@@ -7,14 +7,20 @@ using BulletHellGenerator;
 [CreateAssetMenu(fileName = "NewBulletHellPattern")]
 public class BulletHellPattern : ScriptableObject 
 {
-    [SerializeReference]
-    public BulletBase Bullet;
+    [System.Serializable]
+    public struct PatternLayer
+    {
+        [SerializeReference]
+        public BulletBase Bullet;
 
-    [SerializeReference]
-    public TimingBase Timing;
+        [SerializeReference]
+        public TimingBase Timing;
 
-    [SerializeReference]
-    public PatternBase Pattern;
+        [SerializeReference]
+        public PatternBase Pattern;
+    }
+
+    public List<PatternLayer> PatternLayers;
 
     public float PatternDuration = 5;
 

@@ -40,7 +40,13 @@ namespace BulletHellGenerator.Heatmap
         public void AddHeatWorldPos(Vector3 worldPos)
         {
             worldPos = MainCam.WorldToScreenPoint(worldPos);
-            worldPos /= Downscale;
+
+            // Normalize the position
+            worldPos.x /= (float)MainCam.pixelWidth;
+            worldPos.y /= (float)MainCam.pixelHeight;
+
+            worldPos.x *= map.Texture.width;
+            worldPos.y *= map.Texture.height;
 
             AddHeat((int)worldPos.x, (int)worldPos.y);
         }
@@ -72,7 +78,7 @@ namespace BulletHellGenerator.Heatmap
             heatMap = new byte[Mathf.Abs(width * height)];
 
             Texture = new Texture2D(width, height);
-            Texture.filterMode = FilterMode.Point;
+            //Texture.filterMode = FilterMode.Point;
 
             for (int i = 0; i < heatMap.Length; i++)
             {
