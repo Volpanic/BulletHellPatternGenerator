@@ -19,14 +19,14 @@ MonoBehaviour:
       id: 1
     Pattern:
       id: 2
-  PatternDuration: 5
+  PatternDuration: 2
   references:
     version: 1
     00000000:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: cbc24c19e75c37744bcd229d68ac3cb6, type: 3}
+        - {fileID: 1184654237552063843, guid: 71d3879121b6f2e4a8c66216be8c877b, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -50,12 +50,12 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 32
-        BulletSpeed: 8
+          m_ConstantMax: 4
+        BulletSpeed: 32
         Sequentially: 0
         AngleOffset:
           m_Mode: 0
-          m_CurveMultiplier: 0
+          m_CurveMultiplier: 1
           m_CurveMin:
             serializedVersion: 2
             m_Curve: []
@@ -64,12 +64,31 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_CurveMax:
             serializedVersion: 2
-            m_Curve: []
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 6.28
+              outSlope: 6.28
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.5
+              value: 3.14
+              inSlope: 6.28
+              outSlope: 6.28
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 2
+            m_PostInfinity: 0
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 0
-          AngleSize: 3.1415927
+          AnglePosition: 5.24
+          AngleSize: 0.69
+        TargetPlayer: 1

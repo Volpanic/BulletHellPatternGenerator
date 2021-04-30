@@ -7,11 +7,17 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-public class BulletHellPatternGenerator : MonoBehaviour
+public class BH_BulletHellPatternGenerator : MonoBehaviour
 {
     public List<BulletHellPattern> Patterns;
     public MinMaxCurve Curve;
     public BH_HeatmapGenerator HeatmapGen;
+
+    public float TargetAngle { get { return targetAngle; } }
+
+    public Transform Target;
+
+    private float targetAngle = 0;
 
     private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
@@ -24,6 +30,12 @@ public class BulletHellPatternGenerator : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(Target != null)
+        {
+            Vector2 ang = Target.position - transform.position;
+            targetAngle = Mathf.Atan2(ang.y,ang.x);
+        }
+
         if(Patterns != null)
         {
             for(int i = 0; i < Patterns.Count; i++)

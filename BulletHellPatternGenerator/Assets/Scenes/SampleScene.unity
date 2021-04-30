@@ -1006,6 +1006,7 @@ MonoBehaviour:
     m_ConstantMin: 0
     m_ConstantMax: 0
   HeatmapGen: {fileID: 1003761825}
+  Target: {fileID: 702616134}
 --- !u!4 &1003761824
 Transform:
   m_ObjectHideFlags: 0

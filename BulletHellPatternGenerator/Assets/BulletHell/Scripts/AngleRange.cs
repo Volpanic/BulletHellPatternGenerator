@@ -35,7 +35,12 @@ namespace BulletHellGenerator
 
         public float Evaluate(float normalizedPosition)
         {
-            return MinAngle + (Range * normalizedPosition);
+            return (MinAngle + (Range * normalizedPosition)) + Mathf.PI;
+        }
+
+        public float EvaluateArc(float initalAngle,float normalizedPosition)
+        {
+            return ((initalAngle - AngleSize) + (Range * normalizedPosition));
         }
 
         [SerializeField]
@@ -92,6 +97,7 @@ namespace BulletHellGenerator
                     for (int i = 0; i < angleSegs; i++)
                     {
                         float angle = minAngle + (angleSize * (i / angleSegs));
+                        angle -= Mathf.PI;
 
                         p1.x = Mathf.Cos(angle) * radius;
                         p1.y =- Mathf.Sin(angle) * radius;
@@ -100,6 +106,7 @@ namespace BulletHellGenerator
                         p2.y = -Mathf.Sin(angle) * (radius * 0.75f);
 
                         angle = minAngle + (angleSize * ((i+1f) / angleSegs));
+                        angle -= Mathf.PI;
 
                         p4.x = Mathf.Cos(angle) * radius;
                         p4.y = -Mathf.Sin(angle) * radius;

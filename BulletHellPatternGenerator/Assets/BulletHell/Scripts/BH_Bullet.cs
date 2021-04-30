@@ -17,7 +17,7 @@ public class BH_Bullet : MonoBehaviour
     public Quaternion OrbitalVelcoity = Quaternion.identity;
 
     [HideInInspector]
-    public BulletHellPatternGenerator Creator;
+    public BH_BulletHellPatternGenerator Creator;
 
     //LIFE
     public float MaxLifeTime = 1;
@@ -28,6 +28,7 @@ public class BH_Bullet : MonoBehaviour
     //Rotation Stuff
     public bool RotateRelativeToDirection;
     public Quaternion RotationOffset;
+    public Vector3 RotationalVelocity;
 
     //Crust
     public Rigidbody Body;
@@ -58,11 +59,6 @@ public class BH_Bullet : MonoBehaviour
 
     public Vector3 Direction = Vector3.right;
     public float MoveSpeed = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -101,6 +97,7 @@ public class BH_Bullet : MonoBehaviour
             heatTimer = 0;
         }
 
+        RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + RotationalVelocity * Time.deltaTime);
         transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
     }
 

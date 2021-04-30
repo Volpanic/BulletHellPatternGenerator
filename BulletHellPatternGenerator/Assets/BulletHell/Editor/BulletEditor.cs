@@ -39,7 +39,9 @@ public class BulletEditor : Editor
             bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
                 EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,0,360));
             bullet.RotateRelativeToDirection = EditorGUILayout.Toggle(new GUIContent("Rotate Relative to Direction"),bullet.RotateRelativeToDirection);
-            bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent(""),bullet.RotationOffset.eulerAngles));
+            bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent("Rotation Offset"),bullet.RotationOffset.eulerAngles));
+            bullet.RotationalVelocity = EditorGUILayout.Vector3Field(new GUIContent("Rotation Velocity"),bullet.RotationalVelocity);
+                
 
             if (EditorGUI.EndChangeCheck())
             {
