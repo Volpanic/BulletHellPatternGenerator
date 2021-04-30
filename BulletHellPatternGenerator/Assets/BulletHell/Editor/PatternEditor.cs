@@ -45,9 +45,9 @@ namespace BulletHellGenerator
 
         private void OnGUI()
         {
-            GUI.Box(BoardRect, "Box Tho ╚(•⌂•)╝");
+            GUI.Box(new Rect(BoardRect.x, BoardRect.y + 40, BoardRect.width, BoardRect.height), "Box Tho ╚(•⌂•)╝");
 
-            GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 96, float.MaxValue, float.MaxValue));
+            GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 80, float.MaxValue, float.MaxValue));
             {
                 //Begin vertical area, used to measure the rect of the node
                 GUILayout.BeginVertical(GUILayout.MaxWidth(512), GUILayout.ExpandWidth(false));

@@ -97,4 +97,46 @@ namespace BulletHellGenerator
 #endif
     }
     #endregion
+
+
+    #region On Off Duration Timer
+
+    [System.Serializable]
+    public class OnOffDurationTimer : TimingBase
+    {
+        public float Interval = 0.2f;
+        private float timing = 0;
+        public AnimationCurve OnOffPoints = new AnimationCurve();
+
+        public override bool CheckTime(float duration)
+        {
+            timing += Time.fixedDeltaTime;
+            timing %= duration;
+            //failsafe
+            if (Interval == 0 || OnOffPoints.Evaluate(timing /duration) < 0.5f)
+                return false;
+
+
+            if (timing >= Interval)
+            {
+                if (timing <= 0)
+                    return false;
+
+                timing -= Interval;
+
+                return true;
+            }
+            return false;
+        }
+
+#if UNITY_EDITOR
+        public override void OnGUI(SerializedProperty pattern)
+        {
+            Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);
+            OnOffPoints = EditorGUILayout.CurveField(new GUIContent("On Off Points"), OnOffPoints);
+            Interval = Mathf.Clamp(Interval, 0, float.MaxValue);
+        }
+#endif
+    }
+    #endregion
 }
