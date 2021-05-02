@@ -74,7 +74,7 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 4
+          m_ConstantMax: 3
         BulletSpeed: 8
         Sequentially: 0
         AngleOffset:

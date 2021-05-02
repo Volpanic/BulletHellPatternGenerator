@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 96cac7855ddba9d4994d373ff3dd6d80
+guid: 4fd45f3f93ca7114fafbf62b250bc181
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Itim
+  - Iceberg
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

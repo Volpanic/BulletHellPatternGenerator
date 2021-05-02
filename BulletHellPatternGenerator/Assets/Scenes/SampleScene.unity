@@ -615,7 +615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 527.99994, y: -362.2}
+  m_AnchoredPosition: {x: 527.99994, y: -434.6}
   m_SizeDelta: {x: 196, y: 37.69018}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &574932555
@@ -638,7 +638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Game Name
+  m_text: Origami Outline
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c7bf2c67668c27941b3ab7d5e472c6c7, type: 2}
   m_sharedMaterial: {fileID: 7212427981182664928, guid: c7bf2c67668c27941b3ab7d5e472c6c7, type: 2}
@@ -665,8 +665,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1739,7 +1739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4551887, g: 0.45990565, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
