@@ -21,9 +21,12 @@ namespace BulletHellGenerator
         public void UpdatePattern(BH_BulletHellPatternGenerator generator, BulletHellPattern data, BulletHellPattern.PatternLayer layerData)
         {
             // Base Example
-            if (layerData.Timing.CheckTime(data.PatternDuration))
+            if (layerData.Timing != null && layerData.Timing.CheckTime(data.PatternDuration))
             {
-                GeneratePattern(generator, layerData.Bullet, data.PatternDuration);
+                if (layerData.Bullet != null)
+                {
+                    GeneratePattern(generator, layerData.Bullet, data.PatternDuration);
+                }
             }
 
             durationTimer += Time.fixedDeltaTime;

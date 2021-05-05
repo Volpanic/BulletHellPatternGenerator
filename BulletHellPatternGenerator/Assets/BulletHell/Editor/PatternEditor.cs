@@ -43,6 +43,8 @@ namespace BulletHellGenerator
             SetupContextMenus();
         }
 
+        private Vector2 scrollPos;
+
         private void OnGUI()
         {
             GUI.Box(new Rect(BoardRect.x, BoardRect.y + 40, BoardRect.width, BoardRect.height), "Box Tho ╚(•⌂•)╝");
@@ -50,7 +52,7 @@ namespace BulletHellGenerator
             GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 80, float.MaxValue, float.MaxValue));
             {
                 //Begin vertical area, used to measure the rect of the node
-                GUILayout.BeginVertical(GUILayout.MaxWidth(512), GUILayout.ExpandWidth(false));
+                scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.MaxWidth(512), GUILayout.ExpandWidth(false), GUILayout.MaxHeight(position.height));
                 {
                     if (Data != null)
                     {
@@ -63,10 +65,11 @@ namespace BulletHellGenerator
                             Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
                         }
 
-                        SelectedLayer = Mathf.Clamp(SelectedLayer, 0, Data.PatternLayers.Count - 1);
+                        SelectedLayer = Mathf.Clamp(SelectedLayer, 0, sData.FindProperty("PatternLayers").arraySize-1);
 
                         EditorGUI.BeginChangeCheck();
 
+                        //if(SelectedLayer < sData.FindProperty("PatternLayers").arraySize)
                         DrawBoard(Data.PatternLayers[SelectedLayer], sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer));
 
                         if (EditorGUI.EndChangeCheck()) SetDirtyAndSave();
@@ -76,7 +79,7 @@ namespace BulletHellGenerator
                         titleContent.text = "Pattern Editor";
                         EditorGUILayout.LabelField("No Data Loaded.", EditorStyles.centeredGreyMiniLabel);
                     }
-                    GUILayout.EndVertical();
+                    GUILayout.EndScrollView();
                 }
 
                 //Get size of the above vertical only works during repaint
@@ -117,7 +120,9 @@ namespace BulletHellGenerator
             if (layer.Bullet != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                layer.Bullet.OnGUI(sLayer);
+
+                if (sLayer != null)
+                    layer.Bullet.OnGUI(sLayer);
             }
 
             DrawSeparator();
@@ -130,7 +135,9 @@ namespace BulletHellGenerator
             if (layer.Timing != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                layer.Timing.OnGUI(sLayer);
+
+                if(sLayer != null)
+                    layer.Timing.OnGUI(sLayer);
             }
             DrawSeparator();
 
@@ -142,7 +149,8 @@ namespace BulletHellGenerator
             if (layer.Pattern != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                layer.Pattern.OnGUI(sLayer);
+                if (sLayer != null)
+                    layer.Pattern.OnGUI(sLayer);
             }
 
             DrawSeparator();
@@ -197,7 +205,6 @@ namespace BulletHellGenerator
 
         private void PatternChooseOnClick(object typeIndex)
         {
-            Debug.Log(typeIndex);
             if (Data == null) return;
             //if (patternChooseTypes == null || patternChooseTypes.Length - 1 > typeIndex) return;
 

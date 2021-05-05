@@ -27,6 +27,13 @@ MonoBehaviour:
     Pattern:
       id: 5
     LayerName: Explode
+  - Bullet:
+      id: 6
+    Timing:
+      id: 6
+    Pattern:
+      id: 6
+    LayerName: 
   PatternDuration: 4
   references:
     version: 1
@@ -40,7 +47,7 @@ MonoBehaviour:
       data:
         Interval: 0.2
     00000002:
-      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      type: {class: SquarePattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         BulletAmount:
           m_Mode: 0
@@ -59,7 +66,7 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 8
-        BulletSpeed: 8
+        BulletSpeed: 4
         Sequentially: 0
         AngleOffset:
           m_Mode: 0
@@ -78,10 +85,7 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0
-        BulletArc:
-          AnglePosition: 0
-          AngleSize: 1.06
-        TargetPlayer: 1
+        TargetPlayer: 0
     00000003:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -203,3 +207,5 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 3.1415927
         TargetPlayer: 0
+    00000006:
+      type: {class: , ns: , asm: }
