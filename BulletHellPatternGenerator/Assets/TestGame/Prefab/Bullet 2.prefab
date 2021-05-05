@@ -96,11 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd05a8cd64f5b04db9e29268c578288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 2.5
-  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
-  Creator: {fileID: 0}
   MaxLifeTime: 8
+  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  Target: {fileID: 0}
+  HomingSpeed: 0
+  SpeedModifier: 2.5
   RotateRelativeToDirection: 0
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}
   RotationalVelocity: {x: 0, y: 0, z: 0}

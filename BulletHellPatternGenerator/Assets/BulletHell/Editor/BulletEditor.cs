@@ -32,15 +32,23 @@ public class BulletEditor : Editor
         EditorGUI.BeginChangeCheck();
         {
             //Draw regular bullet data
+            EditorGUILayout.LabelField("Lifetime", EditorStyles.centeredGreyMiniLabel);
             bullet.MaxLifeTime = EditorGUILayout.FloatField(new GUIContent("Max Life Time", "In seconds"), bullet.MaxLifeTime);
-            bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
-                ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
+
+            //Rotatinal
+            EditorGUILayout.LabelField("Rotational and Direction",EditorStyles.centeredGreyMiniLabel);
             bullet.OrbitalVelcoity = Quaternion.Euler(0,0,
                 EditorGUILayout.Slider(bullet.OrbitalVelcoity.eulerAngles.z,0,360));
             bullet.RotateRelativeToDirection = EditorGUILayout.Toggle(new GUIContent("Rotate Relative to Direction"),bullet.RotateRelativeToDirection);
             bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent("Rotation Offset"),bullet.RotationOffset.eulerAngles));
             bullet.RotationalVelocity = EditorGUILayout.Vector3Field(new GUIContent("Rotation Velocity"),bullet.RotationalVelocity);
             EditorGUILayout.PropertyField(bulletObject.FindProperty("RotatinalVelocityModifier"),new GUIContent("Rotational Velocity Modifier"));
+
+            EditorGUILayout.LabelField("Speeds", EditorStyles.centeredGreyMiniLabel);
+            bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
+                ("Speed Modifier", "Effects Movespeed, used to change inital speed of bullet in patterns."), bullet.SpeedModifier);
+            bullet.HomingSpeed = EditorGUILayout.FloatField(new GUIContent
+                ("Homing Speed", "Target is set when spawned by BH_BulletHellPatternGenerator."), bullet.HomingSpeed);
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -49,13 +57,14 @@ public class BulletEditor : Editor
         }
 
         //Draw Bullet events
-        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,GUILayout.Height(256),GUILayout.ExpandHeight(true));
+        EditorGUILayout.LabelField("Bullet Events", EditorStyles.centeredGreyMiniLabel);
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,GUILayout.MaxHeight(256),GUILayout.ExpandHeight(true));
         {
             if (bullet.bulletEvents != null)
             {
                 for (int i = 0; i < bullet.bulletEvents.Count; i++)
                 {
-                    EditorGUILayout.BeginVertical("Box");
+                    EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                     {
                         // Display data for each node
                         EditorGUILayout.BeginHorizontal();

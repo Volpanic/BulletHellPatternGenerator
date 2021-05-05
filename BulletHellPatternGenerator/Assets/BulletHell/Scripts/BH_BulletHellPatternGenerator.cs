@@ -62,7 +62,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         pulse.Direction = dir;
         pulse.MoveSpeed = Speed;
         pulse.RelativeDirection = transform.rotation;
-        pulse.Creator = this;
+        pulse.Target = Target;
 
         SpawnedBullets.Add(pulse);
         return pulse;
@@ -81,7 +81,8 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
 
         pulse.MoveSpeed = Speed * (dir.magnitude);
         pulse.RelativeDirection = transform.rotation;
-        pulse.Creator = this;
+        pulse.Target = Target;
+
 
         SpawnedBullets.Add(pulse);
         return pulse;
@@ -98,7 +99,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         pulse.Direction = dir;
         pulse.MoveSpeed = Speed / M;
         pulse.RelativeDirection = transform.rotation;
-        pulse.Creator = this;
+        pulse.Target = Target;
 
         SpawnedBullets.Add(pulse);
         return pulse;

@@ -12,17 +12,19 @@ public class BH_Bullet : MonoBehaviour
     // Orbital Velocity
     // LIFE
 
-    public Quaternion RelativeDirection;
-    public float SpeedModifier = 1;
 
+    public float MaxLifeTime = 1;
+    private float lifeTimer = 0;
+
+    public Quaternion RelativeDirection;
     public Quaternion OrbitalVelcoity = Quaternion.identity;
 
     [HideInInspector]
-    public BH_BulletHellPatternGenerator Creator;
+    public Transform Target;
 
-    //LIFE
-    public float MaxLifeTime = 1;
-    private float lifeTimer = 0;
+    [Min(0)]
+    public float HomingSpeed = 0;
+    public float SpeedModifier = 1;
 
     private float heatTimer = 0;
 
@@ -82,7 +84,16 @@ public class BH_Bullet : MonoBehaviour
             }
         }
 
+
+        //Apply Orbital velcoity
         Direction += ((OrbitalVelcoity) * Direction) * Time.fixedDeltaTime;
+
+        //Homing
+        if (HomingSpeed != 0 && Target != null)
+        {
+            Direction = Vector3.RotateTowards(Direction,(Target.position - transform.position).normalized,HomingSpeed * Mathf.Deg2Rad * Time.fixedDeltaTime,0.0f);
+        }
+
         transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.fixedDeltaTime;
 
         lifeTimer += Time.fixedDeltaTime;
@@ -93,14 +104,8 @@ public class BH_Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //if (heatTimer >= 0.01f && Creator.HeatmapGen != null && Creator.HeatmapGen.isActiveAndEnabled)
-        //{
-        //    Creator.HeatmapGen.AddHeatWorldPos(transform.position);
-        //    heatTimer = 0;
-        //}
-
         RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + (RotationalVelocity
-            * Extension.MinMaxEvaluate(RotatinalVelocityModifier,lifeTimer / MaxLifeTime)) * Time.deltaTime);
+            * Extension.MinMaxEvaluate(RotatinalVelocityModifier, lifeTimer / MaxLifeTime)) * Time.deltaTime);
         transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
     }
 

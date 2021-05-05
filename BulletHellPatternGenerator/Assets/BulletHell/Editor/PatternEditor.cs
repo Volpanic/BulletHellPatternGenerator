@@ -16,7 +16,7 @@ namespace BulletHellGenerator
 
         public static BulletHellPattern Data;
         public static SerializedObject sData;
-        public static int SelectedLayer  = 0;
+        public static int SelectedLayer = 0;
 
         GenericMenu BulletChooseMenu;
         GenericMenu TimingChooseMenu;
@@ -31,7 +31,7 @@ namespace BulletHellGenerator
 
         public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
         {
-            PatternEditor window =  GetWindow<PatternEditor>("Pattern Editor");
+            PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
             PatternEditor.Data = asset;
             PatternEditor.sData = new SerializedObject(PatternEditor.Data);
 
@@ -57,13 +57,13 @@ namespace BulletHellGenerator
                         titleContent.text = Data.name;
 
                         //Make sure theres data to fill out
-                        if(Data.PatternLayers == null || Data.PatternLayers.Count == 0)
+                        if (Data.PatternLayers == null || Data.PatternLayers.Count == 0)
                         {
                             Data.PatternLayers = new List<BulletHellPattern.PatternLayer>();
                             Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
                         }
 
-                        SelectedLayer = Mathf.Clamp(SelectedLayer, 0, Data.PatternLayers.Count-1);
+                        SelectedLayer = Mathf.Clamp(SelectedLayer, 0, Data.PatternLayers.Count - 1);
 
                         EditorGUI.BeginChangeCheck();
 
@@ -110,11 +110,11 @@ namespace BulletHellGenerator
             EditorGUILayout.PropertyField(sData.FindProperty("PatternDuration"));
 
             //Choosing bullet selection type
-            GUILayout.Label("Bullets",EditorStyles.boldLabel);
+            GUILayout.Label("Bullets", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Change Bullet Mode"))
                 BulletChooseMenu.ShowAsContext();
-            if(layer.Bullet != null)
+            if (layer.Bullet != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 layer.Bullet.OnGUI(sLayer);
@@ -164,21 +164,21 @@ namespace BulletHellGenerator
             bulletChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(BulletBase)).GetTypes(), typeof(BulletBase));
             for (int i = 0; i < bulletChooseTypes.Length; i++)
             {
-                BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false,BulletChooseOnClick,i);
+                BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, BulletChooseOnClick, i);
             }
 
             //Setup Timing choose menu, by getting all compiled 
             timingChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(TimingBase)).GetTypes(), typeof(TimingBase));
             for (int i = 0; i < timingChooseTypes.Length; i++)
             {
-                TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, TimingChooseOnClick,i);
+                TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, TimingChooseOnClick, i);
             }
 
             //Setup Pattern choose menu, by getting all compiled 
             patternChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(PatternBase)).GetTypes(), typeof(PatternBase));
             for (int i = 0; i < patternChooseTypes.Length; i++)
             {
-                PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false,PatternChooseOnClick, i);
+                PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, PatternChooseOnClick, i);
             }
         }
 
@@ -186,7 +186,7 @@ namespace BulletHellGenerator
         {
             List<System.Type> tempList = new List<Type>();
 
-            for(int i = 0; i < toCull.Length; i++)
+            for (int i = 0; i < toCull.Length; i++)
             {
                 if (toCull[i].IsSubclassOf(desiredParentType))
                     tempList.Add(toCull[i]);
@@ -231,7 +231,7 @@ namespace BulletHellGenerator
             if (Data == null) return;
             //if (bulletChooseTypes == null || bulletChooseTypes.Length-1 > typeIndex) return;
 
-            Undo.RecordObject(Data,"Changed Bullet Choose Mode");
+            Undo.RecordObject(Data, "Changed Bullet Choose Mode");
             //This code is kind of yucky, by makes modularity really easy
             var p = Data.PatternLayers[SelectedLayer];
             p.Bullet = (BulletBase)Activator.CreateInstance(bulletChooseTypes[(int)typeIndex]);
@@ -242,7 +242,7 @@ namespace BulletHellGenerator
 
         private void DrawMenuBar()
         {
-            Rect menuBar = new Rect(0, 0, position.width, EditorGUIUtility.singleLineHeight*2);
+            Rect menuBar = new Rect(0, 0, position.width, EditorGUIUtility.singleLineHeight * 2);
 
             GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
             {
@@ -276,7 +276,7 @@ namespace BulletHellGenerator
                 //Generate Names and values for popups
                 int[] values = new int[Data.PatternLayers.Count];
                 GUIContent[] names = new GUIContent[Data.PatternLayers.Count];
-                for(int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
                 {
                     values[i] = i;
                     names[i] = new GUIContent(i.ToString() + " - " + Data.PatternLayers[i].LayerName);
@@ -285,20 +285,20 @@ namespace BulletHellGenerator
                 GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
                 {
 
-                    GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
+                    GUILayout.BeginHorizontal(EditorStyles.toolbar,GUILayout.ExpandWidth(false));
                     {
-                        GUILayout.Label("Pattern Layer");
-                        SelectedLayer = EditorGUILayout.IntPopup(SelectedLayer, names, values);
+                        SelectedLayer = EditorGUILayout.IntPopup(SelectedLayer, names, values, EditorStyles.toolbarPopup);
 
-                        if(GUILayout.Button("+"))
+                        // Add new bullet layer
+                        if (GUILayout.Button("+", EditorStyles.toolbarButton))
                         {
                             Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
-                            SelectedLayer = Data.PatternLayers.Count-1;
+                            SelectedLayer = Data.PatternLayers.Count - 1;
                             SetDirtyAndSave();
                         }
 
-
-                        if (GUILayout.Button("X"))
+                        //Remove bullet layer
+                        if (GUILayout.Button("X", EditorStyles.toolbarButton))
                         {
                             if (Data.PatternLayers.Count > 1)
                             {
@@ -313,22 +313,24 @@ namespace BulletHellGenerator
                             }
                             SetDirtyAndSave();
                         }
-
+                       
                         var sPattern = Data.PatternLayers[SelectedLayer];
-                        sPattern.LayerName = EditorGUILayout.TextField(new GUIContent("Layer Name"),Data.PatternLayers[SelectedLayer].LayerName, GUILayout.ExpandWidth(false));
+                        EditorGUILayout.LabelField("Layer Name",GUILayout.Width(70));
+                        sPattern.LayerName = EditorGUILayout.TextField(Data.PatternLayers[SelectedLayer].LayerName);
                         Data.PatternLayers[SelectedLayer] = sPattern;
 
                         GUILayout.EndHorizontal();
                     }
+
                 }
                 GUILayout.EndArea();
             }
-        
+
         }
 
         private void SetDirtyAndSave()
         {
-            if(Data != null)
+            if (Data != null)
             {
                 EditorUtility.SetDirty(Data);
             }
