@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BulletHellGenerator.Wrappers;
 using static UnityEngine.ParticleSystem;
 
 public class BH_Bullet : MonoBehaviour
@@ -29,6 +30,7 @@ public class BH_Bullet : MonoBehaviour
     public bool RotateRelativeToDirection;
     public Quaternion RotationOffset;
     public Vector3 RotationalVelocity;
+    public MinMaxCurve RotatinalVelocityModifier = new MinMaxCurve(1);
 
     //Crust
     public Rigidbody Body;
@@ -91,13 +93,14 @@ public class BH_Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (heatTimer >= 0.01f && Creator.HeatmapGen != null && Creator.HeatmapGen.isActiveAndEnabled)
-        {
-            Creator.HeatmapGen.AddHeatWorldPos(transform.position);
-            heatTimer = 0;
-        }
+        //if (heatTimer >= 0.01f && Creator.HeatmapGen != null && Creator.HeatmapGen.isActiveAndEnabled)
+        //{
+        //    Creator.HeatmapGen.AddHeatWorldPos(transform.position);
+        //    heatTimer = 0;
+        //}
 
-        RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + RotationalVelocity * Time.deltaTime);
+        RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + (RotationalVelocity
+            * Extension.MinMaxEvaluate(RotatinalVelocityModifier,lifeTimer / MaxLifeTime)) * Time.deltaTime);
         transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
     }
 

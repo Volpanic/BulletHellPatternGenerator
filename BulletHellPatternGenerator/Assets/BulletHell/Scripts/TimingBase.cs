@@ -106,14 +106,17 @@ namespace BulletHellGenerator
     {
         public float Interval = 0.2f;
         private float timing = 0;
+        private float durationcheck = 0;
         public AnimationCurve OnOffPoints = new AnimationCurve();
 
         public override bool CheckTime(float duration)
         {
+            if (durationcheck >= duration) durationcheck -= duration;
             timing += Time.fixedDeltaTime;
-            timing %= duration;
+            durationcheck += Time.fixedDeltaTime;
+
             //failsafe
-            if (Interval == 0 || OnOffPoints.Evaluate(timing /duration) < 0.5f)
+            if (Interval == 0 || OnOffPoints.Evaluate(durationcheck / duration) < 0.5f)
                 return false;
 
 

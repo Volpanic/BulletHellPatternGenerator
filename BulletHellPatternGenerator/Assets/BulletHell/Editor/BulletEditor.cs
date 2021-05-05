@@ -14,14 +14,11 @@ public class BulletEditor : Editor
 
     private SerializedObject bulletObject;
 
-    private SerializedProperty AHHHH;
-
     private void OnEnable()
     {
         bullet = (BH_Bullet)target;
 
         bulletObject = new SerializedObject(target);
-        AHHHH = bulletObject.FindProperty("AHHHHH");
 
         SetupContextMenu();
     }
@@ -29,6 +26,8 @@ public class BulletEditor : Editor
     public override void OnInspectorGUI()
     {
         if (bullet == null) return;
+
+        bulletObject.Update();
 
         EditorGUI.BeginChangeCheck();
         {
@@ -41,7 +40,7 @@ public class BulletEditor : Editor
             bullet.RotateRelativeToDirection = EditorGUILayout.Toggle(new GUIContent("Rotate Relative to Direction"),bullet.RotateRelativeToDirection);
             bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent("Rotation Offset"),bullet.RotationOffset.eulerAngles));
             bullet.RotationalVelocity = EditorGUILayout.Vector3Field(new GUIContent("Rotation Velocity"),bullet.RotationalVelocity);
-                
+            EditorGUILayout.PropertyField(bulletObject.FindProperty("RotatinalVelocityModifier"),new GUIContent("Rotational Velocity Modifier"));
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -128,6 +127,8 @@ public class BulletEditor : Editor
                 EditorUtility.SetDirty(target);
             }
         }
+
+        bulletObject.ApplyModifiedProperties();
     }
 
     private void SetupContextMenu()

@@ -18,6 +18,8 @@ public class BulletHellPattern : ScriptableObject
 
         [SerializeReference]
         public PatternBase Pattern;
+
+        public string LayerName;
     }
 
     public List<PatternLayer> PatternLayers;

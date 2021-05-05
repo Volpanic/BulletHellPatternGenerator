@@ -54,6 +54,8 @@ namespace BulletHellGenerator
                 {
                     if (Data != null)
                     {
+                        titleContent.text = Data.name;
+
                         //Make sure theres data to fill out
                         if(Data.PatternLayers == null || Data.PatternLayers.Count == 0)
                         {
@@ -71,6 +73,7 @@ namespace BulletHellGenerator
                     }
                     else
                     {
+                        titleContent.text = "Pattern Editor";
                         EditorGUILayout.LabelField("No Data Loaded.", EditorStyles.centeredGreyMiniLabel);
                     }
                     GUILayout.EndVertical();
@@ -276,7 +279,7 @@ namespace BulletHellGenerator
                 for(int i = 0; i < values.Length; i++)
                 {
                     values[i] = i;
-                    names[i] = new GUIContent(i.ToString());
+                    names[i] = new GUIContent(i.ToString() + " - " + Data.PatternLayers[i].LayerName);
                 }
 
                 GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
@@ -287,7 +290,7 @@ namespace BulletHellGenerator
                         GUILayout.Label("Pattern Layer");
                         SelectedLayer = EditorGUILayout.IntPopup(SelectedLayer, names, values);
 
-                        if(GUILayout.Button("Add Layer"))
+                        if(GUILayout.Button("+"))
                         {
                             Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
                             SelectedLayer = Data.PatternLayers.Count-1;
@@ -295,7 +298,7 @@ namespace BulletHellGenerator
                         }
 
 
-                        if (GUILayout.Button("Remove Layer"))
+                        if (GUILayout.Button("X"))
                         {
                             if (Data.PatternLayers.Count > 1)
                             {
@@ -310,6 +313,10 @@ namespace BulletHellGenerator
                             }
                             SetDirtyAndSave();
                         }
+
+                        var sPattern = Data.PatternLayers[SelectedLayer];
+                        sPattern.LayerName = EditorGUILayout.TextField(new GUIContent("Layer Name"),Data.PatternLayers[SelectedLayer].LayerName, GUILayout.ExpandWidth(false));
+                        Data.PatternLayers[SelectedLayer] = sPattern;
 
                         GUILayout.EndHorizontal();
                     }
@@ -334,4 +341,26 @@ namespace BulletHellGenerator
             GUI.backgroundColor = Color.white;
         }
     }
+
+    //Draw inspector for scriptable object
+    [CustomEditor(typeof(BulletHellPattern))]
+    class BulletHellPatternInspector : Editor
+    {
+
+        BulletHellPattern pattern;
+        private void OnEnable()
+        {
+            pattern = (BulletHellPattern)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            if (GUILayout.Button("Open in Pattern Editor"))
+            {
+                PatternEditor.OpenWindowWithAsset(pattern);
+            }
+        }
+    }
+
 }
+

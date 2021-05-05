@@ -1,0 +1,205 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
+  m_Name: showof
+  m_EditorClassIdentifier: 
+  PatternLayers:
+  - Bullet:
+      id: 0
+    Timing:
+      id: 1
+    Pattern:
+      id: 2
+    LayerName: Base
+  - Bullet:
+      id: 3
+    Timing:
+      id: 4
+    Pattern:
+      id: 5
+    LayerName: Explode
+  PatternDuration: 4
+  references:
+    version: 1
+    00000000:
+      type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Bullets:
+        - {fileID: 1184654237552063843, guid: cbc24c19e75c37744bcd229d68ac3cb6, type: 3}
+    00000001:
+      type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Interval: 0.2
+    00000002:
+      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        BulletAmount:
+          m_Mode: 0
+          m_CurveMultiplier: 0
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 8
+        BulletSpeed: 8
+        Sequentially: 0
+        AngleOffset:
+          m_Mode: 0
+          m_CurveMultiplier: 0
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 0
+        BulletArc:
+          AnglePosition: 0
+          AngleSize: 1.06
+        TargetPlayer: 1
+    00000003:
+      type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Bullets:
+        - {fileID: 1184654237552063843, guid: 369873a58d72a6c43bbd1064e66e8535, type: 3}
+    00000004:
+      type: {class: OnOffDurationTimer, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Interval: 0.2
+        OnOffPoints:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: -0.34220123
+            value: -1.6706696
+            inSlope: 5.370472
+            outSlope: 5.370472
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.75338155
+            value: 4.2131267
+            inSlope: Infinity
+            outSlope: 0.0017089775
+            tangentMode: 7
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9909973
+            value: 3.6426697
+            inSlope: -2.400754
+            outSlope: -2.400754
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    00000005:
+      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        BulletAmount:
+          m_Mode: 0
+          m_CurveMultiplier: 0
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 16
+        BulletSpeed: 2
+        Sequentially: 0
+        AngleOffset:
+          m_Mode: 3
+          m_CurveMultiplier: 1
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 360
+        BulletArc:
+          AnglePosition: 0
+          AngleSize: 3.1415927
+        TargetPlayer: 0

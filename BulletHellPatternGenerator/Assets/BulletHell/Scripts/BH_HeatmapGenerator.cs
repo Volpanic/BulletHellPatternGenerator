@@ -16,23 +16,74 @@ namespace BulletHellGenerator.Heatmap
 
         public Camera MainCam;
 
-        [Range(1,10)]
-        [Tooltip("The scale of the heatmap textures, Width and Height divided by downscale.")]
-        public int Downscale = 4;
+        //FE
+        [Header("Detection Settings")]
+        public BoxCollider SampleSpace;
+        public LayerMask BulletLayer;
+        public LayerMask PlayerLayer;
+        public bool use3DColliders = false;
+
+        [Range(0.1f,1f)]
+        public float SampleEveryXSeconds = 0.25f;
+
+        private float sampleTimer = 0;
+
+        [Header("Heatmap Settings")]
+        [Range(1,100)]
+        [Tooltip("How many pixel width and height one unit is.")]
+        public int UnitPixelScale = 16;
 
         public Gradient HeatMapGradiant = new Gradient();
 
         public void Start()
         {
-            map = new Heatmap(Mathf.Max(2,Mathf.Abs(Screen.width / Downscale)), Mathf.Max(2, Mathf.Abs(Screen.height / Downscale)));
+            if (SampleSpace != null)
+            {
+                map = new Heatmap((int)SampleSpace.bounds.size.x * UnitPixelScale, (int)SampleSpace.bounds.size.x * UnitPixelScale);
+            }
+            else
+            {
+                Debug.LogWarning("A Sample Space has not been assigned, no heatmap will generate!");
+            }
         }
 
         public void Update()
         {
-            map.UpdateTex(HeatMapGradiant);
+            //map.UpdateTex(HeatMapGradiant);
 
-            if(HeatmapImage != null)
+            //if(HeatmapImage != null)
+            //{
+            //    HeatmapImage.texture = map.Texture;
+            //}
+            sampleTimer += Time.deltaTime;
+
+            if(SampleSpace != null && sampleTimer >= SampleEveryXSeconds)
             {
+                sampleTimer -= SampleEveryXSeconds;
+                if(use3DColliders) // Detect 3D Bullets
+                {
+                    Collider[] DetectedColliders;
+                }
+                else // Detect 2D bullets
+                {
+                    Collider2D[] DetectedColliders;
+
+                    DetectedColliders = Physics2D.OverlapAreaAll(SampleSpace.bounds.min, SampleSpace.bounds.max,BulletLayer);
+
+                    if(DetectedColliders != null)
+                    {
+                        //Loop through all colliders
+                        for(int i = 0; i < DetectedColliders.Length; i++)
+                        {
+                            //Convert Bullet pos to collider pos
+                            Vector3 pos = SampleSpace.ClosestPoint(DetectedColliders[i].transform.position) - SampleSpace.bounds.min;
+                            pos *= UnitPixelScale;
+                            AddHeat((int)pos.x,(int)pos.y);
+                        }
+                    }
+                }
+
+                map.UpdateTex(HeatMapGradiant);
                 HeatmapImage.texture = map.Texture;
             }
         }

@@ -97,10 +97,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 5
-  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643972, w: -0.976296}
+  SpeedModifier: 2.5
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
   Creator: {fileID: 0}
   MaxLifeTime: 8
+  RotateRelativeToDirection: 0
+  RotationOffset: {x: 0, y: 0, z: 0, w: 1}
+  RotationalVelocity: {x: 0, y: 0, z: 0}
+  RotatinalVelocityModifier:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.07227327
+        value: -1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 0
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 1
   Body: {fileID: 0}
   Body2D: {fileID: 0}
   bulletEvents: []
