@@ -116,6 +116,8 @@ public class BH_Bullet : MonoBehaviour
 
         if(RotateRelativeToDirection)
         transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
+        else
+        transform.localRotation = RotationOffset;
     }
 
     private void OnBecameInvisible()

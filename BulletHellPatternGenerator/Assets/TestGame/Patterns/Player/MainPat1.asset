@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
+  m_Name: MainPat1
+  m_EditorClassIdentifier: 
+  PatternLayers:
+  - Bullet:
+      id: 0
+    Timing:
+      id: 1
+    Pattern:
+      id: 2
+    LayerName: 
+  PatternDuration: 5
+  references:
+    version: 1
+    00000000:
+      type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Bullets:
+        - {fileID: 662933406394367464, guid: 677149bb04d36874ab5d6df19e1610b3, type: 3}
+    00000001:
+      type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        Interval: 0.1
+    00000002:
+      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      data:
+        BulletAmount:
+          m_Mode: 0
+          m_CurveMultiplier: 0
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 2
+        BulletSpeed: 32
+        Sequentially: 0
+        AngleOffset:
+          m_Mode: 0
+          m_CurveMultiplier: 0
+          m_CurveMin:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_CurveMax:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ConstantMin: 0
+          m_ConstantMax: 0
+        BulletArc:
+          AnglePosition: 4.8
+          AngleSize: 0.15
+        TargetPlayer: 0
