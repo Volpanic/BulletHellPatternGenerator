@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1184654237552063841}
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
-  - component: {fileID: -8988345013132623521}
+  - component: {fileID: -8688307259590495077}
   m_Layer: 8
-  m_Name: Bullet 2
+  m_Name: p_bullet_purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1184654237552063843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7946635594010192847, guid: 078ebe224f0189a43a1e703f5d25cdd0, type: 3}
+  m_Sprite: {fileID: -931196357129629069, guid: e00b32331317ae345b24a2b138d4a5c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,13 +101,13 @@ MonoBehaviour:
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Target: {fileID: 0}
   HomingSpeed: 0
-  SpeedModifier: 2.5
-  RotateRelativeToDirection: 0
-  RotationOffset: {x: 0, y: 0, z: 0, w: 1}
+  SpeedModifier: 1
+  RotateRelativeToDirection: 1
+  RotationOffset: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
   RotationalVelocity: {x: 0, y: 0, z: 0}
   RotatinalVelocityModifier:
-    m_Mode: 1
-    m_CurveMultiplier: 1
+    m_Mode: 0
+    m_CurveMultiplier: 0
     m_CurveMin:
       serializedVersion: 2
       m_Curve: []
@@ -116,27 +116,9 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_CurveMax:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.07227327
-        value: -1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
-      m_PostInfinity: 0
+      m_PostInfinity: 2
       m_RotationOrder: 4
     m_ConstantMin: 0
     m_ConstantMax: 1
@@ -145,9 +127,10 @@ MonoBehaviour:
   bulletEvents: []
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
+  LoopMode: 1
   references:
     version: 1
---- !u!61 &-8988345013132623521
+--- !u!61 &-8688307259590495077
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.875, y: 0.75}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

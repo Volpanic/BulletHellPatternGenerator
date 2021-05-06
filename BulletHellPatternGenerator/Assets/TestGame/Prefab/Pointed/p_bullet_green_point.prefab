@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1184654237552063841}
   - component: {fileID: 1184654237552063842}
   - component: {fileID: 6436085721792558785}
-  - component: {fileID: -5907166707620802729}
+  - component: {fileID: -8688307259590495077}
   m_Layer: 8
-  m_Name: Bullet
+  m_Name: p_bullet_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1449d04b1e186a048af924baacb72b12, type: 3}
+  m_Sprite: {fileID: -569597214539061904, guid: e00b32331317ae345b24a2b138d4a5c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,27 +96,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd05a8cd64f5b04db9e29268c578288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  SpeedModifier: 1
-  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
-  Creator: {fileID: 0}
   MaxLifeTime: 8
+  RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  Target: {fileID: 0}
+  HomingSpeed: 0
+  SpeedModifier: 1
   RotateRelativeToDirection: 1
   RotationOffset: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
-  RotationalVelocity: {x: -0, y: 0, z: 360}
+  RotationalVelocity: {x: 0, y: 0, z: 0}
+  RotatinalVelocityModifier:
+    m_Mode: 0
+    m_CurveMultiplier: 0
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 1
   Body: {fileID: 0}
   Body2D: {fileID: 0}
-  bulletEvents:
-  - id: 0
+  bulletEvents: []
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
+  LoopMode: 1
   references:
     version: 1
-    00000000:
-      type: {class: BEWaitForSeconds, ns: BulletHellGenerator.BulletEvents, asm: Assembly-CSharp}
-      data:
-        MaxTime: 1
---- !u!61 &-5907166707620802729
+--- !u!61 &-8688307259590495077
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,16 +143,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03125}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.875, y: 0.75}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.25}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0

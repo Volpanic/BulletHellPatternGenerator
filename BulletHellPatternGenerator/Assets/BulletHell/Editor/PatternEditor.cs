@@ -4,6 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using System.Reflection;
 using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace BulletHellGenerator
 {
@@ -320,6 +323,13 @@ namespace BulletHellGenerator
                             }
                             SetDirtyAndSave();
                         }
+
+                        //if(GUILayout.Button("Duplicate Layer",EditorStyles.toolbarButton))
+                        //{
+                        //    Data.PatternLayers.Add(DuplicateLayer(Data.PatternLayers[SelectedLayer]));
+                        //    SelectedLayer = Data.PatternLayers.Count - 1;
+                        //    SetDirtyAndSave();
+                        //}
                        
                         var sPattern = Data.PatternLayers[SelectedLayer];
                         EditorGUILayout.LabelField("Layer Name",GUILayout.Width(70));

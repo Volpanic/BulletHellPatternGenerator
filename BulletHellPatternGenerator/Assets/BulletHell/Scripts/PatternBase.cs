@@ -10,13 +10,14 @@ namespace BulletHellGenerator
     {
         Loop = 0,
         PingPong,
-
     }
 
     [System.Serializable]
     public abstract class PatternBase
     {
         protected float durationTimer = 0;
+
+        public const float MaxRadians = Mathf.PI * 2f;
 
         public void UpdatePattern(BH_BulletHellPatternGenerator generator, BulletHellPattern data, BulletHellPattern.PatternLayer layerData)
         {
@@ -81,7 +82,7 @@ namespace BulletHellGenerator
                     {
                         AddAngle = BulletArc.EvaluateArc(generator.TargetAngle, (i + 0.5f) / (float)bulletAmount); // With credence to generator target
                     }
-                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
                     generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
                 }
@@ -96,7 +97,7 @@ namespace BulletHellGenerator
                 {
                     AddAngle = BulletArc.EvaluateArc(generator.TargetAngle, (SeqentialCount++ + 0.5f) / (float)bulletAmount); // With credence to generator target
                 }
-                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
                 generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
                 SeqentialCount %= bulletAmount;
@@ -149,7 +150,7 @@ namespace BulletHellGenerator
                     {
                         AddAngle = BulletArc.EvaluateArc(generator.TargetAngle, (i + 0.5f) / (float)bulletAmount); // With credence to generator target
                     }
-                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
                     generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
                 }
@@ -164,7 +165,7 @@ namespace BulletHellGenerator
                 {
                     AddAngle = BulletArc.EvaluateArc(generator.TargetAngle, (SeqentialCount++ + 0.5f) / (float)bulletAmount); // With credence to generator target
                 }
-                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
 
                 generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
@@ -207,7 +208,7 @@ namespace BulletHellGenerator
             float AddAngle = 0;
             if (!Sequentially)
             {
-                float seg = (Mathf.PI * 2f) / bulletAmount;
+                float seg = (MaxRadians) / bulletAmount;
                 for (int i = 0; i < bulletAmount; i++)
                 {
 
@@ -219,7 +220,7 @@ namespace BulletHellGenerator
                     {
                         AddAngle = (seg * i) + generator.TargetAngle; // With credence to generator target
                     }
-                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                    AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
 
                     generator.CreateBulletAtDirectionSquare(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
@@ -227,7 +228,7 @@ namespace BulletHellGenerator
             }
             else
             {
-                float seg = (Mathf.PI * 2f) / bulletAmount;
+                float seg = (MaxRadians) / bulletAmount;
                 if (!TargetPlayer)
                 {
                     AddAngle = (seg * SeqentialCount++);
@@ -236,7 +237,7 @@ namespace BulletHellGenerator
                 {
                     AddAngle = (seg * SeqentialCount++) + generator.TargetAngle; // With credence to generator target
                 }
-                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration));// With credence to the Angle Offset
+                AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
                 generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
                 SeqentialCount %= bulletAmount;
             }

@@ -103,6 +103,63 @@ namespace BulletHellGenerator.BulletEvents
     }
     #endregion
 
+    #region // Transition To move speed
+    [System.Serializable]
+    public class BEToHomingSpeed : BulletEvents
+    {
+        public float TransitonDuration = 1;
+        public float TargetSpeed = 0;
+        public bool Relative = false;
+        private float timer = 0;
+
+        private float initalSpeed = 0;
+        private float targetSpeed = 0;
+        private bool hasGottenInitalSpeed = false;
+
+        public override void OnReset()
+        {
+            timer = 0;
+            initalSpeed = 0;
+            targetSpeed = 0;
+            hasGottenInitalSpeed = false;
+        }
+
+        // Edit this later
+        public override bool OnUpdate(BH_Bullet bullet)
+        {
+            if (!hasGottenInitalSpeed)
+            {
+                hasGottenInitalSpeed = true;
+                initalSpeed = bullet.HomingSpeed;
+
+                //Adjust to be relative if should
+                targetSpeed = TargetSpeed;
+
+                if (Relative)
+                {
+                    targetSpeed += bullet.HomingSpeed;
+                }
+            }
+
+            timer += Time.deltaTime;
+            bullet.HomingSpeed = Mathf.Lerp(initalSpeed, targetSpeed, timer / TransitonDuration);
+
+            if (timer >= TransitonDuration) return true;
+            return false;
+        }
+
+#if UNITY_EDITOR
+        public override void OnInspectorGUI(BH_Bullet bullet)
+        {
+            TransitonDuration = Mathf.Abs(EditorGUILayout.FloatField("Transition Duration", TransitonDuration));
+            TargetSpeed = EditorGUILayout.FloatField("Target Homing Speed", TargetSpeed);
+            if (TransitonDuration == 0) TransitonDuration = 0.01f;
+            Relative = EditorGUILayout.Toggle("Relative", Relative);
+        }
+#endif
+    }
+    #endregion
+
     #region // Rotate Direction
 
     [System.Serializable]

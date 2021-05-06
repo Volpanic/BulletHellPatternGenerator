@@ -121,6 +121,8 @@ public class BulletEditor : Editor
             EditorGUILayout.EndScrollView();
         }
 
+        bullet.LoopMode = (BH_Bullet.BulletEventLoopMode)EditorGUILayout.EnumPopup(bullet.LoopMode);
+
         //Add Button
         if(GUILayout.Button("Add Bullet Event"))
         {
@@ -146,6 +148,7 @@ public class BulletEditor : Editor
 
         addEventWindow.AddItem(new GUIContent("Wait For x Seconds"),false, () => AddBulletEvent<BEWaitForSeconds>());
         addEventWindow.AddItem(new GUIContent("Transition to Speed"),false, () => AddBulletEvent<BEToMoveSpeed>());
+        addEventWindow.AddItem(new GUIContent("Transition to Homing Speed"), false, () => AddBulletEvent<BEToHomingSpeed>());
         addEventWindow.AddItem(new GUIContent("Transition to Direction"),false, () => AddBulletEvent<BERotateTowardsDirection>());
     }
 

@@ -12,6 +12,11 @@ public class BH_Bullet : MonoBehaviour
     // Orbital Velocity
     // LIFE
 
+    public enum BulletEventLoopMode
+    {
+        Stop = 0,
+        Repeat = 1
+    }
 
     public float MaxLifeTime = 1;
     private float lifeTimer = 0;
@@ -42,33 +47,21 @@ public class BH_Bullet : MonoBehaviour
     public List<BulletEvents> bulletEvents = new List<BulletEvents>();
     private int bulletEventIndex;
 
-    //public Vector3 Velocity
-    //{
-    //    get
-    //    {
-    //        // Rigidbodies take priority in case user wants to use them instead
-    //        if (Body != null) return Body.velocity;
-    //        if (Body2D != null) return Body2D.velocity;
-    //        return Direction * MoveSpeed;
-    //    }
-
-    //    set
-    //    {
-    //        if (Body != null) Body.velocity = value;
-    //        if (Body2D != null) Body2D.velocity = value;
-    //        Direction = value.normalized;
-    //        MoveSpeed = value.magnitude;
-    //    }
-    //}
-
     public Vector3 Direction = Vector3.right;
     public float MoveSpeed = 0;
+
+    public BulletEventLoopMode LoopMode = BulletEventLoopMode.Repeat;
+
+    private void Start()
+    {
+        transform.localRotation = RotationOffset;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //Bullet Event stack
-        if (bulletEvents != null && bulletEvents.Count > 0)
+        if (bulletEvents != null && bulletEvents.Count > 0 && bulletEventIndex >= 0)
         {
             if (bulletEvents[bulletEventIndex].OnUpdate(this))
             {
@@ -77,13 +70,24 @@ public class BH_Bullet : MonoBehaviour
                 //Still in bounds
                 if (bulletEventIndex >= bulletEvents.Count)
                 {
-                    bulletEventIndex = 0;
-                }
+                    switch (LoopMode)
+                    {
+                        case BulletEventLoopMode.Stop:
+                        {
+                            bulletEventIndex = -1;
+                            break;
+                        }
 
-                bulletEvents[bulletEventIndex].OnReset();
+                        default:
+                        {
+                            bulletEventIndex = 0;
+                            bulletEvents[bulletEventIndex].OnReset();
+                            break;
+                        }
+                    }
+                }
             }
         }
-
 
         //Apply Orbital velcoity
         Direction += ((OrbitalVelcoity) * Direction) * Time.fixedDeltaTime;
@@ -91,7 +95,7 @@ public class BH_Bullet : MonoBehaviour
         //Homing
         if (HomingSpeed != 0 && Target != null)
         {
-            Direction = Vector3.RotateTowards(Direction,(Target.position - transform.position).normalized,HomingSpeed * Mathf.Deg2Rad * Time.fixedDeltaTime,0.0f);
+            Direction = Vector3.RotateTowards(Direction, (Target.position - transform.position).normalized, HomingSpeed * Mathf.Deg2Rad * Time.fixedDeltaTime, 0.0f);
         }
 
         transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.fixedDeltaTime;
@@ -104,8 +108,13 @@ public class BH_Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + (RotationalVelocity
-            * Extension.MinMaxEvaluate(RotatinalVelocityModifier, lifeTimer / MaxLifeTime)) * Time.deltaTime);
+        if (RotationalVelocity != Vector3.zero)
+        {
+            RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + (RotationalVelocity
+                * Extension.MinMaxEvaluate(RotatinalVelocityModifier, lifeTimer / MaxLifeTime)) * Time.deltaTime); 
+        }
+
+        if(RotateRelativeToDirection)
         transform.localRotation = Quaternion.LookRotation(Vector3.forward, (RotationOffset * (RelativeDirection * Direction)).normalized);
     }
 
@@ -114,5 +123,3 @@ public class BH_Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 }
-
-// Pre JOBS 30~ FPS
