@@ -4,18 +4,43 @@ using UnityEngine;
 
 public class BossScript : MonoBehaviour
 {
+    [System.Serializable]
+    public struct HealthbarBand
+    {
+        public BulletHellPattern Pattern;
+        public int HPAmount;
+    }
+
     private Vector3 targetPosition;
     private Vector3 startPosition;
     private float transitionDuration = 1;
     private float transitionTimer = 0;
     private bool transitioning = false;
 
-    public int MaxHp = 100;
+    public BH_BulletHellPatternGenerator Generator;
+    public int MaxHp = 0;
+    public int CurrentHp = 0;
+
+    public HealthbarBand[] AttackBands;
+
+    private int bandHpAmount = 0;
+    private int currentBand = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        for(int i = 0; i < AttackBands.Length; i++)
+        {
+            MaxHp += AttackBands[i].HPAmount;
+
+            if (i == 0)
+            {
+                bandHpAmount = AttackBands[i].HPAmount;
+                Generator.Patterns[0] = AttackBands[i].Pattern;
+            }
+        }
+
+        CurrentHp = MaxHp;
     }
 
     // Update is called once per frame
@@ -43,5 +68,35 @@ public class BossScript : MonoBehaviour
         transitionTimer = 0;
         transitioning = true;
         startPosition = transform.position;
+    }
+
+    public void Hurt(int Amount)
+    {
+        bandHpAmount -= Amount;
+        CurrentHp -= Amount;
+
+        //Whiles in case a bands hp is 0, or the player does a lot of damage
+        while(bandHpAmount <= 0)
+        {
+            currentBand++;
+            Debug.Log("Hurt");
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                bandHpAmount = 128;
+            }
+
+            if (currentBand < AttackBands.Length)
+            {
+                int newAmount = AttackBands[currentBand].HPAmount + bandHpAmount; // Adds the negatives if below 0
+                bandHpAmount = newAmount;
+                Generator.Patterns[0] = AttackBands[currentBand].Pattern;
+            }
+            else
+            {
+                Debug.Log("Dead");
+                break;
+            }
+        }
     }
 }

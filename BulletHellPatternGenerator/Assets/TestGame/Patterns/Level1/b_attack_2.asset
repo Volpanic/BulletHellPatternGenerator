@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
-  m_Name: NewBulletHellPattern
+  m_Name: b_attack_2
   m_EditorClassIdentifier: 
   PatternLayers:
   - Bullet:
@@ -20,18 +20,19 @@ MonoBehaviour:
     Pattern:
       id: 2
     LayerName: 
-  PatternDuration: 4
+  PatternDuration: 3
   references:
     version: 1
     00000000:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
+        - {fileID: 1184654237552063843, guid: 2dd1b48057fed0f42ac624424af98521, type: 3}
+        - {fileID: 1184654237552063843, guid: cd360298c9c26c040af37b0604e73a4c, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
-        Interval: 0.2
+        Interval: 0.05
     00000002:
       type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -51,8 +52,8 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 16
-        BulletSpeed: 3
+          m_ConstantMax: 4
+        BulletSpeed: 8
         Sequentially: 0
         AngleOffset:
           m_Mode: 1
@@ -76,7 +77,7 @@ MonoBehaviour:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.5
+              time: 0.25
               value: 0
               inSlope: 0
               outSlope: 0
@@ -90,6 +91,6 @@ MonoBehaviour:
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 360
+          AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0

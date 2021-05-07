@@ -98,7 +98,6 @@ namespace BulletHellGenerator
     }
     #endregion
 
-
     #region On Off Duration Timer
 
     [System.Serializable]
@@ -107,18 +106,29 @@ namespace BulletHellGenerator
         public float Interval = 0.2f;
         private float timing = 0;
         private float durationcheck = 0;
+        private bool wasOff = true;
         public AnimationCurve OnOffPoints = new AnimationCurve();
 
         public override bool CheckTime(float duration)
         {
             if (durationcheck >= duration) durationcheck -= duration;
-            timing += Time.fixedDeltaTime;
+
             durationcheck += Time.fixedDeltaTime;
 
             //failsafe
             if (Interval == 0 || OnOffPoints.Evaluate(durationcheck / duration) < 0.5f)
+            {
+                wasOff = true;
                 return false;
+            }
 
+            if(wasOff)
+            {
+                wasOff = false;
+                timing = 0;
+            }
+
+            timing += Time.fixedDeltaTime;
 
             if (timing >= Interval)
             {

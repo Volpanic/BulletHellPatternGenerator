@@ -53,6 +53,8 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    private Color clearColor = new Color(1f,1f,1f,0.25f);
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -61,10 +63,12 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            sRenderer.color = clearColor;
             transform.position += direction * ShiftMoveSpeed * Time.fixedDeltaTime;
         }
         else
         {
+            sRenderer.color = Color.white;
             transform.position += direction * MoveSpeed * Time.fixedDeltaTime;
         }
 

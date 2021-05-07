@@ -15,7 +15,6 @@ namespace BulletHellGenerator
         // Rect is dynamically sized, but to get that size we need a 
         // rect that the dynamic one falls in, So we just give it a huge one
         Rect BoardRect = new Rect(0, 0, 1, 1);
-        Vector2 boardPosition;
 
         public static BulletHellPattern Data;
         public static SerializedObject sData;
@@ -123,7 +122,7 @@ namespace BulletHellGenerator
             if (layer.Bullet != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-
+                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
                 if (sLayer != null)
                     layer.Bullet.OnGUI(sLayer);
             }
@@ -138,8 +137,8 @@ namespace BulletHellGenerator
             if (layer.Timing != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-
-                if(sLayer != null)
+                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
+                if (sLayer != null)
                     layer.Timing.OnGUI(sLayer);
             }
             DrawSeparator();
@@ -152,7 +151,8 @@ namespace BulletHellGenerator
             if (layer.Pattern != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                if (sLayer != null)
+                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
+                if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null)
                     layer.Pattern.OnGUI(sLayer);
             }
 

@@ -104,7 +104,7 @@ MonoBehaviour:
   SpeedModifier: 1
   RotateRelativeToDirection: 0
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}
-  RotationalVelocity: {x: 0, y: 0, z: 45}
+  RotationalVelocity: {x: 0, y: 0, z: 360}
   RotatinalVelocityModifier:
     m_Mode: 0
     m_CurveMultiplier: 0

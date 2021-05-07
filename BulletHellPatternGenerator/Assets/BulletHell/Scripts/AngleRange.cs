@@ -49,7 +49,7 @@ namespace BulletHellGenerator
 
         [SerializeField]
         [Range(0, 180f)]
-        public float AngleSize = Mathf.PI;
+        public float AngleSize = 180;
     }
 
 #if UNITY_EDITOR

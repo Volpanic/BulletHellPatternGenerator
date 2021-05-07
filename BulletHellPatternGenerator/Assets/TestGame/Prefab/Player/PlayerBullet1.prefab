@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1489218417231770690}
   - component: {fileID: 4881029658516502528}
   - component: {fileID: 6111356478442044201}
-  m_Layer: 0
+  - component: {fileID: -3450981014987443728}
+  m_Layer: 11
   m_Name: PlayerBullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,3 +157,30 @@ MonoBehaviour:
   LoopMode: 1
   references:
     version: 1
+--- !u!114 &-3450981014987443728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662933406394367464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7dfa1f7910dea44851acb141e65be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collider: {fileID: 4881029658516502528}
+  CorrectLayer:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 1024
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0

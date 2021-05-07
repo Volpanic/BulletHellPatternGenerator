@@ -58,7 +58,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         {
             for(int i = 0; i < Patterns.Count; i++)
             {
-                if (Patterns[i].PatternLayers == null || Patterns[i].PatternLayers.Count == 0)
+                if (Patterns[i] == null || Patterns[i].PatternLayers == null || Patterns[i].PatternLayers.Count == 0)
                     continue;
 
                 for (int j = 0; j < Patterns[i].PatternLayers.Count; j++)

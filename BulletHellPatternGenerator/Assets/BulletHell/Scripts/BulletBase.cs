@@ -60,7 +60,7 @@ namespace BulletHellGenerator
                 {
                     EditorGUILayout.BeginHorizontal();
                     Bullets[i] = EditorGUILayout.ObjectField(new GUIContent("Bullet Prefab"), Bullets[i], typeof(GameObject), false, GUILayout.ExpandWidth(true)) as GameObject;
-                    if (GUILayout.Button("X",GUILayout.ExpandWidth(false)))
+                    if (GUILayout.Button("X", GUILayout.ExpandWidth(false)))
                     {
                         Bullets.RemoveAt(i);
                         i--;
@@ -110,18 +110,19 @@ namespace BulletHellGenerator
 
             EditorGUILayout.BeginVertical("Box");
             {
-                EditorGUILayout.BeginHorizontal();
+
                 for (int i = 0; i < Bullets.Count; i++)
                 {
-                    Bullets[i] = EditorGUILayout.ObjectField(new GUIContent("Bullet Prefab"), Bullets[i], typeof(GameObject), false) as GameObject;
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("X"))
+                    EditorGUILayout.BeginHorizontal();
+                    Bullets[i] = EditorGUILayout.ObjectField(new GUIContent("Bullet Prefab"), Bullets[i], typeof(GameObject), false, GUILayout.ExpandWidth(true)) as GameObject;
+                    if (GUILayout.Button("X", GUILayout.ExpandWidth(false)))
                     {
                         Bullets.RemoveAt(i);
                         i--;
                     }
+                    EditorGUILayout.EndHorizontal();
                 }
-                EditorGUILayout.EndHorizontal();
+
 
                 EditorGUILayout.EndVertical();
             }
