@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxLifeTime: 8
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.21643962, w: 0.976296}
   Target: {fileID: 0}
   HomingSpeed: 0
   SpeedModifier: 1
@@ -154,5 +154,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0

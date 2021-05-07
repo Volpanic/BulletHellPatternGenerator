@@ -27,8 +27,8 @@ MonoBehaviour:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 2dd1b48057fed0f42ac624424af98521, type: 3}
-        - {fileID: 1184654237552063843, guid: cd360298c9c26c040af37b0604e73a4c, type: 3}
+        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
+        - {fileID: 1184654237552063843, guid: 7829cd8a75dae6045a226b341b1d220b, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:

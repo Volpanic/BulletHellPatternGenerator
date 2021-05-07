@@ -116,6 +116,7 @@ public class PlayerScript : MonoBehaviour
             if(grazeAmount > 0)
             {
                 Graze += grazeAmount;
+                if (GrazeText != null) GrazeText.text = Graze.ToString();
 
                 if (GrazeEffect != null)
                 {
@@ -124,9 +125,12 @@ public class PlayerScript : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void AddPoints(int PointAmount)
+    {
+        Score += PointAmount;
         if (ScoreText != null) ScoreText.text = Score.ToString();
-        if (GrazeText != null) GrazeText.text = Graze.ToString();
     }
 
     void UpdateLives()

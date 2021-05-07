@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6436085721792558785}
   - component: {fileID: -8688307259590495077}
   m_Layer: 8
-  m_Name: p_bullet_blue
+  m_Name: p_bullet_blue_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Target: {fileID: 0}
-  HomingSpeed: 0
+  HomingSpeed: 10
   SpeedModifier: 1
   RotateRelativeToDirection: 1
   RotationOffset: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}

@@ -45,10 +45,12 @@ namespace BulletHellGenerator
 
         [SerializeField]
         [Range(0,360f)]
+        [Tooltip("The Middle position of the angle from the arc.")]
         public float AnglePosition = 0;
 
         [SerializeField]
         [Range(0, 180f)]
+        [Tooltip("The size of the arc.")]
         public float AngleSize = 180;
     }
 

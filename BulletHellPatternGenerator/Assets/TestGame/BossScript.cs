@@ -20,6 +20,7 @@ public class BossScript : MonoBehaviour
     public BH_BulletHellPatternGenerator Generator;
     public int MaxHp = 0;
     public int CurrentHp = 0;
+    public GameObject PointPaper;
 
     public HealthbarBand[] AttackBands;
 
@@ -86,6 +87,8 @@ public class BossScript : MonoBehaviour
                 bandHpAmount = 128;
             }
 
+            Generator.ClearBullets(CreateScorePaper);
+
             if (currentBand < AttackBands.Length)
             {
                 int newAmount = AttackBands[currentBand].HPAmount + bandHpAmount; // Adds the negatives if below 0
@@ -98,5 +101,10 @@ public class BossScript : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void CreateScorePaper(Transform from)
+    {
+        Instantiate(PointPaper, from.position, Quaternion.identity).GetComponent<PointPaper>().Target = Generator.Target;
     }
 }

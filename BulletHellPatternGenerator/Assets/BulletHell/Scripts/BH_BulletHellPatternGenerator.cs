@@ -70,6 +70,28 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         }
     }
 
+    public void ClearBullets()
+    {
+        if (pooler == null) return;
+
+        for(int i = 0; i < pooler.transform.childCount; i++)
+        {
+            pooler.transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void ClearBullets(Action<Transform> bulletClearEvent)
+    {
+        if (pooler == null) return;
+
+        for (int i = 0; i < pooler.transform.childCount; i++)
+        {
+            var child = pooler.transform.GetChild(i);
+            if(child.gameObject.activeSelf) bulletClearEvent(child);
+            child.gameObject.SetActive(false);
+        }
+    }
+
     #region // Bullet Creation
 
     public BH_Bullet CreateBulletAtDirection(Vector3 position, float Speed, float Angle, GameObject BulletPrefab)
