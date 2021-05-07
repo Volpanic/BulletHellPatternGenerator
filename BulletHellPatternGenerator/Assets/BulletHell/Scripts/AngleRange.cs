@@ -35,20 +35,20 @@ namespace BulletHellGenerator
 
         public float Evaluate(float normalizedPosition)
         {
-            return (MinAngle + (Range * normalizedPosition)) + Mathf.PI;
+            return ((MinAngle + (Range * normalizedPosition)) + 180f) * Mathf.Deg2Rad;
         }
 
         public float EvaluateArc(float initalAngle,float normalizedPosition)
         {
-            return ((initalAngle - AngleSize) + (Range * normalizedPosition));
+            return (((initalAngle * Mathf.Rad2Deg) - AngleSize) + (Range * normalizedPosition)) * Mathf.Deg2Rad;
         }
 
         [SerializeField]
-        [Range(0,Mathf.PI*2)]
+        [Range(0,360f)]
         public float AnglePosition = 0;
 
         [SerializeField]
-        [Range(0, Mathf.PI)]
+        [Range(0, 180f)]
         public float AngleSize = Mathf.PI;
     }
 
@@ -75,17 +75,19 @@ namespace BulletHellGenerator
                 GL.Clear(true, false, Color.black);
 
                 //Draw the actual circle
-                float minAngle = property.FindPropertyRelative("AnglePosition").floatValue - property.FindPropertyRelative("AngleSize").floatValue;
-                float angleSize = property.FindPropertyRelative("AngleSize").floatValue * 2f;
+                float minAngle = (property.FindPropertyRelative("AnglePosition").floatValue * Mathf.Deg2Rad) - (property.FindPropertyRelative("AngleSize").floatValue * Mathf.Deg2Rad);
+                float angleSize = (property.FindPropertyRelative("AngleSize").floatValue * 2f) * Mathf.Deg2Rad;
 
                 float angleSegs = 32;
 
                 float radius = EditorGUIUtility.singleLineHeight * 1.5f;
 
+                Color col = Color.black;
+
                 if (angleSegs > 0)
                 {
                     GL.Begin(GL.QUADS);
-                    GL.Color(Color.white);
+                    GL.Color(col);
 
                     Vector3 p1 = new Vector3(0,0,0);
                     Vector3 p2 = new Vector3(0,0,0);
@@ -96,6 +98,11 @@ namespace BulletHellGenerator
 
                     for (int i = 0; i < angleSegs; i++)
                     {
+                        GL.Color(col);
+                        col.r = Mathf.Lerp(0, 1, i / angleSegs);
+                        col.g = col.r;
+                        col.b = col.r;
+
                         float angle = minAngle + (angleSize * (i / angleSegs));
                         angle -= Mathf.PI;
 

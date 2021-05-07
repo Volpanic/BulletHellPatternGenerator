@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.ParticleSystem;
 
 public class BH_BulletHellPatternGenerator : MonoBehaviour
@@ -21,10 +22,27 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
 
     private List<BH_Bullet> SpawnedBullets = new List<BH_Bullet>();
 
+    private BH_BulletObjectPooler pooler;
+
+    //Prev REv
+    //With Pooling 70 - 90 FPS
+    //Wout Pooling 
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        string poolName = SceneManager.GetActiveScene().name + "bulletGen_pooler";
+        //Search if object exsists, so we don't have multiple poolers, GameObject.Find is expensive but only runs in start
+        GameObject oPool = GameObject.Find(poolName);
+        if(oPool != null)
+        {
+            pooler = oPool.GetComponent<BH_BulletObjectPooler>();
+        }
+        else
+        {
+            //Create Object
+            pooler = new GameObject(poolName).AddComponent<BH_BulletObjectPooler>();
+        }
     }
 
     // Update is called once per frame
@@ -59,7 +77,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         if (BulletPrefab == null) return null;
         Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
 
-        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        BH_Bullet pulse = pooler.PoolInstansiate(BulletPrefab, position, Quaternion.identity);
         pulse.Direction = dir;
         pulse.MoveSpeed = Speed;
         pulse.RelativeDirection = transform.rotation;
@@ -74,7 +92,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         if (BulletPrefab == null) return null;
         Vector3 dir = new Vector3(Mathf.Cos(Angle), Mathf.Sin(Angle), 0);
 
-        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        BH_Bullet pulse = pooler.PoolInstansiate(BulletPrefab, position, Quaternion.identity);
         pulse.Direction = dir;
 
         if (Mathf.Abs(Mathf.Round(dir.x)) > Mathf.Abs(Mathf.Round(dir.y))) dir.x = Mathf.Round(dir.x);
@@ -96,7 +114,7 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
 
         float M = Mathf.Max(Mathf.Abs(dir.x),Mathf.Abs(dir.y));
 
-        BH_Bullet pulse = Instantiate(BulletPrefab, position, Quaternion.identity).GetComponent<BH_Bullet>();
+        BH_Bullet pulse = pooler.PoolInstansiate(BulletPrefab, position, Quaternion.identity);
         pulse.Direction = dir;
         pulse.MoveSpeed = Speed / M;
         pulse.RelativeDirection = transform.rotation;

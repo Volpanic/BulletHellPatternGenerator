@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662933406394367464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.47225, y: 1.7022808, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Target: {fileID: 0}
-  HomingSpeed: 32
+  HomingSpeed: 0
   SpeedModifier: 1
   RotateRelativeToDirection: 1
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}

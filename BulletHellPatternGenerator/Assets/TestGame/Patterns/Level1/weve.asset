@@ -99,8 +99,8 @@ MonoBehaviour:
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 1.16
-          AngleSize: 3.1415927
+          AnglePosition: 0
+          AngleSize: 180
         TargetPlayer: 0
     00000003:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
@@ -171,6 +171,6 @@ MonoBehaviour:
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 1.5707964
-          AngleSize: 3.1415927
+          AnglePosition: 180
+          AngleSize: 180
         TargetPlayer: 0

@@ -102,7 +102,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   HomingSpeed: 0
   SpeedModifier: 1
-  RotateRelativeToDirection: 1
+  RotateRelativeToDirection: 0
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}
   RotationalVelocity: {x: 0, y: 0, z: 0}
   RotatinalVelocityModifier:

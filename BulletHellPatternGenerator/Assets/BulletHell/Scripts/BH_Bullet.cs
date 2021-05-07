@@ -31,7 +31,6 @@ public class BH_Bullet : MonoBehaviour
     public float HomingSpeed = 0;
     public float SpeedModifier = 1;
 
-    private float heatTimer = 0;
 
     //Rotation Stuff
     public bool RotateRelativeToDirection;
@@ -55,6 +54,11 @@ public class BH_Bullet : MonoBehaviour
     private void Start()
     {
         transform.localRotation = RotationOffset;
+    }
+
+    private void OnEnable()
+    {
+        lifeTimer = 0;
     }
 
     // Update is called once per frame
@@ -101,11 +105,12 @@ public class BH_Bullet : MonoBehaviour
         transform.position += ((RelativeDirection * Direction).normalized * (MoveSpeed * SpeedModifier)) * Time.fixedDeltaTime;
 
         lifeTimer += Time.fixedDeltaTime;
-        heatTimer += Time.fixedDeltaTime;
 
         if (lifeTimer >= MaxLifeTime)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
+
         }
 
         if (RotationalVelocity != Vector3.zero)
@@ -122,6 +127,7 @@ public class BH_Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

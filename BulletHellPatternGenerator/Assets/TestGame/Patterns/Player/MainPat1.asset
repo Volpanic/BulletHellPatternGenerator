@@ -72,6 +72,6 @@ MonoBehaviour:
           m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
-          AnglePosition: 4.8
-          AngleSize: 0.15
+          AnglePosition: 272
+          AngleSize: 4
         TargetPlayer: 0
