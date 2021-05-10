@@ -54,11 +54,16 @@ public class BH_Bullet : MonoBehaviour
     private void Start()
     {
         transform.localRotation = RotationOffset;
+
+        Body = GetComponent<Rigidbody>();
+        Body2D = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
     {
         lifeTimer = 0;
+        if (Body != null) Body.velocity = Vector3.zero;
+        if (Body2D != null) Body2D.velocity = Vector2.zero;
     }
 
     // Update is called once per frame
