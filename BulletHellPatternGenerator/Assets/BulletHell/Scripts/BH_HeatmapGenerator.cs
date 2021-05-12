@@ -42,8 +42,8 @@ namespace BulletHellGenerator.Heatmap
         {
             if (SampleSpace != null)
             {
-                BulletMap = new Heatmap((int)SampleSpace.bounds.size.x * UnitPixelScale, (int)SampleSpace.bounds.size.x * UnitPixelScale);
-                PlayerMap = new Heatmap((int)SampleSpace.bounds.size.x * UnitPixelScale, (int)SampleSpace.bounds.size.x * UnitPixelScale);
+                BulletMap = new Heatmap((int)SampleSpace.bounds.size.x * UnitPixelScale, (int)SampleSpace.bounds.size.y * UnitPixelScale);
+                PlayerMap = new Heatmap((int)SampleSpace.bounds.size.x * UnitPixelScale, (int)SampleSpace.bounds.size.y * UnitPixelScale);
             }
             else
             {

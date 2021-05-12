@@ -33,7 +33,7 @@ MonoBehaviour:
       data:
         Interval: 0.2
     00000002:
-      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      type: {class: OctogonPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         BulletAmount:
           m_Mode: 0
@@ -51,8 +51,8 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 2
-        BulletSpeed: 4
+          m_ConstantMax: 32
+        BulletSpeed: 6
         Sequentially: 0
         AngleOffset:
           m_Mode: 0

@@ -10,6 +10,7 @@ using System.IO;
 
 namespace BulletHellGenerator
 {
+    [System.Serializable]
     public class PatternEditor : EditorWindow
     {
         // Rect is dynamically sized, but to get that size we need a 
@@ -49,7 +50,7 @@ namespace BulletHellGenerator
 
         private void OnGUI()
         {
-            GUI.Box(new Rect(BoardRect.x, BoardRect.y + 40, BoardRect.width, BoardRect.height), "Box Tho ╚(•⌂•)╝");
+            GUI.Box(new Rect(BoardRect.x, BoardRect.y + 40, BoardRect.width, BoardRect.height), "Empty");
 
             GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 80, float.MaxValue, float.MaxValue));
             {
@@ -136,6 +137,7 @@ namespace BulletHellGenerator
 
             //Choosing timing type
             GUILayout.Label("Timing", EditorStyles.boldLabel);
+            sData.ApplyModifiedProperties();
 
             if (GUILayout.Button("Change Timing Mode"))
                 TimingChooseMenu.ShowAsContext();
@@ -152,10 +154,12 @@ namespace BulletHellGenerator
 
             //Choosing pattern type
             GUILayout.Label("Pattern", EditorStyles.boldLabel);
+            sData.ApplyModifiedProperties();
 
             if (GUILayout.Button("Change Pattern Mode"))
                 PatternChooseMenu.ShowAsContext();
             layer = Data.PatternLayers[SelectedLayer];
+
 
             if (layer.Pattern != null)
             {
