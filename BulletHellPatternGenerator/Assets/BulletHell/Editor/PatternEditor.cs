@@ -10,7 +10,6 @@ using System.IO;
 
 namespace BulletHellGenerator
 {
-    [System.Serializable]
     public class PatternEditor : EditorWindow
     {
         // Rect is dynamically sized, but to get that size we need a 

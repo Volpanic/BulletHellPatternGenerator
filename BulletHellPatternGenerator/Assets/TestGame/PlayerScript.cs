@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
@@ -66,11 +67,14 @@ public class PlayerScript : MonoBehaviour
             {
                 inWorldBombs[i] = Instantiate(Bomb, BombsCounter.transform);
                 if (i > Bombs) inWorldBombs[i].SetActive(false);
+
+                rHit = true;
+                hitTimer = 3f;
             }
         }
     }
 
-    private Color clearColor = new Color(1f,1f,1f,0.25f);
+    private Color clearColor = new Color(0f,0f,0f,1f);
 
     void Update()
     {
@@ -169,6 +173,11 @@ public class PlayerScript : MonoBehaviour
             {
                 if (i > Lives) inWorldLives[i].SetActive(false);
             }
+        }
+
+        if(Lives < -1)// Should be dead
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
     }
 
