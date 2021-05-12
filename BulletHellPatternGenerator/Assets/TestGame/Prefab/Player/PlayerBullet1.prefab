@@ -127,7 +127,7 @@ MonoBehaviour:
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Target: {fileID: 0}
-  HomingSpeed: 0
+  HomingSpeed: 16
   SpeedModifier: 1
   RotateRelativeToDirection: 1
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}

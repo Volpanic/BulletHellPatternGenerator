@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
-  m_Name: 3DPattern
+  m_Name: p_hard_3
   m_EditorClassIdentifier: 
   PatternLayers:
   - Bullet:
@@ -20,14 +20,17 @@ MonoBehaviour:
     Pattern:
       id: 2
     LayerName: 
-  PatternDuration: 5
+  PatternDuration: 8
   references:
     version: 1
     00000000:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 7599985567584617676, guid: e761cafac7765c6429a7159efb47fc2b, type: 3}
+        - {fileID: 1184654237552063843, guid: 0df35ce754de82d4d9bcb5da5687a4e7, type: 3}
+        - {fileID: 1184654237552063843, guid: 9396bddbca0f91042b10b22bc7d747ba, type: 3}
+        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
+        - {fileID: 1184654237552063843, guid: 7829cd8a75dae6045a226b341b1d220b, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -51,12 +54,12 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 2
+          m_ConstantMax: 16
         BulletSpeed: 4
         Sequentially: 0
         AngleOffset:
-          m_Mode: 0
-          m_CurveMultiplier: 0
+          m_Mode: 1
+          m_CurveMultiplier: 1
           m_CurveMin:
             serializedVersion: 2
             m_Curve: []
@@ -65,9 +68,27 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_CurveMax:
             serializedVersion: 2
-            m_Curve: []
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 1
+              inSlope: -0.18245822
+              outSlope: -0.18245822
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0.23913044
+            - serializedVersion: 3
+              time: 0.5
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 2
+            m_PostInfinity: 0
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0

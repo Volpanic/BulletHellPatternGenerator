@@ -50,6 +50,8 @@ public class BulletEditor : Editor
             bullet.HomingSpeed = EditorGUILayout.FloatField(new GUIContent
                 ("Homing Speed", "Target is set when spawned by BH_BulletHellPatternGenerator."), bullet.HomingSpeed);
 
+            bullet.DisableWhenOffscreen = EditorGUILayout.Toggle(new GUIContent("Disable When Offscreen","If the bullet should be made inactive when offscreen"),bullet.DisableWhenOffscreen);
+
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(target);  

@@ -21,6 +21,8 @@ public class BH_Bullet : MonoBehaviour
     public float MaxLifeTime = 1;
     private float lifeTimer = 0;
 
+    public bool DisableWhenOffscreen = true;
+
     public Quaternion RelativeDirection;
     public Quaternion OrbitalVelcoity = Quaternion.identity;
 
@@ -132,6 +134,7 @@ public class BH_Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
+        if (!DisableWhenOffscreen) return;
         //Destroy(gameObject);
         gameObject.SetActive(false);
     }

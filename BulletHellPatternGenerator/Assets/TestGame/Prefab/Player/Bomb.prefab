@@ -59,6 +59,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  SpawnOnBullets: {fileID: 4507323756350988347, guid: a2fd66fa0ce5ff84fbb344cec1688d01, type: 3}
   MaxRadius: 100
   Duration: 4
 --- !u!58 &6865563281987200675

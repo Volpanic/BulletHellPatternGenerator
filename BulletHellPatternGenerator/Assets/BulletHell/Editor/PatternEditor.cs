@@ -72,7 +72,7 @@ namespace BulletHellGenerator
                         EditorGUI.BeginChangeCheck();
 
                         //if(SelectedLayer < sData.FindProperty("PatternLayers").arraySize)
-                        DrawBoard(Data.PatternLayers[SelectedLayer], sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer));
+                        DrawBoard();
 
                         if (EditorGUI.EndChangeCheck()) SetDirtyAndSave();
                     }
@@ -105,12 +105,15 @@ namespace BulletHellGenerator
             DrawMenuBar();
         }
 
-        private void DrawBoard(BulletHellPattern.PatternLayer layer, SerializedProperty sLayer)
+        private void DrawBoard()
         {
             if (Data == null) return;
             if (sData == null) return;
 
             sData.Update();
+
+            BulletHellPattern.PatternLayer layer = Data.PatternLayers[SelectedLayer];
+            SerializedProperty sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
 
             EditorGUILayout.PropertyField(sData.FindProperty("PatternDuration"));
 
@@ -119,6 +122,8 @@ namespace BulletHellGenerator
 
             if (GUILayout.Button("Change Bullet Mode"))
                 BulletChooseMenu.ShowAsContext();
+            layer = Data.PatternLayers[SelectedLayer];
+
             if (layer.Bullet != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
@@ -134,6 +139,8 @@ namespace BulletHellGenerator
 
             if (GUILayout.Button("Change Timing Mode"))
                 TimingChooseMenu.ShowAsContext();
+            layer = Data.PatternLayers[SelectedLayer];
+
             if (layer.Timing != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
@@ -148,6 +155,8 @@ namespace BulletHellGenerator
 
             if (GUILayout.Button("Change Pattern Mode"))
                 PatternChooseMenu.ShowAsContext();
+            layer = Data.PatternLayers[SelectedLayer];
+
             if (layer.Pattern != null)
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);

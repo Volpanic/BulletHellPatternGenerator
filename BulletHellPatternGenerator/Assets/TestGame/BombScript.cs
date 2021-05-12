@@ -7,6 +7,8 @@ public class BombScript : MonoBehaviour
     public CircleCollider2D BombCollider;
     public ContactFilter2D BulletLayer;
 
+    public GameObject SpawnOnBullets;
+
     public float MaxRadius = 100;
     public float Duration = 4;
 
@@ -27,7 +29,8 @@ public class BombScript : MonoBehaviour
 
         for(int i = 0; i < foundColliders.Count; i++)
         {
-            Destroy(foundColliders[i].gameObject);
+            if(SpawnOnBullets != null) Instantiate(SpawnOnBullets, foundColliders[i].transform.position, Quaternion.identity);
+            foundColliders[i].gameObject.SetActive(false);
             foundColliders.RemoveAt(i);
             i--;
         }

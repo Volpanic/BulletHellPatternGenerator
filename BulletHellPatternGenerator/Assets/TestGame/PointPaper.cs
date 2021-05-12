@@ -13,17 +13,29 @@ public class PointPaper : MonoBehaviour
     private void Start()
     {
         initalPos = transform.position;
-        maxtime = (Target.position - transform.position).magnitude * 0.025f;
+        if(Target != null) maxtime = (Target.position - transform.position).magnitude * 0.025f;
     }
 
     void FixedUpdate()
     {
         timer += Time.deltaTime;
-        transform.position = Vector3.Lerp(initalPos,Target.position, timer / maxtime);
-        if (timer >= maxtime)
+        if (Target != null)
         {
-            Target.BroadcastMessage("AddPoints", 10, SendMessageOptions.DontRequireReceiver);
-            Destroy(gameObject);
+            transform.position = Vector3.Lerp(initalPos, Target.position, timer / maxtime);
+            if (timer >= maxtime)
+            {
+                Target.BroadcastMessage("AddPoints", 10, SendMessageOptions.DontRequireReceiver);
+                Destroy(gameObject);
+            }
         }
+        else
+        {
+            transform.position += Vector3.down * Time.deltaTime * 10f;
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

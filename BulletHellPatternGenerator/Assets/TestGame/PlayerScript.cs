@@ -25,13 +25,19 @@ public class PlayerScript : MonoBehaviour
     public Collider2D GrazeCollider;
     public ContactFilter2D BulletMask;
 
+    [Header("Prefabs")]
+    public GameObject WorldBomb;
+
     [Header("Effects")]
     public ParticleSystem GrazeEffect;
 
     [Header("UI")]
     public HorizontalLayoutGroup LivesCounter;
+    public HorizontalLayoutGroup BombsCounter;
     public GameObject Life;
+    public GameObject Bomb;
     private GameObject[] inWorldLives;
+    private GameObject[] inWorldBombs;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI GrazeText;
 
@@ -51,9 +57,30 @@ public class PlayerScript : MonoBehaviour
                 if (i > Lives) inWorldLives[i].SetActive(false);
             }
         }
+
+        //Create bomb counter
+        if (BombsCounter != null && Bomb != null)
+        {
+            inWorldBombs = new GameObject[MAX_BOMB];
+            for (int i = 0; i < inWorldBombs.Length; i++)
+            {
+                inWorldBombs[i] = Instantiate(Bomb, BombsCounter.transform);
+                if (i > Bombs) inWorldBombs[i].SetActive(false);
+            }
+        }
     }
 
     private Color clearColor = new Color(1f,1f,1f,0.25f);
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X) && Bombs > 0)
+        {
+            Bombs--;
+            if (WorldBomb != null) Instantiate(WorldBomb, transform.position, Quaternion.identity);
+            UpdateBombs();
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -141,6 +168,18 @@ public class PlayerScript : MonoBehaviour
             for (int i = 0; i < inWorldLives.Length; i++)
             {
                 if (i > Lives) inWorldLives[i].SetActive(false);
+            }
+        }
+    }
+
+    void UpdateBombs()
+    {
+        //Create lives in layout group
+        if (BombsCounter != null && Bomb != null)
+        {
+            for (int i = 0; i < inWorldBombs.Length; i++)
+            {
+                if (i > Bombs) inWorldBombs[i].SetActive(false);
             }
         }
     }

@@ -26,8 +26,11 @@ public class BulletHellPattern : ScriptableObject
 
     public float PatternDuration = 5;
 
+    public static object PatternEditor { get; private set; }
+
     private void OnValidate()
     {
         PatternDuration = Mathf.Max(0.01f, PatternDuration);
     }
+
 }
