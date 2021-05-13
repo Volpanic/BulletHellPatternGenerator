@@ -19,33 +19,27 @@ MonoBehaviour:
       id: 1
     Pattern:
       id: 2
-    LayerName: Random
+    LayerName: blue
   - Bullet:
       id: 3
     Timing:
       id: 4
     Pattern:
       id: 5
-    LayerName: Squares
-  - Bullet:
-      id: 6
-    Timing:
-      id: 7
-    Pattern:
-      id: 8
     LayerName: 
-  PatternDuration: 5
+  PatternDuration: 2
   references:
     version: 1
     00000000:
-      type: {class: RandomBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
+      type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 7829cd8a75dae6045a226b341b1d220b, type: 3}
+        - {fileID: 1184654237552063843, guid: 0df35ce754de82d4d9bcb5da5687a4e7, type: 3}
+        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
-        Interval: 0.15
+        Interval: 0.05
     00000002:
       type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -65,7 +59,7 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 2
+          m_ConstantMax: 1
         BulletSpeed: 8
         Sequentially: 0
         AngleOffset:
@@ -82,24 +76,24 @@ MonoBehaviour:
             m_Curve:
             - serializedVersion: 3
               time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
+              value: 0
+              inSlope: 1
+              outSlope: 1
+              tangentMode: 34
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 1
-              value: 0
-              inSlope: -2
-              outSlope: -2
-              tangentMode: 0
+              value: 1
+              inSlope: 1
+              outSlope: 1
+              tangentMode: 34
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 0
+            m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0
@@ -107,16 +101,19 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 1
+        MaxSpeed: 12
+        StackCount: 3
     00000003:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 0df35ce754de82d4d9bcb5da5687a4e7, type: 3}
-        - {fileID: 1184654237552063843, guid: 9396bddbca0f91042b10b22bc7d747ba, type: 3}
+        - {fileID: 1184654237552063843, guid: 799afdc5c01891e47b2f94f33708aae5, type: 3}
+        - {fileID: 1184654237552063843, guid: 10419bbc07bbaea4cbf8f0deff79d9e5, type: 3}
     00000004:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
-        Interval: 0.15
+        Interval: 0.5
     00000005:
       type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -136,61 +133,10 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 8
+          m_ConstantMax: 32
         BulletSpeed: 8
         Sequentially: 0
         AngleOffset:
-          m_Mode: 1
-          m_CurveMultiplier: 1
-          m_CurveMin:
-            serializedVersion: 2
-            m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_CurveMax:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 0.5
-              value: 0
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 0
-            m_RotationOrder: 4
-          m_ConstantMin: 0
-          m_ConstantMax: 0
-        BulletArc:
-          AnglePosition: 0
-          AngleSize: 180
-        TargetPlayer: 0
-    00000006:
-      type: {class: RandomBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
-      data:
-        Bullets:
-        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
-    00000007:
-      type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
-      data:
-        Interval: 0.05
-    00000008:
-      type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
-      data:
-        BulletAmount:
           m_Mode: 0
           m_CurveMultiplier: 0
           m_CurveMin:
@@ -206,45 +152,11 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 2
-        BulletSpeed: 12
-        Sequentially: 0
-        AngleOffset:
-          m_Mode: 1
-          m_CurveMultiplier: 1
-          m_CurveMin:
-            serializedVersion: 2
-            m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          m_CurveMax:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 0.5
-              value: 0
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            m_PreInfinity: 2
-            m_PostInfinity: 0
-            m_RotationOrder: 4
-          m_ConstantMin: 0
           m_ConstantMax: 0
         BulletArc:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 1
+        StackCount: 2

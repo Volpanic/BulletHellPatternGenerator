@@ -74,7 +74,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private Color clearColor = new Color(0f,0f,0f,1f);
+    private Color clearColor = new Color(0.1f,0.1f,0.1f,1f);
 
     void Update()
     {

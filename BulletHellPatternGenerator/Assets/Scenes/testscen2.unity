@@ -6454,7 +6454,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Origami Outline
+  m_text: game tho
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c7bf2c67668c27941b3ab7d5e472c6c7, type: 2}
   m_sharedMaterial: {fileID: 7212427981182664928, guid: c7bf2c67668c27941b3ab7d5e472c6c7, type: 2}

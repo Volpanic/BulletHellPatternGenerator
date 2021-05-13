@@ -96,3 +96,6 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 0
+        StackCount: 0

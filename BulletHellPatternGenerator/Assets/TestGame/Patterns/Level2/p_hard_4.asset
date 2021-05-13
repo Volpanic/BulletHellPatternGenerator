@@ -103,6 +103,9 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 0
+        StackCount: 0
     00000003:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -176,3 +179,6 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 0
+        StackCount: 0

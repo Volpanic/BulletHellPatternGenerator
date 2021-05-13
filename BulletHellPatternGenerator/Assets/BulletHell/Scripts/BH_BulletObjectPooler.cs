@@ -25,6 +25,7 @@ public class BH_BulletObjectPooler : MonoBehaviour
                 P.transform.parent = creator;
                 P.SetActive(false);
                 Objects.Add(P.GetComponent<BH_Bullet>());
+                
             }
         }
 

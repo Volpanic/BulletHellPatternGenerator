@@ -61,6 +61,11 @@ namespace BulletHellGenerator
         public AngleRange BulletArc;
         public bool TargetPlayer = false;
 
+        //Stack
+        public bool Stack = false;
+        public float MaxSpeed = 1;
+        public int StackCount = 2;
+
         private int SeqentialCount;
 
         protected override void GeneratePattern(BH_BulletHellPatternGenerator generator, BulletBase bulletChooser, float duration)
@@ -84,7 +89,8 @@ namespace BulletHellGenerator
                     }
                     AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
-                    generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    if (!Stack) generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    else generator.CreateBulletAtDirectionStack(generator.transform.position, BulletSpeed, MaxSpeed, StackCount, AddAngle, bulletChooser.GetBullet());
                 }
             }
             else
@@ -99,7 +105,8 @@ namespace BulletHellGenerator
                 }
                 AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
-                generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                if (!Stack) generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                else generator.CreateBulletAtDirectionStack(generator.transform.position, BulletSpeed, MaxSpeed, StackCount, AddAngle, bulletChooser.GetBullet());
                 SeqentialCount %= bulletAmount;
             }
         }
@@ -108,7 +115,21 @@ namespace BulletHellGenerator
         public override void OnGUI(SerializedProperty pattern)
         {
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
-            BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+
+            Stack = EditorGUILayout.Toggle(new GUIContent("Stack"), Stack);
+            if (!Stack) BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Stack Speed",GUILayout.ExpandWidth(false));
+                BulletSpeed = EditorGUILayout.FloatField(BulletSpeed);
+                MaxSpeed = EditorGUILayout.FloatField(MaxSpeed);
+
+                EditorGUILayout.EndHorizontal();
+
+                StackCount = EditorGUILayout.IntField(new GUIContent("Stack Count"), StackCount);
+                StackCount = Mathf.Max(StackCount, 2);
+            }
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
             TargetPlayer = EditorGUILayout.Toggle(new GUIContent("Aim at Target"), TargetPlayer);
@@ -129,6 +150,11 @@ namespace BulletHellGenerator
         public AngleRange BulletArc;
         public bool TargetPlayer = false;
 
+        //Stack
+        public bool Stack = false;
+        public float MaxSpeed = 1;
+        public int StackCount = 2;
+
         private int SeqentialCount;
 
         protected override void GeneratePattern(BH_BulletHellPatternGenerator generator, BulletBase bulletChooser, float duration)
@@ -152,7 +178,8 @@ namespace BulletHellGenerator
                     }
                     AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
-                    generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    if(!Stack) generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    else generator.CreateBulletAtDirectionOctStack(generator.transform.position, BulletSpeed,MaxSpeed,StackCount, AddAngle, bulletChooser.GetBullet());
                 }
             }
             else
@@ -168,7 +195,8 @@ namespace BulletHellGenerator
                 AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
 
-                generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                if(!Stack) generator.CreateBulletAtDirectionOct(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                else generator.CreateBulletAtDirectionOctStack(generator.transform.position, BulletSpeed,MaxSpeed,StackCount, AddAngle, bulletChooser.GetBullet());
                 SeqentialCount %= bulletAmount;
             }
         }
@@ -177,7 +205,20 @@ namespace BulletHellGenerator
         public override void OnGUI(SerializedProperty pattern)
         {
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
-            BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+            Stack = EditorGUILayout.Toggle(new GUIContent("Stack"), Stack);
+            if (!Stack) BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Stack Speed", GUILayout.ExpandWidth(false));
+                BulletSpeed = EditorGUILayout.FloatField(BulletSpeed);
+                MaxSpeed = EditorGUILayout.FloatField(MaxSpeed);
+
+                EditorGUILayout.EndHorizontal();
+
+                StackCount = EditorGUILayout.IntField(new GUIContent("Stack Count"), StackCount);
+                StackCount = Mathf.Max(StackCount, 2);
+            }
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));
             TargetPlayer = EditorGUILayout.Toggle(new GUIContent("Aim at Target"), TargetPlayer);
@@ -196,6 +237,11 @@ namespace BulletHellGenerator
         public bool Sequentially = false;
         public MinMaxCurve AngleOffset = new MinMaxCurve(0);
         public bool TargetPlayer = false;
+
+        //Stack
+        public bool Stack = false;
+        public float MaxSpeed = 1;
+        public int StackCount = 2;
 
         private int SeqentialCount;
 
@@ -222,8 +268,8 @@ namespace BulletHellGenerator
                     }
                     AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
 
-
-                    generator.CreateBulletAtDirectionSquare(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    if (!Stack) generator.CreateBulletAtDirectionSquare(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                    else generator.CreateBulletAtDirectionSquareStack(generator.transform.position, BulletSpeed, MaxSpeed, StackCount, AddAngle, bulletChooser.GetBullet());
                 }
             }
             else
@@ -238,7 +284,10 @@ namespace BulletHellGenerator
                     AddAngle = (seg * SeqentialCount++) + generator.TargetAngle; // With credence to generator target
                 }
                 AddAngle += (Wrappers.Extension.MinMaxEvaluate(AngleOffset, durationTimer / duration)) * MaxRadians;// With credence to the Angle Offset
-                generator.CreateBulletAtDirection(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+
+                if(!Stack) generator.CreateBulletAtDirectionSquare(generator.transform.position, BulletSpeed, AddAngle, bulletChooser.GetBullet());
+                else generator.CreateBulletAtDirectionSquareStack(generator.transform.position, BulletSpeed,MaxSpeed,StackCount, AddAngle, bulletChooser.GetBullet());
+
                 SeqentialCount %= bulletAmount;
             }
         }
@@ -247,7 +296,20 @@ namespace BulletHellGenerator
         public override void OnGUI(SerializedProperty pattern)
         {
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("BulletAmount"), new GUIContent("Bullet Amount"));
-            BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+            Stack = EditorGUILayout.Toggle(new GUIContent("Stack"), Stack);
+            if (!Stack) BulletSpeed = EditorGUILayout.FloatField(new GUIContent("Bullet Speed"), BulletSpeed);
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Stack Speed", GUILayout.ExpandWidth(false));
+                BulletSpeed = EditorGUILayout.FloatField(BulletSpeed);
+                MaxSpeed = EditorGUILayout.FloatField(MaxSpeed);
+
+                EditorGUILayout.EndHorizontal();
+
+                StackCount = EditorGUILayout.IntField(new GUIContent("Stack Count"), StackCount);
+                StackCount = Mathf.Max(StackCount, 2);
+            }
             Sequentially = EditorGUILayout.Toggle(new GUIContent("Sequentially"), Sequentially);
             TargetPlayer = EditorGUILayout.Toggle(new GUIContent("Aim at Target"), TargetPlayer);
             EditorGUILayout.PropertyField(pattern.FindPropertyRelative("Pattern").FindPropertyRelative("AngleOffset"), new GUIContent("Angle Offset"));

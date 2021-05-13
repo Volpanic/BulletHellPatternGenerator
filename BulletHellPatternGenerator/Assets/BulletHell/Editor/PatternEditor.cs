@@ -108,6 +108,7 @@ namespace BulletHellGenerator
         private void DrawBoard()
         {
             if (Data == null) return;
+            if (Data.PatternLayers == null) return;
             if (sData == null) return;
 
             sData.Update();
@@ -128,7 +129,7 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null)
+                if (sLayer != null && layer.Bullet != null)
                     layer.Bullet.OnGUI(sLayer);
             }
 
@@ -146,7 +147,7 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null)
+                if (sLayer != null && layer.Timing != null)
                     layer.Timing.OnGUI(sLayer);
             }
             DrawSeparator();
@@ -164,7 +165,7 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null)
+                if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null && layer.Pattern != null)
                     layer.Pattern.OnGUI(sLayer);
             }
 
@@ -230,6 +231,9 @@ namespace BulletHellGenerator
             p.Pattern = (PatternBase)Activator.CreateInstance(patternChooseTypes[(int)typeIndex]);
             Data.PatternLayers[SelectedLayer] = p;
 
+            sData.ApplyModifiedProperties();
+            sData = new SerializedObject(Data);
+
             SetDirtyAndSave();
             Repaint();
         }
@@ -244,6 +248,10 @@ namespace BulletHellGenerator
             var p = Data.PatternLayers[SelectedLayer];
             p.Timing = (TimingBase)Activator.CreateInstance(timingChooseTypes[(int)typeIndex]);
             Data.PatternLayers[SelectedLayer] = p;
+
+            sData.ApplyModifiedProperties();
+            sData = new SerializedObject(Data);
+
             SetDirtyAndSave();
             Repaint();
         }
@@ -258,6 +266,10 @@ namespace BulletHellGenerator
             var p = Data.PatternLayers[SelectedLayer];
             p.Bullet = (BulletBase)Activator.CreateInstance(bulletChooseTypes[(int)typeIndex]);
             Data.PatternLayers[SelectedLayer] = p;
+
+            sData.ApplyModifiedProperties();
+            sData = new SerializedObject(Data);
+
             SetDirtyAndSave();
             Repaint();
         }

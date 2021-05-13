@@ -145,5 +145,33 @@ public class BH_BulletHellPatternGenerator : MonoBehaviour
         SpawnedBullets.Add(pulse);
         return pulse;
     }
+
+    public void CreateBulletAtDirectionStack(Vector3 position, float MinSpeed, float MaxSpeed, int StackCount,float Angle, GameObject BulletPrefab)
+    {
+        for(int i = 0; i < StackCount; i++)
+        {
+            float speed = Mathf.Lerp(MinSpeed, MaxSpeed, (float)i / (float)StackCount);
+            CreateBulletAtDirection(position,speed,Angle,BulletPrefab);
+        }
+    }
+
+    public void CreateBulletAtDirectionOctStack(Vector3 position, float MinSpeed, float MaxSpeed, int StackCount, float Angle, GameObject BulletPrefab)
+    {
+        for (int i = 0; i < StackCount; i++)
+        {
+            float speed = Mathf.Lerp(MinSpeed, MaxSpeed, (float)i / (float)StackCount);
+            CreateBulletAtDirectionOct(position, speed, Angle, BulletPrefab);
+        }
+    }
+
+    public void CreateBulletAtDirectionSquareStack(Vector3 position, float MinSpeed, float MaxSpeed, int StackCount, float Angle, GameObject BulletPrefab)
+    {
+        for (int i = 0; i < StackCount; i++)
+        {
+            float speed = Mathf.Lerp(MinSpeed, MaxSpeed, (float)i / (float)StackCount);
+            CreateBulletAtDirectionSquare(position, speed, Angle, BulletPrefab);
+        }
+    }
+
     #endregion
 }
