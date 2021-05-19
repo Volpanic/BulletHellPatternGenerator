@@ -28,6 +28,7 @@ MonoBehaviour:
       data:
         Bullets:
         - {fileID: 7599985567584617676, guid: e761cafac7765c6429a7159efb47fc2b, type: 3}
+        - {fileID: 7599985567584617676, guid: 65693838d11b4024d82f5a7213b6c749, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -75,3 +76,6 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 0
+        StackCount: 0

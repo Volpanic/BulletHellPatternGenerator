@@ -7,11 +7,6 @@ using static UnityEngine.ParticleSystem;
 
 public class BH_Bullet : MonoBehaviour
 {
-    // Positinal Velocity
-    // Rotatinal Velocity
-    // Orbital Velocity
-    // LIFE
-
     public enum BulletEventLoopMode
     {
         Stop = 0,
