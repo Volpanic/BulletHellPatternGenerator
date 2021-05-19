@@ -51,7 +51,7 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 64
+          m_ConstantMax: 32
         BulletSpeed: 3
         Sequentially: 0
         AngleOffset:
@@ -95,4 +95,4 @@ MonoBehaviour:
         TargetPlayer: 0
         Stack: 0
         MaxSpeed: 0
-        StackCount: 0
+        StackCount: 2
