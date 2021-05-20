@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLifeTime: 2
+  DisableWhenOffscreen: 1
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
   OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
   Target: {fileID: 0}
@@ -184,3 +185,4 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  sRenderer: {fileID: 1489218417231770690}

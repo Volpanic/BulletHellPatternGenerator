@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BossScript : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class BossScript : MonoBehaviour
 
     private int bandHpAmount = 0;
     private int currentBand = 0;
+
+    public UnityEvent OnDeath;
+
+    private bool dead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +81,8 @@ public class BossScript : MonoBehaviour
         bandHpAmount -= Amount;
         CurrentHp -= Amount;
 
+        if (dead) return;
+
         //Whiles in case a bands hp is 0, or the player does a lot of damage
         while(bandHpAmount <= 0)
         {
@@ -97,7 +104,8 @@ public class BossScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("Dead");
+                dead = true;
+                OnDeath.Invoke();
                 break;
             }
         }

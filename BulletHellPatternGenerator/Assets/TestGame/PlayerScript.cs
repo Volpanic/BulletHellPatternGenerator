@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     public Collider2D BaseCollider;
     public Collider2D GrazeCollider;
     public ContactFilter2D BulletMask;
+    public Collider Space;
 
     [Header("Prefabs")]
     public GameObject WorldBomb;
@@ -41,6 +43,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject[] inWorldBombs;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI GrazeText;
+
+    public UnityEvent OnDeath;
 
     private float hitTimer = 0;
     private bool rHit = false;
@@ -66,7 +70,7 @@ public class PlayerScript : MonoBehaviour
             for (int i = 0; i < inWorldBombs.Length; i++)
             {
                 inWorldBombs[i] = Instantiate(Bomb, BombsCounter.transform);
-                if (i > Bombs) inWorldBombs[i].SetActive(false);
+                if (i > Bombs-1) inWorldBombs[i].SetActive(false);
 
                 rHit = true;
                 hitTimer = 3f;
@@ -102,6 +106,9 @@ public class PlayerScript : MonoBehaviour
             sRenderer.color = Color.white;
             transform.position += direction * MoveSpeed * Time.fixedDeltaTime;
         }
+
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, Space.bounds.min.x, Space.bounds.max.x),
+            Mathf.Clamp(transform.position.y, Space.bounds.min.y, Space.bounds.max.y), transform.position.z);
 
         if (rHit)
         {
@@ -177,7 +184,7 @@ public class PlayerScript : MonoBehaviour
 
         if(Lives < -1)// Should be dead
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            OnDeath.Invoke();
         }
     }
 
@@ -188,7 +195,7 @@ public class PlayerScript : MonoBehaviour
         {
             for (int i = 0; i < inWorldBombs.Length; i++)
             {
-                if (i > Bombs) inWorldBombs[i].SetActive(false);
+                if (i > Bombs-1) inWorldBombs[i].SetActive(false);
             }
         }
     }

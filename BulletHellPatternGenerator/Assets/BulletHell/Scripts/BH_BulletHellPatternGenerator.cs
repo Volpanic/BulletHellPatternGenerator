@@ -11,7 +11,6 @@ using static UnityEngine.ParticleSystem;
 public class BH_BulletHellPatternGenerator : MonoBehaviour
 {
     public List<BulletHellPattern> Patterns;
-    public MinMaxCurve Curve;
     public BH_HeatmapGenerator HeatmapGen;
 
     public float TargetAngle { get { return targetAngle; } }
