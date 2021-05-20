@@ -75,3 +75,6 @@ MonoBehaviour:
           AnglePosition: 272
           AngleSize: 4
         TargetPlayer: 0
+        Stack: 0
+        MaxSpeed: 0
+        StackCount: 0
