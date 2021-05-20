@@ -1,4 +1,5 @@
-﻿using BulletHellGenerator.BulletEvents;
+﻿using BulletHellGenerator;
+using BulletHellGenerator.BulletEvents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -154,7 +155,7 @@ public class BulletEditor : Editor
         addEventWindow.AddItem(new GUIContent("Transition to Direction"),false, () => AddBulletEvent<BERotateTowardsDirection>());
     }
 
-    private void AddBulletEvent<BE>() where BE : BulletEvents, new()
+    private void AddBulletEvent<BE>() where BE : BulletEvent, new()
     {
         if(bullet != null)
         {
@@ -164,7 +165,7 @@ public class BulletEditor : Editor
             //Crate the list
             if (bullet.bulletEvents == null)
             {
-                bullet.bulletEvents = new List<BulletEvents>();
+                bullet.bulletEvents = new List<BulletEvent>();
             }
             bullet.bulletEvents.Add(new BE());
 

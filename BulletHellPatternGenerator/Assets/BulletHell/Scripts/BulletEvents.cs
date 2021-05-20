@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BulletHellGenerator.BulletEvents
 {
     [System.Serializable]
-    public abstract class BulletEvents
+    public abstract class BulletEvent
     {
         public abstract void OnReset(); // Reset all values in case events repeat
         public abstract bool OnUpdate(BH_Bullet bullet); // Update the event, returns true if event done.
@@ -19,7 +19,7 @@ namespace BulletHellGenerator.BulletEvents
     #region // Wait for X Seconds
 
     [System.Serializable]
-    public class BEWaitForSeconds : BulletEvents
+    public class BEWaitForSeconds : BulletEvent
     {
         public float MaxTime = 1;
         private float timer = 0;
@@ -48,7 +48,7 @@ namespace BulletHellGenerator.BulletEvents
 
     #region // Transition To move speed
     [System.Serializable]
-    public class BEToMoveSpeed : BulletEvents
+    public class BEToMoveSpeed : BulletEvent
     {
         public float TransitonDuration = 1;
         public float TargetSpeed = 0;
@@ -105,7 +105,7 @@ namespace BulletHellGenerator.BulletEvents
 
     #region // Transition To move speed
     [System.Serializable]
-    public class BEToHomingSpeed : BulletEvents
+    public class BEToHomingSpeed : BulletEvent
     {
         public float TransitonDuration = 1;
         public float TargetSpeed = 0;
@@ -163,7 +163,7 @@ namespace BulletHellGenerator.BulletEvents
     #region // Rotate Direction
 
     [System.Serializable]
-    public class BERotateTowardsDirection : BulletEvents
+    public class BERotateTowardsDirection : BulletEvent
     {
         public float TransitonDuration = 1;
         public Vector3 TargetDirection = Vector3.right;
