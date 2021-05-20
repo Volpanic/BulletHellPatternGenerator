@@ -28,12 +28,19 @@ namespace BulletHellGenerator
         public static PatternEditor OpenWindow()
         {
             PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
+            window.maxSize = new Vector2(512 + 32, 1024);
+            window.minSize = new Vector2(512 + 32, 512);
             return window;
         }
 
         public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
         {
             PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
+
+            window.maxSize = new Vector2(512 + 32, 1024);
+            window.minSize = new Vector2(512 + 32, 512);
+
+
             PatternEditor.Data = asset;
             PatternEditor.sData = new SerializedObject(PatternEditor.Data);
 
@@ -64,10 +71,16 @@ namespace BulletHellGenerator
                         if (Data.PatternLayers == null || Data.PatternLayers.Count == 0)
                         {
                             Data.PatternLayers = new List<BulletHellPattern.PatternLayer>();
-                            Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
+
+                            BulletHellPattern.PatternLayer pl = new BulletHellPattern.PatternLayer();
+                            pl.Bullet = new AlternatingBullets();
+                            pl.Timing = new EveryXSecondTiming();
+                            pl.Pattern = new RingPattern();
+
+                            Data.PatternLayers.Add(pl);
                         }
 
-                        SelectedLayer = Mathf.Clamp(SelectedLayer, 0, sData.FindProperty("PatternLayers").arraySize-1);
+                        SelectedLayer = Mathf.Max(0, sData.FindProperty("PatternLayers").arraySize - 1);
 
                         EditorGUI.BeginChangeCheck();
 
@@ -171,7 +184,7 @@ namespace BulletHellGenerator
 
             DrawSeparator();
             SetDirtyAndSave();
-            sData.ApplyModifiedProperties();
+            if (sData != null) sData.ApplyModifiedProperties();
         }
 
         private static System.Type[] bulletChooseTypes;
@@ -319,7 +332,7 @@ namespace BulletHellGenerator
                 GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
                 {
 
-                    GUILayout.BeginHorizontal(EditorStyles.toolbar,GUILayout.ExpandWidth(false));
+                    GUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(false));
                     {
                         SelectedLayer = EditorGUILayout.IntPopup(SelectedLayer, names, values, EditorStyles.toolbarPopup);
 
@@ -354,9 +367,9 @@ namespace BulletHellGenerator
                         //    SelectedLayer = Data.PatternLayers.Count - 1;
                         //    SetDirtyAndSave();
                         //}
-                       
+
                         var sPattern = Data.PatternLayers[SelectedLayer];
-                        EditorGUILayout.LabelField("Layer Name",GUILayout.Width(70));
+                        EditorGUILayout.LabelField("Layer Name", GUILayout.Width(70));
                         sPattern.LayerName = EditorGUILayout.TextField(Data.PatternLayers[SelectedLayer].LayerName);
                         Data.PatternLayers[SelectedLayer] = sPattern;
 

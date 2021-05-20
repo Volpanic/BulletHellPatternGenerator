@@ -22,7 +22,7 @@ public class BulletHellPattern : ScriptableObject
         public string LayerName;
     }
 
-    public List<PatternLayer> PatternLayers;
+    public List<PatternLayer> PatternLayers = new List<PatternLayer>();
 
     public float PatternDuration = 5;
 
@@ -31,6 +31,7 @@ public class BulletHellPattern : ScriptableObject
     private void OnValidate()
     {
         PatternDuration = Mathf.Max(0.01f, PatternDuration);
+
     }
 
 }
