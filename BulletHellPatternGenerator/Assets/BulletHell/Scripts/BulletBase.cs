@@ -9,24 +9,11 @@ namespace BulletHellGenerator
     [System.Serializable]
     public abstract class BulletBase
     {
-        //Edits the prefab instance to contain the bullet script
-        private void SetupPrefab()
-        {
-
-        }
-
         //Returns a bullet
         public virtual GameObject GetBullet()
         {
             return null;
         }
-
-#if UNITY_EDITOR
-        public virtual void OnGUI(SerializedProperty pattern)
-        {
-
-        }
-#endif
     }
 
     #region Alternating Bullets
@@ -48,38 +35,6 @@ namespace BulletHellGenerator
             if (Bullets.Count == 0) return null;
             return Bullets[ToPick++ % Bullets.Count];
         }
-
-#if UNITY_EDITOR
-        public override void OnGUI(SerializedProperty pattern)
-        {
-            if (Bullets == null) Bullets = new List<GameObject>();
-
-            EditorGUILayout.BeginVertical("Box");
-            {
-
-                for (int i = 0; i < Bullets.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    Bullets[i] = EditorGUILayout.ObjectField(new GUIContent("Bullet Prefab"), Bullets[i], typeof(GameObject), false, GUILayout.ExpandWidth(true)) as GameObject;
-                    if (GUILayout.Button("X", GUILayout.ExpandWidth(false)))
-                    {
-                        Bullets.RemoveAt(i);
-                        i--;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
-
-                EditorGUILayout.EndVertical();
-            }
-
-            //GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Add Bullet", GUILayout.MaxWidth(128)))
-            {
-                Bullets.Add(null);
-            }
-        }
-#endif
     }
     #endregion
 
@@ -104,37 +59,6 @@ namespace BulletHellGenerator
             return Bullets[Random.Range(0, Bullets.Count)];
         }
 
-#if UNITY_EDITOR
-        public override void OnGUI(SerializedProperty pattern)
-        {
-            if (Bullets == null) Bullets = new List<GameObject>();
-
-            EditorGUILayout.BeginVertical("Box");
-            {
-
-                for (int i = 0; i < Bullets.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    Bullets[i] = EditorGUILayout.ObjectField(new GUIContent("Bullet Prefab"), Bullets[i], typeof(GameObject), false, GUILayout.ExpandWidth(true)) as GameObject;
-                    if (GUILayout.Button("X", GUILayout.ExpandWidth(false)))
-                    {
-                        Bullets.RemoveAt(i);
-                        i--;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
-
-                EditorGUILayout.EndVertical();
-            }
-
-            //GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Add Bullet", GUILayout.MaxWidth(128)))
-            {
-                Bullets.Add(null);
-            }
-        }
-#endif
     }
     #endregion
 }

@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BulletHellGenerator;
+using static UnityEngine.ParticleSystem;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "NewBulletHellPattern")]
 public class BulletHellPattern : ScriptableObject 
 {
     [System.Serializable]
-    public struct PatternLayer
+    public class PatternLayer
     {
         [SerializeReference]
+        [Header("Bullets")]
         public BulletBase Bullet;
 
         [SerializeReference]
+        [Header("Timing")]
         public TimingBase Timing;
 
         [SerializeReference]
+        [Header("Pattern")]
         public PatternBase Pattern;
 
         public string LayerName;

@@ -27,11 +27,12 @@ MonoBehaviour:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
         Bullets:
-        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
+        - {fileID: 1184654237552063843, guid: 0df35ce754de82d4d9bcb5da5687a4e7, type: 3}
+        - {fileID: 1184654237552063843, guid: 0df35ce754de82d4d9bcb5da5687a4e7, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
-        Interval: 0.2
+        Interval: 0.025
     00000002:
       type: {class: RingPattern, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -52,11 +53,11 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 32
-        BulletSpeed: 3
-        Sequentially: 0
+        BulletSpeed: 8
+        Sequentially: 1
         AngleOffset:
-          m_Mode: 1
-          m_CurveMultiplier: 1
+          m_Mode: 3
+          m_CurveMultiplier: 0
           m_CurveMin:
             serializedVersion: 2
             m_Curve: []
@@ -65,34 +66,16 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_CurveMax:
             serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 1
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
-            - serializedVersion: 3
-              time: 0.5
-              value: 0
-              inSlope: 0
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0
-              outWeight: 0
+            m_Curve: []
             m_PreInfinity: 2
-            m_PostInfinity: 0
+            m_PostInfinity: 2
             m_RotationOrder: 4
-          m_ConstantMin: 0
-          m_ConstantMax: 0
+          m_ConstantMin: -0.05
+          m_ConstantMax: 0.05
         BulletArc:
-          AnglePosition: 360
+          AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
-        Stack: 0
-        MaxSpeed: 0
-        StackCount: 2
+        Stack: 1
+        MaxSpeed: 12
+        StackCount: 4

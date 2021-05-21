@@ -115,6 +115,7 @@ namespace BulletHellGenerator
 
                 GUILayout.EndArea();
             }
+
             DrawMenuBar();
         }
 
@@ -142,8 +143,8 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null && layer.Bullet != null)
-                    layer.Bullet.OnGUI(sLayer);
+                //if (sLayer != null && layer.Bullet != null)
+                    //layer.Bullet.OnGUI(sLayer);
             }
 
             DrawSeparator();
@@ -160,8 +161,8 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null && layer.Timing != null)
-                    layer.Timing.OnGUI(sLayer);
+                //if (sLayer != null && layer.Timing != null)
+                   // layer.Timing.OnGUI(sLayer);
             }
             DrawSeparator();
 
@@ -178,8 +179,8 @@ namespace BulletHellGenerator
             {
                 GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
                 sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null && layer.Pattern != null)
-                    layer.Pattern.OnGUI(sLayer);
+                //if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null && layer.Pattern != null)
+                    //layer.Pattern.OnGUI(sLayer);
             }
 
             DrawSeparator();
@@ -326,7 +327,7 @@ namespace BulletHellGenerator
                 for (int i = 0; i < values.Length; i++)
                 {
                     values[i] = i;
-                    names[i] = new GUIContent(i.ToString() + " - " + Data.PatternLayers[i].LayerName);
+                    names[i]  = new GUIContent(i.ToString() + " - " + Data.PatternLayers[i].LayerName);
                 }
 
                 GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
@@ -396,6 +397,7 @@ namespace BulletHellGenerator
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
             GUI.backgroundColor = Color.white;
         }
+
     }
 
     //Draw inspector for scriptable object

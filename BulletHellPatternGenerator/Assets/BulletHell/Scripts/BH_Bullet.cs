@@ -9,12 +9,6 @@ namespace BulletHellGenerator
 {
     public class BH_Bullet : MonoBehaviour
     {
-        public enum BulletEventLoopMode
-        {
-            Stop = 0,
-            Repeat = 1
-        }
-
         public float MaxLifeTime = 1;
         private float lifeTimer = 0;
 
@@ -35,20 +29,14 @@ namespace BulletHellGenerator
         public bool RotateRelativeToDirection;
         public Quaternion RotationOffset;
         public Vector3 RotationalVelocity;
-        public MinMaxCurve RotatinalVelocityModifier = new MinMaxCurve(1);
 
         //Crust
         public Rigidbody Body;
         public Rigidbody2D Body2D;
 
-        [SerializeReference]
-        public List<BulletEvent> bulletEvents = new List<BulletEvent>();
-        private int bulletEventIndex;
-
         public Vector3 Direction = Vector3.right;
         public float MoveSpeed = 0;
 
-        public BulletEventLoopMode LoopMode = BulletEventLoopMode.Repeat;
 
         private void Start()
         {
@@ -68,35 +56,6 @@ namespace BulletHellGenerator
         // Update is called once per frame
         void FixedUpdate()
         {
-            //Bullet Event stack
-            if (bulletEvents != null && bulletEvents.Count > 0 && bulletEventIndex >= 0)
-            {
-                if (bulletEvents[bulletEventIndex].OnUpdate(this))
-                {
-                    bulletEventIndex++;
-
-                    //Still in bounds
-                    if (bulletEventIndex >= bulletEvents.Count)
-                    {
-                        switch (LoopMode)
-                        {
-                            case BulletEventLoopMode.Stop:
-                                {
-                                    bulletEventIndex = -1;
-                                    break;
-                                }
-
-                            default:
-                                {
-                                    bulletEventIndex = 0;
-                                    bulletEvents[bulletEventIndex].OnReset();
-                                    break;
-                                }
-                        }
-                    }
-                }
-            }
-
             //Apply Orbital velcoity
             Direction += ((OrbitalVelcoity) * Direction) * Time.fixedDeltaTime;
 
@@ -115,12 +74,6 @@ namespace BulletHellGenerator
                 //Destroy(gameObject);
                 gameObject.SetActive(false);
 
-            }
-
-            if (RotationalVelocity != Vector3.zero)
-            {
-                RotationOffset = Quaternion.Euler(RotationOffset.eulerAngles + (RotationalVelocity
-                    * Extension.MinMaxEvaluate(RotatinalVelocityModifier, lifeTimer / MaxLifeTime)) * Time.deltaTime);
             }
 
             if (RotateRelativeToDirection)

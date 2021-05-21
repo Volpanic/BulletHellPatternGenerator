@@ -65,9 +65,7 @@ namespace BulletHellGenerator
             //EditorGUI.LabelField(position, label);
 
             //oxymoron name, i know
-            Rect circleRect = new Rect(position.position, new Vector2(EditorGUIUtility.singleLineHeight * 6, EditorGUIUtility.singleLineHeight * 4));
-
-            EditorGUI.HelpBox(circleRect, "", MessageType.None);
+            Rect circleRect = new Rect(position.position, new Vector2(EditorGUIUtility.singleLineHeight * 6, EditorGUIUtility.singleLineHeight * 2));
 
             //Draw the circle in the box
             if (Event.current.type == EventType.Repaint)
@@ -80,9 +78,9 @@ namespace BulletHellGenerator
                 float minAngle = (property.FindPropertyRelative("AnglePosition").floatValue * Mathf.Deg2Rad) - (property.FindPropertyRelative("AngleSize").floatValue * Mathf.Deg2Rad);
                 float angleSize = (property.FindPropertyRelative("AngleSize").floatValue * 2f) * Mathf.Deg2Rad;
 
-                float angleSegs = 32;
+                float angleSegs = 64;
 
-                float radius = EditorGUIUtility.singleLineHeight * 1.5f;
+                float radius = EditorGUIUtility.singleLineHeight * 0.85f;
 
                 Color col = Color.black;
 

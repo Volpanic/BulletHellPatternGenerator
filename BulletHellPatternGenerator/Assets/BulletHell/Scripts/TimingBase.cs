@@ -14,12 +14,6 @@ namespace BulletHellGenerator
             return true;
         }
 
-        #if UNITY_EDITOR
-        public virtual void OnGUI(SerializedProperty pattern)
-        {
-
-        }
-        #endif
     }
 
     #region Every X Seconds
@@ -48,14 +42,6 @@ namespace BulletHellGenerator
             }
             return false;
         }
-
-        #if UNITY_EDITOR
-        public override void OnGUI(SerializedProperty pattern)
-        {
-            Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);
-            Interval = Mathf.Clamp(Interval,0, float.MaxValue);
-        }
-        #endif
     }
     #endregion
 
@@ -88,13 +74,6 @@ namespace BulletHellGenerator
             }
             return false;
         }
-
-#if UNITY_EDITOR
-        public override void OnGUI(SerializedProperty pattern)
-        {
-            EditorGUILayout.LabelField("No settings to adjust",EditorStyles.centeredGreyMiniLabel);
-        }
-#endif
     }
     #endregion
 
@@ -141,15 +120,6 @@ namespace BulletHellGenerator
             }
             return false;
         }
-
-#if UNITY_EDITOR
-        public override void OnGUI(SerializedProperty pattern)
-        {
-            Interval = EditorGUILayout.FloatField(new GUIContent("Interval"), Interval);
-            OnOffPoints = EditorGUILayout.CurveField(new GUIContent("On Off Points"), OnOffPoints);
-            Interval = Mathf.Clamp(Interval, 0, float.MaxValue);
-        }
-#endif
     }
     #endregion
 }

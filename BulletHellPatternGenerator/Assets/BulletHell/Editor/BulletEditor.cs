@@ -59,89 +59,6 @@ public class BulletEditor : Editor
             }
         }
 
-        //Draw Bullet events
-        EditorGUILayout.LabelField("Bullet Events", EditorStyles.centeredGreyMiniLabel);
-        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,GUILayout.MaxHeight(256),GUILayout.ExpandHeight(true));
-        {
-            if (bullet.bulletEvents != null)
-            {
-                for (int i = 0; i < bullet.bulletEvents.Count; i++)
-                {
-                    EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-                    {
-                        // Display data for each node
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            GUILayout.Label(bullet.bulletEvents[i].GetType().Name);
-
-                            //Remove Button
-                            if(GUILayout.Button("✘"))
-                            {
-                                Undo.RecordObject(target,"Bullet Event Removed");
-                                bullet.bulletEvents.RemoveAt(i);
-                                i--;
-                                EditorUtility.SetDirty(target);
-                                continue;
-                            }
-
-                            //MoveUp Button
-                            if (GUILayout.Button("▲") && i != 0)
-                            {
-                                Undo.RecordObject(target, "Bullet Event Moved Up");
-                                bullet.bulletEvents.Reverse(i-1, 2);
-                                i--;
-                                EditorUtility.SetDirty(target);
-                                continue;
-                            }
-
-                            //MoveDown Button
-                            if (GUILayout.Button("▼") && i != bullet.bulletEvents.Count-1)
-                            {
-                                Undo.RecordObject(target, "Bullet Event Moved Down");
-                                bullet.bulletEvents.Reverse(i,2);
-                                i--;
-                                EditorUtility.SetDirty(target);
-                                continue;
-                            }
-
-                            EditorGUILayout.EndHorizontal();
-                        }
-
-                        EditorGUI.BeginChangeCheck();
-
-                        bullet.bulletEvents[i].OnInspectorGUI(bullet);
-
-                        //If bullet event edited
-                        if(EditorGUI.EndChangeCheck())
-                        {
-                            EditorUtility.SetDirty(target);
-                        }
-
-                        EditorGUILayout.EndVertical();
-                    }
-                }
-            }
-            EditorGUILayout.EndScrollView();
-        }
-
-        bullet.LoopMode = (BH_Bullet.BulletEventLoopMode)EditorGUILayout.EnumPopup(bullet.LoopMode);
-
-        //Add Button
-        if(GUILayout.Button("Add Bullet Event"))
-        {
-            addEventWindow.ShowAsContext();
-        }
-
-        if (GUILayout.Button("Clear ALL Bullet Events"))
-        {
-            if (bullet.bulletEvents != null)
-            {
-                Undo.RecordObject(bullet, "Cleared bullet events.");
-                bullet.bulletEvents.Clear();
-                EditorUtility.SetDirty(target);
-            }
-        }
-
         bulletObject.ApplyModifiedProperties();
     }
 
@@ -161,13 +78,6 @@ public class BulletEditor : Editor
         {
             //Undo event logs before the object changes
             Undo.RecordObject(bullet, "Added new bullet event.");
-
-            //Crate the list
-            if (bullet.bulletEvents == null)
-            {
-                bullet.bulletEvents = new List<BulletEvent>();
-            }
-            bullet.bulletEvents.Add(new BE());
 
             //Set dirty so editor knows to save it
             EditorUtility.SetDirty(target);

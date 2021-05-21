@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1304e3e22bb49004b88eee0ec95eba44, type: 3}
-  m_Name: NewBulletHellPattern
+  m_Name: b_attack_1
   m_EditorClassIdentifier: 
   PatternLayers:
   - Bullet:
@@ -20,13 +20,14 @@ MonoBehaviour:
     Pattern:
       id: 2
     LayerName: 
-  PatternDuration: 5
+  PatternDuration: 16
   references:
     version: 1
     00000000:
       type: {class: AlternatingBullets, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
-        Bullets: []
+        Bullets:
+        - {fileID: 1184654237552063843, guid: 606bedf5d0f9e5c47a3d02da84c9043c, type: 3}
     00000001:
       type: {class: EveryXSecondTiming, ns: BulletHellGenerator, asm: Assembly-CSharp}
       data:
@@ -50,12 +51,12 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           m_ConstantMin: 0
-          m_ConstantMax: 64
-        BulletSpeed: 4
+          m_ConstantMax: 8
+        BulletSpeed: 6
         Sequentially: 0
         AngleOffset:
-          m_Mode: 0
-          m_CurveMultiplier: 0
+          m_Mode: 1
+          m_CurveMultiplier: 1
           m_CurveMin:
             serializedVersion: 2
             m_Curve: []
@@ -64,9 +65,27 @@ MonoBehaviour:
             m_RotationOrder: 4
           m_CurveMax:
             serializedVersion: 2
-            m_Curve: []
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.5
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
-            m_PostInfinity: 2
+            m_PostInfinity: 0
             m_RotationOrder: 4
           m_ConstantMin: 0
           m_ConstantMax: 0
@@ -74,6 +93,3 @@ MonoBehaviour:
           AnglePosition: 0
           AngleSize: 180
         TargetPlayer: 0
-        Stack: 0
-        MaxSpeed: 1
-        StackCount: 2

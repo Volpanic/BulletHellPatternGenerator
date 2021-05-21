@@ -31,7 +31,7 @@ namespace BulletHellGenerator
         //Wout Pooling 
 
         // Start is called before the first frame update
-        void Start()
+        public void Start()
         {
             string poolName = SceneManager.GetActiveScene().name + "bulletGen_pooler";
             //Search if object exsists, so we don't have multiple poolers, GameObject.Find is expensive but only runs in start
@@ -48,7 +48,7 @@ namespace BulletHellGenerator
         }
 
         // Update is called once per frame
-        void FixedUpdate()
+        public void FixedUpdate()
         {
             if (Target != null)
             {
