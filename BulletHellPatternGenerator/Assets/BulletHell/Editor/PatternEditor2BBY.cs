@@ -54,9 +54,11 @@ public class PatternEditor2BBY : EditorWindow
         SetupContextMenus();
     }
 
+    private Vector2 scrollPos;
+
     public void OnGUI()
     {
-        GUILayout.BeginVertical("Box", GUILayout.MaxWidth(512));
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, "Box", GUILayout.MaxWidth(position.width));
         {
             // Load Input
             EditorGUI.BeginChangeCheck();
@@ -72,7 +74,7 @@ public class PatternEditor2BBY : EditorWindow
                 sData.ApplyModifiedProperties();
             }
 
-            GUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
         }
     }
 
@@ -102,23 +104,23 @@ public class PatternEditor2BBY : EditorWindow
         if (sLayer == null) return;
   
         //Bullets
-        if (GUILayout.Button("Change Bullet Mode")) BulletChooseMenu.ShowAsContext();
         GUILayout.Label("Bullet Selection", EditorStyles.centeredGreyMiniLabel);
         if (sBullet != null) EditorGUILayout.PropertyField(sBullet, true);
+        if (GUILayout.Button("Change Bullet Mode", GUILayout.Width(128))) BulletChooseMenu.ShowAsContext();
 
         DrawSeparator();
 
         //Timing
-        if (GUILayout.Button("Change Timing Mode")) TimingChooseMenu.ShowAsContext();
         GUILayout.Label("Timing Selection", EditorStyles.centeredGreyMiniLabel);
         if (sTiming != null) EditorGUILayout.PropertyField(sTiming, true);
+        if (GUILayout.Button("Change Timing Mode", GUILayout.Width(128))) TimingChooseMenu.ShowAsContext();
 
         DrawSeparator();
 
         //Pattern
-        if (GUILayout.Button("Change Pattern Mode")) PatternChooseMenu.ShowAsContext();
         GUILayout.Label("Pattern Selection", EditorStyles.centeredGreyMiniLabel);
         if (sPattern != null) EditorGUILayout.PropertyField(sPattern, true);
+        if (GUILayout.Button("Change Pattern Mode", GUILayout.Width(128))) PatternChooseMenu.ShowAsContext();
 
         DrawSeparator();
     }

@@ -12,15 +12,12 @@ public class BulletHellPattern : ScriptableObject
     public class PatternLayer
     {
         [SerializeReference]
-        [Header("Bullets")]
         public BulletBase Bullet;
 
         [SerializeReference]
-        [Header("Timing")]
         public TimingBase Timing;
 
         [SerializeReference]
-        [Header("Pattern")]
         public PatternBase Pattern;
 
         public string LayerName;
