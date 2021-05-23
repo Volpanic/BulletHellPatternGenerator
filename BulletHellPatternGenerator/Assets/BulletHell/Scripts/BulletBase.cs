@@ -20,20 +20,20 @@ namespace BulletHellGenerator
     [System.Serializable]
     public class AlternatingBullets : BulletBase
     {
-        public List<GameObject> Bullets;
+        public BH_BulletList Bullets = new BH_BulletList();
 
         private int ToPick = 0;
 
         public AlternatingBullets()
         {
-            //Creates a new lis if bullets == null
-            Bullets = Bullets ?? new List<GameObject>();
+            //Creates a new list if bullets == null
+            Bullets = Bullets ?? new BH_BulletList();
         }
 
         public override GameObject GetBullet()
         {
-            if (Bullets.Count == 0) return null;
-            return Bullets[ToPick++ % Bullets.Count];
+            if (Bullets.Bullets.Length == 0) return null;
+            return Bullets.Bullets[ToPick++ % Bullets.Bullets.Length];
         }
     }
     #endregion
@@ -42,21 +42,21 @@ namespace BulletHellGenerator
     [System.Serializable]
     public class RandomBullets : BulletBase
     {
-        public List<GameObject> Bullets;
+        public BH_BulletList Bullets = new BH_BulletList();
 
         private int ToPick = 0;
 
         public RandomBullets()
         {
             //Creates a new lis if bullets == null
-            Bullets = Bullets ?? new List<GameObject>();
+            Bullets = Bullets ?? new BH_BulletList();
         }
 
         public override GameObject GetBullet()
         {
             //Make randomness consistant
             Random.InitState(ToPick++);
-            return Bullets[Random.Range(0, Bullets.Count)];
+            return Bullets.Bullets[Random.Range(0, Bullets.Bullets.Length)];
         }
 
     }

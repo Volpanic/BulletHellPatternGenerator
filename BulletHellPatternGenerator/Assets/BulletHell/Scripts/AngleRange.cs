@@ -38,13 +38,13 @@ namespace BulletHellGenerator
             return ((MinAngle + (Range * normalizedPosition)) + 180f) * Mathf.Deg2Rad;
         }
 
-        public float EvaluateArc(float initalAngle,float normalizedPosition)
+        public float EvaluateArc(float initalAngle, float normalizedPosition)
         {
             return (((initalAngle * Mathf.Rad2Deg) - AngleSize) + (Range * normalizedPosition)) * Mathf.Deg2Rad;
         }
 
         [SerializeField]
-        [Range(0,360f)]
+        [Range(0, 360f)]
         [Tooltip("The Middle position of the angle from the arc.")]
         public float AnglePosition = 0;
 
@@ -65,7 +65,9 @@ namespace BulletHellGenerator
             //EditorGUI.LabelField(position, label);
 
             //oxymoron name, i know
-            Rect circleRect = new Rect(position.position, new Vector2(EditorGUIUtility.singleLineHeight * 6, EditorGUIUtility.singleLineHeight * 2));
+            Rect circleRect = new Rect(position.position, new Vector2(EditorGUIUtility.singleLineHeight * 6, EditorGUIUtility.singleLineHeight * 4));
+
+            EditorGUI.HelpBox(circleRect, "", MessageType.None);
 
             //Draw the circle in the box
             if (Event.current.type == EventType.Repaint)
@@ -78,9 +80,9 @@ namespace BulletHellGenerator
                 float minAngle = (property.FindPropertyRelative("AnglePosition").floatValue * Mathf.Deg2Rad) - (property.FindPropertyRelative("AngleSize").floatValue * Mathf.Deg2Rad);
                 float angleSize = (property.FindPropertyRelative("AngleSize").floatValue * 2f) * Mathf.Deg2Rad;
 
-                float angleSegs = 64;
+                float angleSegs = 32;
 
-                float radius = EditorGUIUtility.singleLineHeight * 0.85f;
+                float radius = EditorGUIUtility.singleLineHeight * 1.5f;
 
                 Color col = Color.black;
 
@@ -89,10 +91,10 @@ namespace BulletHellGenerator
                     GL.Begin(GL.QUADS);
                     GL.Color(col);
 
-                    Vector3 p1 = new Vector3(0,0,0);
-                    Vector3 p2 = new Vector3(0,0,0);
-                    Vector3 p3 = new Vector3(0,0,0);
-                    Vector3 p4 = new Vector3(0,0,0);
+                    Vector3 p1 = new Vector3(0, 0, 0);
+                    Vector3 p2 = new Vector3(0, 0, 0);
+                    Vector3 p3 = new Vector3(0, 0, 0);
+                    Vector3 p4 = new Vector3(0, 0, 0);
 
                     Vector3 pos = circleRect.size / 2f;
 
@@ -107,12 +109,12 @@ namespace BulletHellGenerator
                         angle -= Mathf.PI;
 
                         p1.x = Mathf.Cos(angle) * radius;
-                        p1.y =- Mathf.Sin(angle) * radius;
+                        p1.y = -Mathf.Sin(angle) * radius;
 
                         p2.x = Mathf.Cos(angle) * (radius * 0.75f);
                         p2.y = -Mathf.Sin(angle) * (radius * 0.75f);
 
-                        angle = minAngle + (angleSize * ((i+1f) / angleSegs));
+                        angle = minAngle + (angleSize * ((i + 1f) / angleSegs));
                         angle -= Mathf.PI;
 
                         p4.x = Mathf.Cos(angle) * radius;
@@ -130,16 +132,16 @@ namespace BulletHellGenerator
 
 
                     GL.End();
-                   
+
                 }
                 GL.PopMatrix();
                 GUI.EndClip();
             }
 
             EditorGUI.PropertyField(new Rect(circleRect.xMax + EditorGUIUtility.singleLineHeight, circleRect.center.y - EditorGUIUtility.singleLineHeight
-                , position.width - circleRect.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight),property.FindPropertyRelative("AnglePosition"));
+                , position.width - circleRect.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight), property.FindPropertyRelative("AnglePosition"));
             EditorGUI.PropertyField(new Rect(circleRect.xMax + EditorGUIUtility.singleLineHeight, circleRect.center.y, position.width - circleRect.width - EditorGUIUtility.singleLineHeight
-                , EditorGUIUtility.singleLineHeight),property.FindPropertyRelative("AngleSize"));
+                , EditorGUIUtility.singleLineHeight), property.FindPropertyRelative("AngleSize"));
 
             EditorGUI.EndProperty();
         }
