@@ -327,7 +327,7 @@ namespace BulletHellGenerator
                 for (int i = 0; i < values.Length; i++)
                 {
                     values[i] = i;
-                    names[i]  = new GUIContent(i.ToString() + " - " + Data.PatternLayers[i].LayerName);
+                    names[i] = new GUIContent(i.ToString());
                 }
 
                 GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
@@ -371,7 +371,6 @@ namespace BulletHellGenerator
 
                         var sPattern = Data.PatternLayers[SelectedLayer];
                         EditorGUILayout.LabelField("Layer Name", GUILayout.Width(70));
-                        sPattern.LayerName = EditorGUILayout.TextField(Data.PatternLayers[SelectedLayer].LayerName);
                         Data.PatternLayers[SelectedLayer] = sPattern;
 
                         GUILayout.EndHorizontal();

@@ -12,15 +12,13 @@ public class BulletHellPattern : ScriptableObject
     public class PatternLayer
     {
         [SerializeReference]
-        public BulletBase Bullet;
+        public BulletBase Bullet = new AlternatingBullets();
 
         [SerializeReference]
-        public TimingBase Timing;
+        public TimingBase Timing = new EveryXSecondTiming();
 
         [SerializeReference]
-        public PatternBase Pattern;
-
-        public string LayerName;
+        public PatternBase Pattern = new RingPattern();
     }
 
     public List<PatternLayer> PatternLayers = new List<PatternLayer>();
