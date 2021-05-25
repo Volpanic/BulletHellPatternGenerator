@@ -39,9 +39,10 @@ namespace BulletHellGenerator
 
                 list.drawElementCallback = DrawBulletItem;
                 list.drawHeaderCallback = DrawHeaderBullet;
-                //list.onAddCallback = AddBullet;
             }
 
+            list.serializedProperty = property.FindPropertyRelative("Bullets");
+            if(list != null && list.serializedProperty != null)
             list.DoLayoutList();
         }
 

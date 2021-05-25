@@ -7,417 +7,321 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using BulletHellGenerator;
 
-namespace BulletHellGenerator
+public class PatternEditor : EditorWindow
 {
-    public class PatternEditor : EditorWindow
-    {
-        // Rect is dynamically sized, but to get that size we need a 
-        // rect that the dynamic one falls in, So we just give it a huge one
-        Rect BoardRect = new Rect(0, 0, 1, 1);
-
-        public static BulletHellPattern Data;
-        public static SerializedObject sData;
-        public static int SelectedLayer = 0;
-
-        GenericMenu BulletChooseMenu;
-        GenericMenu TimingChooseMenu;
-        GenericMenu PatternChooseMenu;
-
-        [MenuItem("Pattern Editor/Editor")]
-        public static PatternEditor OpenWindow()
+    public SerializedObject sData { get { return sdata; } set 
         {
-            PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
-            window.maxSize = new Vector2(512 + 32, 1024);
-            window.minSize = new Vector2(512 + 32, 512);
-            return window;
-        }
+            sdata = value;
 
-        public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
-        {
-            PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
-
-            window.maxSize = new Vector2(512 + 32, 1024);
-            window.minSize = new Vector2(512 + 32, 512);
-
-
-            PatternEditor.Data = asset;
-            PatternEditor.sData = new SerializedObject(PatternEditor.Data);
-
-            return window;
-        }
-
-        private void OnEnable()
-        {
-            SetupContextMenus();
-        }
-
-        private Vector2 scrollPos;
-
-        private void OnGUI()
-        {
-            GUI.Box(new Rect(BoardRect.x, BoardRect.y + 40, BoardRect.width, BoardRect.height), "Empty");
-
-            GUILayout.BeginArea(new Rect(BoardRect.x + 16, BoardRect.y + 80, float.MaxValue, float.MaxValue));
+            if (value != null)
             {
-                //Begin vertical area, used to measure the rect of the node
-                scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.MaxWidth(512), GUILayout.ExpandWidth(false), GUILayout.MaxHeight(position.height));
+                BulletHellPattern pattern = (BulletHellPattern)value.targetObject;
+
+                //Verify that the object has a pattern
+                if (pattern != null)
                 {
-                    if (Data != null)
+                    if (pattern.PatternLayers == null)
                     {
-                        titleContent.text = Data.name;
-
-                        //Make sure theres data to fill out
-                        if (Data.PatternLayers == null || Data.PatternLayers.Count == 0)
-                        {
-                            Data.PatternLayers = new List<BulletHellPattern.PatternLayer>();
-
-                            BulletHellPattern.PatternLayer pl = new BulletHellPattern.PatternLayer();
-                            pl.Bullet = new AlternatingBullets();
-                            pl.Timing = new EveryXSecondTiming();
-                            pl.Pattern = new RingPattern();
-
-                            Data.PatternLayers.Add(pl);
-                        }
-
-                        SelectedLayer = Mathf.Max(0, sData.FindProperty("PatternLayers").arraySize - 1);
-
-                        EditorGUI.BeginChangeCheck();
-
-                        //if(SelectedLayer < sData.FindProperty("PatternLayers").arraySize)
-                        DrawBoard();
-
-                        if (EditorGUI.EndChangeCheck()) SetDirtyAndSave();
+                        pattern.PatternLayers = new List<BulletHellPattern.PatternLayer>();
+                        pattern.PatternLayers.Add(new BulletHellPattern.PatternLayer());
                     }
-                    else
+
+                    if (pattern.PatternLayers.Count <= 0)
                     {
-                        titleContent.text = "Pattern Editor";
-                        EditorGUILayout.LabelField("No Data Loaded.", EditorStyles.centeredGreyMiniLabel);
-                    }
-                    GUILayout.EndScrollView();
-                }
-
-                //Get size of the above vertical only works during repaint
-                if (Event.current.type == EventType.Repaint)
-                {
-                    Rect dynamicRect = GUILayoutUtility.GetLastRect();
-                    dynamicRect.width += 32;
-                    dynamicRect.height += 32;
-
-                    //If rect has changed in size force repaint with new rect
-                    if (BoardRect != dynamicRect)
-                    {
-                        BoardRect = dynamicRect;
-
-                        Repaint();
+                        pattern.PatternLayers.Add(new BulletHellPattern.PatternLayer());
                     }
                 }
-
-                GUILayout.EndArea();
-            }
-
-            DrawMenuBar();
-        }
-
-        private void DrawBoard()
-        {
-            if (Data == null) return;
-            if (Data.PatternLayers == null) return;
-            if (sData == null) return;
-
-            sData.Update();
-
-            BulletHellPattern.PatternLayer layer = Data.PatternLayers[SelectedLayer];
-            SerializedProperty sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-
-            EditorGUILayout.PropertyField(sData.FindProperty("PatternDuration"));
-
-            //Choosing bullet selection type
-            GUILayout.Label("Bullets", EditorStyles.boldLabel);
-
-            if (GUILayout.Button("Change Bullet Mode"))
-                BulletChooseMenu.ShowAsContext();
-            layer = Data.PatternLayers[SelectedLayer];
-
-            if (layer.Bullet != null)
-            {
-                GUILayout.Label(ObjectNames.NicifyVariableName(layer.Bullet.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                //if (sLayer != null && layer.Bullet != null)
-                    //layer.Bullet.OnGUI(sLayer);
-            }
-
-            DrawSeparator();
-
-            //Choosing timing type
-            GUILayout.Label("Timing", EditorStyles.boldLabel);
-            sData.ApplyModifiedProperties();
-
-            if (GUILayout.Button("Change Timing Mode"))
-                TimingChooseMenu.ShowAsContext();
-            layer = Data.PatternLayers[SelectedLayer];
-
-            if (layer.Timing != null)
-            {
-                GUILayout.Label(ObjectNames.NicifyVariableName(layer.Timing.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                //if (sLayer != null && layer.Timing != null)
-                   // layer.Timing.OnGUI(sLayer);
-            }
-            DrawSeparator();
-
-            //Choosing pattern type
-            GUILayout.Label("Pattern", EditorStyles.boldLabel);
-            sData.ApplyModifiedProperties();
-
-            if (GUILayout.Button("Change Pattern Mode"))
-                PatternChooseMenu.ShowAsContext();
-            layer = Data.PatternLayers[SelectedLayer];
-
-
-            if (layer.Pattern != null)
-            {
-                GUILayout.Label(ObjectNames.NicifyVariableName(layer.Pattern.GetType().Name), EditorStyles.centeredGreyMiniLabel);
-                sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
-                //if (sLayer != null && sLayer.FindPropertyRelative("Pattern") != null && layer.Pattern != null)
-                    //layer.Pattern.OnGUI(sLayer);
-            }
-
-            DrawSeparator();
-            SetDirtyAndSave();
-            if (sData != null) sData.ApplyModifiedProperties();
-        }
-
-        private static System.Type[] bulletChooseTypes;
-        private static System.Type[] timingChooseTypes;
-        private static System.Type[] patternChooseTypes;
-
-        private void SetupContextMenus()
-        {
-            BulletChooseMenu = new GenericMenu();
-            TimingChooseMenu = new GenericMenu();
-            PatternChooseMenu = new GenericMenu();
-
-            //Setup bullet choose menu, by getting all compiled 
-            bulletChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(BulletBase)).GetTypes(), typeof(BulletBase));
-            for (int i = 0; i < bulletChooseTypes.Length; i++)
-            {
-                BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, BulletChooseOnClick, i);
-            }
-
-            //Setup Timing choose menu, by getting all compiled 
-            timingChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(TimingBase)).GetTypes(), typeof(TimingBase));
-            for (int i = 0; i < timingChooseTypes.Length; i++)
-            {
-                TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, TimingChooseOnClick, i);
-            }
-
-            //Setup Pattern choose menu, by getting all compiled 
-            patternChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(PatternBase)).GetTypes(), typeof(PatternBase));
-            for (int i = 0; i < patternChooseTypes.Length; i++)
-            {
-                PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, PatternChooseOnClick, i);
-            }
-        }
-
-        private System.Type[] CullTypeArray(System.Type[] toCull, System.Type desiredParentType)
-        {
-            List<System.Type> tempList = new List<Type>();
-
-            for (int i = 0; i < toCull.Length; i++)
-            {
-                if (toCull[i].IsSubclassOf(desiredParentType))
-                    tempList.Add(toCull[i]);
-            }
-
-            return tempList.ToArray();
-        }
-
-        private void PatternChooseOnClick(object typeIndex)
-        {
-            if (Data == null) return;
-            //if (patternChooseTypes == null || patternChooseTypes.Length - 1 > typeIndex) return;
-
-            Undo.RecordObject(Data, "Changed Pattern Choose Mode");
-            //This code is kind of yucky, by makes modularity really easy
-            var p = Data.PatternLayers[SelectedLayer];
-            p.Pattern = null;
-            p.Pattern = (PatternBase)Activator.CreateInstance(patternChooseTypes[(int)typeIndex]);
-            Data.PatternLayers[SelectedLayer] = p;
-
-            sData.ApplyModifiedProperties();
-            sData = new SerializedObject(Data);
-
-            SetDirtyAndSave();
-            Repaint();
-        }
-
-        private void TimingChooseOnClick(object typeIndex)
-        {
-            if (Data == null) return;
-            //if (timingChooseTypes == null || timingChooseTypes.Length - 1 > typeIndex) return;
-
-            Undo.RecordObject(Data, "Changed Timing Choose Mode");
-            //This code is kind of yucky, by makes modularity really easy
-            var p = Data.PatternLayers[SelectedLayer];
-            p.Timing = (TimingBase)Activator.CreateInstance(timingChooseTypes[(int)typeIndex]);
-            Data.PatternLayers[SelectedLayer] = p;
-
-            sData.ApplyModifiedProperties();
-            sData = new SerializedObject(Data);
-
-            SetDirtyAndSave();
-            Repaint();
-        }
-
-        private void BulletChooseOnClick(object typeIndex)
-        {
-            if (Data == null) return;
-            //if (bulletChooseTypes == null || bulletChooseTypes.Length-1 > typeIndex) return;
-
-            Undo.RecordObject(Data, "Changed Bullet Choose Mode");
-            //This code is kind of yucky, by makes modularity really easy
-            var p = Data.PatternLayers[SelectedLayer];
-            p.Bullet = (BulletBase)Activator.CreateInstance(bulletChooseTypes[(int)typeIndex]);
-            Data.PatternLayers[SelectedLayer] = p;
-
-            sData.ApplyModifiedProperties();
-            sData = new SerializedObject(Data);
-
-            SetDirtyAndSave();
-            Repaint();
-        }
-
-        private void DrawMenuBar()
-        {
-            Rect menuBar = new Rect(0, 0, position.width, EditorGUIUtility.singleLineHeight * 2);
-
-            GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
-            {
-                //Draw menu bar content
-                GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
-                {
-                    EditorGUI.BeginChangeCheck();
-                    Data = (BulletHellPattern)EditorGUILayout.ObjectField(Data, typeof(BulletHellPattern), false);
-
-                    if (EditorGUI.EndChangeCheck() && Data != null)
-                    {
-                        sData = new SerializedObject(Data);
-                    }
-
-                    if (GUILayout.Button("Save"))
-                    {
-                        SetDirtyAndSave();
-                    }
-
-                    GUILayout.EndHorizontal();
-                }
-
-                GUILayout.EndArea();
-            }
-
-            // Layer Bar
-            if (Data != null && Data.PatternLayers != null)
-            {
-                menuBar.y += menuBar.height;
-
-                //Generate Names and values for popups
-                int[] values = new int[Data.PatternLayers.Count];
-                GUIContent[] names = new GUIContent[Data.PatternLayers.Count];
-                for (int i = 0; i < values.Length; i++)
-                {
-                    values[i] = i;
-                    names[i] = new GUIContent(i.ToString());
-                }
-
-                GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
-                {
-
-                    GUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(false));
-                    {
-                        SelectedLayer = EditorGUILayout.IntPopup(SelectedLayer, names, values, EditorStyles.toolbarPopup);
-
-                        // Add new bullet layer
-                        if (GUILayout.Button("+", EditorStyles.toolbarButton))
-                        {
-                            Data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
-                            SelectedLayer = Data.PatternLayers.Count - 1;
-                            SetDirtyAndSave();
-                        }
-
-                        //Remove bullet layer
-                        if (GUILayout.Button("X", EditorStyles.toolbarButton))
-                        {
-                            if (Data.PatternLayers.Count > 1)
-                            {
-                                Data.PatternLayers.RemoveAt(SelectedLayer);
-                                SelectedLayer--;
-                                SelectedLayer = Mathf.Clamp(SelectedLayer, 0, Data.PatternLayers.Count);
-                            }
-                            else
-                            {
-                                Data.PatternLayers[0] = new BulletHellPattern.PatternLayer();
-                                SelectedLayer = 0;
-                            }
-                            SetDirtyAndSave();
-                        }
-
-                        //if(GUILayout.Button("Duplicate Layer",EditorStyles.toolbarButton))
-                        //{
-                        //    Data.PatternLayers.Add(DuplicateLayer(Data.PatternLayers[SelectedLayer]));
-                        //    SelectedLayer = Data.PatternLayers.Count - 1;
-                        //    SetDirtyAndSave();
-                        //}
-
-                        var sPattern = Data.PatternLayers[SelectedLayer];
-                        EditorGUILayout.LabelField("Layer Name", GUILayout.Width(70));
-                        Data.PatternLayers[SelectedLayer] = sPattern;
-
-                        GUILayout.EndHorizontal();
-                    }
-
-                }
-                GUILayout.EndArea();
-            }
-
-        }
-
-        private void SetDirtyAndSave()
-        {
-            if (Data != null)
-            {
-                EditorUtility.SetDirty(Data);
-            }
-        }
-
-        private void DrawSeparator()
-        {
-            GUI.backgroundColor = Color.cyan;
-            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-            GUI.backgroundColor = Color.white;
-        }
-
-    }
-
-    //Draw inspector for scriptable object
-    [CustomEditor(typeof(BulletHellPattern))]
-    class BulletHellPatternInspector : Editor
-    {
-
-        BulletHellPattern pattern;
-        private void OnEnable()
-        {
-            pattern = (BulletHellPattern)target;
-        }
-
-        public override void OnInspectorGUI()
-        {
-            if (GUILayout.Button("Open in Pattern Editor"))
-            {
-                PatternEditor.OpenWindowWithAsset(pattern);
             }
         }
     }
 
+    public int SelectedLayer
+    {
+        get { return selectedLayer; }
+
+        set
+        {
+            if(sData != null)
+            {
+                selectedLayer = Mathf.Clamp(value,0, sData.FindProperty("PatternLayers").arraySize);
+            }
+            else
+            {
+                selectedLayer = 0;
+            }
+            sLayer = null;
+        }
+    }
+
+    private int selectedLayer = 0;
+
+    private SerializedObject sdata;
+
+    private BulletHellPattern data;
+
+    public readonly Color HighlightColor = new Color(1f,1f,1f,1f);
+
+    GenericMenu BulletChooseMenu;
+    GenericMenu TimingChooseMenu;
+    GenericMenu PatternChooseMenu;
+
+    [MenuItem("Bullet Hell/Pattern Editor")]
+    public static PatternEditor OpenWindow()
+    {
+        PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
+        return window;
+    }
+
+    public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
+    {
+        PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
+        window.sData = new SerializedObject(asset);
+        window.data = asset;
+        return window;
+    }
+
+    private void OnEnable()
+    {
+        SetupContextMenus();
+    }
+
+    private Vector2 scrollPos;
+
+    public void OnGUI()
+    {
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, "Box", GUILayout.MaxWidth(position.width));
+        {
+            // Load Input
+            EditorGUI.BeginChangeCheck();
+            data = (BulletHellPattern)EditorGUILayout.ObjectField(data, typeof(BulletHellPattern), false);
+            if (EditorGUI.EndChangeCheck())
+            {
+                sLayer = null;
+                sData = null;
+                sData = new SerializedObject(data);
+            }
+
+            DrawLayerBar();
+
+            if (sData != null)
+            {
+                sData.Update();
+
+                DrawBoard();
+
+                sData.ApplyModifiedProperties();
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+    }
+
+    SerializedProperty sLayer;
+    SerializedProperty sBullet;
+    SerializedProperty sTiming;
+    SerializedProperty sPattern;
+
+    private void DrawBoard()
+    {
+
+        if(sData.FindProperty("PatternLayers").arraySize > 0)
+        sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
+
+        if (sLayer != null)
+        {
+            sBullet  = sLayer.FindPropertyRelative("Bullet");
+            sTiming  = sLayer.FindPropertyRelative("Timing");
+            sPattern = sLayer.FindPropertyRelative("Pattern");
+
+            sBullet.isExpanded  = true;
+            sTiming.isExpanded  = true;
+            sPattern.isExpanded = true;
+        }
+
+        //Bullets
+        GUILayout.Label("Bullet Selection", EditorStyles.centeredGreyMiniLabel);
+        if (sBullet != null) EditorGUILayout.PropertyField(sBullet, true);
+        if (GUILayout.Button("Change Bullet Mode", GUILayout.Width(192))) BulletChooseMenu.ShowAsContext();
+
+        DrawSeparator();
+
+        //Timing
+        GUILayout.Label("Timing Selection", EditorStyles.centeredGreyMiniLabel);
+        if (sTiming != null) EditorGUILayout.PropertyField(sTiming, true);
+        if (GUILayout.Button("Change Timing Mode", GUILayout.Width(192))) TimingChooseMenu.ShowAsContext();
+
+        DrawSeparator();
+
+        //Pattern
+        GUILayout.Label("Pattern Selection", EditorStyles.centeredGreyMiniLabel);
+        if (sPattern != null) EditorGUILayout.PropertyField(sPattern, true);
+        if (GUILayout.Button("Change Pattern Mode", GUILayout.Width(192))) PatternChooseMenu.ShowAsContext();
+
+        DrawSeparator();
+    }
+
+    private void DrawSeparator()
+    {
+        GUI.backgroundColor = HighlightColor;
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        GUI.backgroundColor = Color.white;
+    }
+
+    private void DrawLayerBar()
+    {
+        if (sData == null) return;
+        if (sData.FindProperty("PatternLayers") == null) return;
+
+        sData.Update();
+
+        SerializedProperty sLayers = sData.FindProperty("PatternLayers");
+
+        EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+        {
+            //Generate Names and values for popups
+            int[] values = new int[sLayers.arraySize];
+            GUIContent[] names = new GUIContent[sLayers.arraySize];
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = i;
+                names[i] = new GUIContent(i.ToString());
+            }
+
+            SelectedLayer = EditorGUILayout.IntPopup(new GUIContent("Layer"),SelectedLayer, names, values, EditorStyles.toolbarPopup);
+
+            //Add Remove Patten Layer
+            if(GUILayout.Button(new GUIContent("Add Layer","Adds a new pattern.")))
+            {
+                data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
+                SelectedLayer = sLayers.arraySize - 1;
+                sLayer = null;
+            }
+
+            if (GUILayout.Button(new GUIContent("Remove Layer", "Removes the selected pattern")))
+            {
+                data.PatternLayers.RemoveAt(SelectedLayer);
+                SelectedLayer--;
+
+                if(data.PatternLayers.Count <= 0)
+                {
+                    data.PatternLayers.Add(new BulletHellPattern.PatternLayer());
+                }
+                sLayer = null; // Forces it to reget the layer
+            }
+
+            //Pattern Duration
+            EditorGUILayout.PropertyField(sData.FindProperty("PatternDuration"), new GUIContent("Duration","The total duration of the pattern, used to calculate curves x positions."));
+
+            EditorGUILayout.EndHorizontal();
+
+            sData.ApplyModifiedProperties();
+        }
+
+    }
+
+    #region // CONTEXT MENUS
+    private static System.Type[] bulletChooseTypes;
+    private static System.Type[] timingChooseTypes;
+    private static System.Type[] patternChooseTypes;
+
+    private void SetupContextMenus()
+    {
+        BulletChooseMenu  = new GenericMenu();
+        TimingChooseMenu  = new GenericMenu();
+        PatternChooseMenu = new GenericMenu();
+
+        //Setup bullet choose menu, by getting all compiled 
+        bulletChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(BulletBase)).GetTypes(), typeof(BulletBase));
+        for (int i = 0; i < bulletChooseTypes.Length; i++)
+        {
+            BulletChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(bulletChooseTypes[i].Name)), false, BulletChooseOnClick, i);
+        }
+
+        //Setup Timing choose menu, by getting all compiled 
+        timingChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(TimingBase)).GetTypes(), typeof(TimingBase));
+        for (int i = 0; i < timingChooseTypes.Length; i++)
+        {
+            TimingChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(timingChooseTypes[i].Name)), false, TimingChooseOnClick, i);
+        }
+
+        //Setup Pattern choose menu, by getting all compiled 
+        patternChooseTypes = CullTypeArray(Assembly.GetAssembly(typeof(PatternBase)).GetTypes(), typeof(PatternBase));
+        for (int i = 0; i < patternChooseTypes.Length; i++)
+        {
+            PatternChooseMenu.AddItem(new GUIContent(ObjectNames.NicifyVariableName(patternChooseTypes[i].Name)), false, PatternChooseOnClick, i);
+        }
+    }
+
+    private System.Type[] CullTypeArray(System.Type[] toCull, System.Type desiredParentType)
+    {
+        List<System.Type> tempList = new List<Type>();
+
+        for (int i = 0; i < toCull.Length; i++)
+        {
+            if (toCull[i].IsSubclassOf(desiredParentType))
+                tempList.Add(toCull[i]);
+        }
+
+        return tempList.ToArray();
+    }
+
+    private void PatternChooseOnClick(object typeIndex)
+    {
+        BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
+        
+        //Make sure pattern exsits
+        if(pattern != null)
+        {
+            sdata.Update();
+            BulletHellPattern.PatternLayer layer = pattern.PatternLayers[0];
+            layer.Pattern = (PatternBase)Activator.CreateInstance(patternChooseTypes[(int)typeIndex]);
+            sLayer = null;
+
+            pattern.PatternLayers[SelectedLayer] = layer;
+            sData.ApplyModifiedProperties();
+        }
+
+        Repaint();
+    }
+
+    private void TimingChooseOnClick(object typeIndex)
+    {
+        BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
+
+        //Make sure pattern exsits
+        if (pattern != null)
+        {
+            sdata.Update();
+            BulletHellPattern.PatternLayer layer = pattern.PatternLayers[0];
+            layer.Timing = (TimingBase)Activator.CreateInstance(timingChooseTypes[(int)typeIndex]);
+            sLayer = null;
+
+            pattern.PatternLayers[SelectedLayer] = layer;
+            sData.ApplyModifiedProperties();
+        }
+
+        Repaint();
+    }
+
+    private void BulletChooseOnClick(object typeIndex)
+    {
+        BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
+
+        //Make sure pattern exsits
+        if (pattern != null)
+        {
+            sdata.Update();
+            BulletHellPattern.PatternLayer layer = pattern.PatternLayers[0];
+            layer.Bullet = (BulletBase)Activator.CreateInstance(bulletChooseTypes[(int)typeIndex]);
+            sLayer = null;
+
+            pattern.PatternLayers[SelectedLayer] = layer;
+            sData.ApplyModifiedProperties();
+        }
+
+        Repaint();
+    }
+    #endregion
 }
-
