@@ -3,7 +3,7 @@
 The Bullet Hell Pattern Generator is a way to create patterns of various complexities in editor using prefabs. Patterns can be edited in engine without the use of any code and can be changed during editor runtime for rapid iteration. The system also comes with a bullet script (BH_BULLET) that must be placed on all prefabs used within the system, this script allows you to easily customise bullets to be used in your patterns. 
 
 ## How To Use
-Currently this project is in active development, so it may be unstable. (Put Download here when repo goes public)
+Currently this project is in active development, so it may be unstable. https://github.com/Volpanic/BulletHellPatternGenerator/releases/tag/Unstable
 
 ### BH_BulletHellPatternGenerator
 *	Patterns is a list that hold the pattern scriptable objects, you can stack multiple on top of each other to create even more complex patterns.
