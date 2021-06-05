@@ -1,5 +1,4 @@
 ﻿using BulletHellGenerator;
-using BulletHellGenerator.Heatmap;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace BulletHellGenerator
     public class BH_BulletHellPatternGenerator : MonoBehaviour
     {
         public List<BulletHellPattern> Patterns;
-        public BH_HeatmapGenerator HeatmapGen;
 
         public float TargetAngle { get { return targetAngle; } }
 
@@ -26,15 +24,11 @@ namespace BulletHellGenerator
 
         private BH_BulletObjectPooler pooler;
 
-        //Prev REv
-        //With Pooling 70 - 90 FPS
-        //Wout Pooling 
-
         // Start is called before the first frame update
         public void Start()
         {
             string poolName = SceneManager.GetActiveScene().name + "bulletGen_pooler";
-            //Search if object exsists, so we don't have multiple poolers, GameObject.Find is expensive but only runs in start
+            //Search if object exists, so we don't have multiple poolers, GameObject.Find is expensive but only runs in start
             GameObject oPool = GameObject.Find(poolName);
             if (oPool != null)
             {

@@ -99,38 +99,17 @@ MonoBehaviour:
   MaxLifeTime: 8
   DisableWhenOffscreen: 1
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.93697745, w: 0.34938985}
   Target: {fileID: 0}
   HomingSpeed: 0
   SpeedModifier: 1
   RotateRelativeToDirection: 0
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}
   RotationalVelocity: {x: 0, y: 0, z: 0}
-  RotatinalVelocityModifier:
-    m_Mode: 0
-    m_CurveMultiplier: 0
-    m_CurveMin:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_CurveMax:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_ConstantMin: 0
-    m_ConstantMax: 1
   Body: {fileID: 0}
   Body2D: {fileID: 0}
-  bulletEvents: []
   Direction: {x: 1, y: 0, z: 0}
   MoveSpeed: 0
-  LoopMode: 1
-  references:
-    version: 1
 --- !u!61 &-8688307259590495077
 BoxCollider2D:
   m_ObjectHideFlags: 0

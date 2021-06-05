@@ -24,7 +24,6 @@ namespace BulletHellGenerator
         public float HomingSpeed = 0;
         public float SpeedModifier = 1;
 
-
         //Rotation Stuff
         public bool RotateRelativeToDirection;
         public Quaternion RotationOffset;

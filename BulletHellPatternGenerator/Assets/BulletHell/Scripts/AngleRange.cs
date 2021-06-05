@@ -58,8 +58,15 @@ namespace BulletHellGenerator
     [CustomPropertyDrawer(typeof(AngleRange))]
     public class AngleRangeDrawer : PropertyDrawer
     {
+        private Material mat;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if(mat == null)
+            {
+                mat = new Material(Shader.Find("Hidden/Internal-Colored"));
+            }
+
             EditorGUI.BeginProperty(position, label, property);
 
             //EditorGUI.LabelField(position, label);
@@ -75,6 +82,7 @@ namespace BulletHellGenerator
                 GUI.BeginClip(circleRect);
                 GL.PushMatrix();
                 GL.Clear(true, false, Color.black);
+                mat.SetPass(0);
 
                 //Draw the actual circle
                 float minAngle = (property.FindPropertyRelative("AnglePosition").floatValue * Mathf.Deg2Rad) - (property.FindPropertyRelative("AngleSize").floatValue * Mathf.Deg2Rad);

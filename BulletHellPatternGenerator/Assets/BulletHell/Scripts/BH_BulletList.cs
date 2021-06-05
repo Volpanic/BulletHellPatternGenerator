@@ -27,12 +27,13 @@ namespace BulletHellGenerator
 
         private void DrawBulletItem(Rect rect, int index, bool isActive, bool isFocused)
         {
+            if(bullets.GetArrayElementAtIndex(index) != null)
             EditorGUI.PropertyField(rect, bullets.GetArrayElementAtIndex(index));
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (bullets == null) bullets = property.FindPropertyRelative("Bullets");
+            bullets = property.FindPropertyRelative("Bullets");
             if (list == null)
             {
                 list = new ReorderableList(property.serializedObject, property.FindPropertyRelative("Bullets"), true, true, true, true);

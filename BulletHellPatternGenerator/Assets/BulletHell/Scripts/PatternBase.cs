@@ -49,7 +49,7 @@ namespace BulletHellGenerator
     {
         //Stack
         [Header("Bullet Info")]
-        public Stack Stack;
+        public Stack Stack = new Stack();
 
         [Header("Spawning Info")]
         public MinMaxCurve BulletDensity = new MinMaxCurve(8);
@@ -57,7 +57,7 @@ namespace BulletHellGenerator
 
         [Header("Angle")]
         public MinMaxCurve AngleOffset = new MinMaxCurve(0);
-        public AngleRange BulletArc;
+        public AngleRange BulletArc = new AngleRange();
         public bool TargetPlayer = false;
 
         private int SeqentialCount;
@@ -112,7 +112,7 @@ namespace BulletHellGenerator
     public class OctogonPattern : PatternBase
     {
         [Header("Bullet Info")]
-        public Stack Stack;
+        public Stack Stack = new Stack();
 
         [Header("Spawning Info")]
         public MinMaxCurve BulletDensity = new MinMaxCurve(8);
@@ -120,7 +120,7 @@ namespace BulletHellGenerator
 
         [Header("Angle")]
         public MinMaxCurve AngleOffset = new MinMaxCurve(0);
-        public AngleRange BulletArc;
+        public AngleRange BulletArc = new AngleRange();
         public bool TargetPlayer = false;
 
         private int SeqentialCount;
@@ -177,7 +177,7 @@ namespace BulletHellGenerator
     public class SquarePattern : PatternBase
     {
         [Header("Bullet Info")]
-        public Stack Stack;
+        public Stack Stack = new Stack();
 
         [Header("Spawning Info")]
         public MinMaxCurve BulletDensity = new MinMaxCurve(8);
@@ -188,8 +188,6 @@ namespace BulletHellGenerator
         public bool TargetPlayer = false;
 
         private int SeqentialCount;
-
-        // private float[] SquareSides = new []{ 0, Mathf.PI * 0.5f, Mathf.PI, Mathf.PI * 1.5f };
 
         protected override void GeneratePattern(BH_BulletHellPatternGenerator generator, BulletBase bulletChooser, float duration)
         {

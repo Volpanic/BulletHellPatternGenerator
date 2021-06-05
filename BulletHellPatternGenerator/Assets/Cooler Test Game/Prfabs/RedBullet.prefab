@@ -99,7 +99,7 @@ MonoBehaviour:
   MaxLifeTime: 8
   DisableWhenOffscreen: 1
   RelativeDirection: {x: 0, y: 0, z: 0, w: 0}
-  OrbitalVelcoity: {x: 0, y: 0, z: 0, w: 1}
+  OrbitalVelcoity: {x: 0, y: 0, z: 0.52991927, w: 0.8480481}
   Target: {fileID: 0}
   HomingSpeed: 0
   SpeedModifier: 1

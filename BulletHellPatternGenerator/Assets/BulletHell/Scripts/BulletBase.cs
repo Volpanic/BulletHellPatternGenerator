@@ -48,7 +48,7 @@ namespace BulletHellGenerator
 
         public RandomBullets()
         {
-            //Creates a new lis if bullets == null
+            //Creates a new list if bullets == null
             Bullets = Bullets ?? new BH_BulletList();
         }
 

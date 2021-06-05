@@ -43,7 +43,6 @@ public class BulletEditor : Editor
             bullet.RotateRelativeToDirection = EditorGUILayout.Toggle(new GUIContent("Rotate Relative to Direction"),bullet.RotateRelativeToDirection);
             bullet.RotationOffset = Quaternion.Euler(EditorGUILayout.Vector3Field(new GUIContent("Rotation Offset"),bullet.RotationOffset.eulerAngles));
             bullet.RotationalVelocity = EditorGUILayout.Vector3Field(new GUIContent("Rotation Velocity"),bullet.RotationalVelocity);
-            EditorGUILayout.PropertyField(bulletObject.FindProperty("RotatinalVelocityModifier"),new GUIContent("Rotational Velocity Modifier"));
 
             EditorGUILayout.LabelField("Speeds", EditorStyles.centeredGreyMiniLabel);
             bullet.SpeedModifier = EditorGUILayout.FloatField(new GUIContent
