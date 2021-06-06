@@ -11,6 +11,8 @@ using BulletHellGenerator;
 
 public class PatternEditor : EditorWindow
 {
+    // Big get and set to make sure sData is setup properly
+    // Creates and fills lists if they are empty
     public SerializedObject sData { get { return sdata; } set 
         {
             sdata = value;
@@ -37,6 +39,7 @@ public class PatternEditor : EditorWindow
         }
     }
 
+    //Clamps the layer so we can't get one out of index
     public int SelectedLayer
     {
         get { return selectedLayer; }
@@ -56,13 +59,12 @@ public class PatternEditor : EditorWindow
     }
 
     private int selectedLayer = 0;
-
     private SerializedObject sdata;
-
     private BulletHellPattern data;
+    private Vector2 scrollPos;
+    public readonly Color HighlightColor = new Color(1f,1f,1f,1f); // Color of the seperators
 
-    public readonly Color HighlightColor = new Color(1f,1f,1f,1f);
-
+    //Menus that hold different bases to create
     GenericMenu BulletChooseMenu;
     GenericMenu TimingChooseMenu;
     GenericMenu PatternChooseMenu;
@@ -74,6 +76,7 @@ public class PatternEditor : EditorWindow
         return window;
     }
 
+    //Opens the editor with an asset already loaded
     public static PatternEditor OpenWindowWithAsset(BulletHellPattern asset)
     {
         PatternEditor window = GetWindow<PatternEditor>("Pattern Editor");
@@ -86,8 +89,6 @@ public class PatternEditor : EditorWindow
     {
         SetupContextMenus();
     }
-
-    private Vector2 scrollPos;
 
     public void OnGUI()
     {
@@ -118,6 +119,7 @@ public class PatternEditor : EditorWindow
         }
     }
 
+    //Data used for displaying the pattern board
     SerializedProperty sLayer;
     SerializedProperty sBullet;
     SerializedProperty sTiming;
@@ -129,6 +131,7 @@ public class PatternEditor : EditorWindow
         if(sData.FindProperty("PatternLayers").arraySize > 0)
         sLayer = sData.FindProperty("PatternLayers").GetArrayElementAtIndex(SelectedLayer);
 
+        //Set the board data if layer is not null
         if (sLayer != null)
         {
             sBullet  = sLayer.FindPropertyRelative("Bullet");
@@ -162,6 +165,7 @@ public class PatternEditor : EditorWindow
         DrawSeparator();
     }
 
+    //Draws a line through the window to separate sections
     private void DrawSeparator()
     {
         GUI.backgroundColor = HighlightColor;
@@ -169,6 +173,7 @@ public class PatternEditor : EditorWindow
         GUI.backgroundColor = Color.white;
     }
 
+    //Draws a bar at the top of the window for controlling layers
     private void DrawLayerBar()
     {
         if (sData == null) return;
@@ -199,6 +204,7 @@ public class PatternEditor : EditorWindow
                 sLayer = null;
             }
 
+            //Removes selected layer, if only one layer exists it replaces it with a fresh one
             if (GUILayout.Button(new GUIContent("Remove Layer", "Removes the selected pattern")))
             {
                 data.PatternLayers.RemoveAt(SelectedLayer);
@@ -254,6 +260,7 @@ public class PatternEditor : EditorWindow
         }
     }
 
+    //Culls an array of all types that are not subclasses of the desired type
     private System.Type[] CullTypeArray(System.Type[] toCull, System.Type desiredParentType)
     {
         List<System.Type> tempList = new List<Type>();
@@ -266,7 +273,8 @@ public class PatternEditor : EditorWindow
 
         return tempList.ToArray();
     }
-
+    
+    //Replaces the currently selected layers pattern with the selected one
     private void PatternChooseOnClick(object typeIndex)
     {
         BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
@@ -286,6 +294,7 @@ public class PatternEditor : EditorWindow
         Repaint();
     }
 
+    //Replaces the currently selected layers timing with the selected one
     private void TimingChooseOnClick(object typeIndex)
     {
         BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
@@ -305,6 +314,7 @@ public class PatternEditor : EditorWindow
         Repaint();
     }
 
+    //Replaces the currently selected layers bullet with the selected one
     private void BulletChooseOnClick(object typeIndex)
     {
         BulletHellPattern pattern = (BulletHellPattern)sData.targetObject;
